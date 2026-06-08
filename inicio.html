@@ -88,8 +88,381 @@
     </nav>
 
     <main id="app">
-      <h2>Inicio</h2>
-      <!-- contenido dinámico — M3 -->
+      <section aria-label="Destacados">
+        <section
+          aria-roledescription="diapositiva"
+          aria-label="Diapositiva 1 de 5"
+        >
+          <figure>
+            <img
+              loading="lazy"
+              src="https://image.tmdb.org/t/p/w400/m0psah5Ttchm7Jlp74NZ5xDe6C8.jpg"
+              alt="Póster de Intercambiados"
+            />
+          </figure>
+          <p>Película destacada</p>
+          <h2>Intercambiados</h2>
+          <p>Dirigida por <em>Nathan Greno</em></p>
+          <p>
+            Una pequeña criatura del bosque y un ave majestuosa intercambian
+            cuerpos. Ahora, deben aliarse para sobrevivir a la aventura más
+            salvaje de sus vidas.
+          </p>
+          <p><span aria-hidden="true">★★★★☆</span> 4.4 de 5</p>
+          <p>2026 · United States of America · 102 min</p>
+          <p><a href="detalles.html?id=1">Ver detalle →</a></p>
+        </section>
+
+        <section
+          aria-roledescription="diapositiva"
+          aria-label="Diapositiva 2 de 5"
+        >
+          <figure>
+            <img
+              loading="lazy"
+              src="https://image.tmdb.org/t/p/w400/l6V3TEoJlGh3ztAFxK2hemHfDJ2.jpg"
+              alt="Póster de Sueño de fuga"
+            />
+          </figure>
+          <p>Película destacada</p>
+          <h2>Sueño de fuga</h2>
+          <p>Dirigida por <em>Frank Darabont</em></p>
+          <p>
+            Andy Dufresne es un banquero injustamente encarcelado en la prisión
+            de Shawshank por el asesinato de su esposa y su amante. Dentro de
+            prisión, Andy entabla una amistad con Red, un prisionero con
+            habilidades para conseguir cosas.
+          </p>
+          <p><span aria-hidden="true">★★★★☆</span> 4.3 de 5</p>
+          <p>1994 · United States of America · 143 min</p>
+          <p><a href="detalles.html?id=2">Ver detalle →</a></p>
+        </section>
+
+        <section
+          aria-roledescription="diapositiva"
+          aria-label="Diapositiva 3 de 5"
+        >
+          <figure>
+            <img
+              loading="lazy"
+              src="https://image.tmdb.org/t/p/w400/tUeZeWzbw37sOIpDsuK8qq8Unor.jpg"
+              alt="Póster de El Padrino"
+            />
+          </figure>
+          <p>Película destacada</p>
+          <h2>El Padrino</h2>
+          <p>Dirigida por <em>Francis Ford Coppola</em></p>
+          <p>
+            Don Vito Corleone es el respetado y temido jefe de una de las cinco
+            familias de la mafia de Nueva York. Cuando se niega a intervenir en
+            el negocio de las drogas, el jefe de otra banda ordena su asesinato.
+          </p>
+          <p><span aria-hidden="true">★★★★☆</span> 4.3 de 5</p>
+          <p>1972 · United States of America · 175 min</p>
+          <p><a href="detalles.html?id=3">Ver detalle →</a></p>
+        </section>
+
+        <section
+          aria-roledescription="diapositiva"
+          aria-label="Diapositiva 4 de 5"
+        >
+          <figure>
+            <img
+              loading="lazy"
+              src="https://image.tmdb.org/t/p/w400/cWpvRQcppLnXD0Kno4OZUzkA05R.jpg"
+              alt="Póster de Proyecto Fin del Mundo"
+            />
+          </figure>
+          <p>Película destacada</p>
+          <h2>Proyecto Fin del Mundo</h2>
+          <p>Dirigida por <em>Phil Lord</em></p>
+          <p>
+            El profesor de ciencias Ryland Grace despierta en una nave espacial
+            a años luz de su hogar sin recordar quién es ni cómo llegó allí. A
+            medida que recupera la memoria, comienza a descubrir su misión.
+          </p>
+          <p><span aria-hidden="true">★★★★☆</span> 4.2 de 5</p>
+          <p>2026 · United States of America · 156 min</p>
+          <p><a href="detalles.html?id=4">Ver detalle →</a></p>
+        </section>
+
+        <section
+          aria-roledescription="diapositiva"
+          aria-label="Diapositiva 5 de 5"
+        >
+          <figure>
+            <img
+              loading="lazy"
+              src="https://image.tmdb.org/t/p/w400/nitJxV5GfaOB44VVOpVx2fOxnuT.jpg"
+              alt="Póster de El Padrino II"
+            />
+          </figure>
+          <p>Película destacada</p>
+          <h2>El Padrino II</h2>
+          <p>Dirigida por <em>Francis Ford Coppola</em></p>
+          <p>
+            Continuación de la historia de los Corleone: la elección de Michael
+            como jefe de los negocios familiares y los orígenes del patriarca,
+            Don Vito Corleone, primero en su Sicilia natal y posteriormente en
+            Estados Unidos.
+          </p>
+          <p><span aria-hidden="true">★★★★☆</span> 4.2 de 5</p>
+          <p>1974 · United States of America · 202 min</p>
+          <p><a href="detalles.html?id=5">Ver detalle →</a></p>
+        </section>
+
+        <div role="group" aria-label="Controles del carrusel">
+          <button type="button">Anterior</button>
+          <button type="button">Siguiente</button>
+          <ol aria-label="Indicadores de diapositiva">
+            <li>
+              <button type="button" aria-label="Ir a la diapositiva 1">
+                1
+              </button>
+            </li>
+            <li>
+              <button type="button" aria-label="Ir a la diapositiva 2">
+                2
+              </button>
+            </li>
+            <li>
+              <button type="button" aria-label="Ir a la diapositiva 3">
+                3
+              </button>
+            </li>
+            <li>
+              <button type="button" aria-label="Ir a la diapositiva 4">
+                4
+              </button>
+            </li>
+            <li>
+              <button type="button" aria-label="Ir a la diapositiva 5">
+                5
+              </button>
+            </li>
+          </ol>
+          <p>01 / 05</p>
+        </div>
+      </section>
+
+      <section aria-label="Películas">
+        <header>
+          <p>MEJOR VALORADOS</p>
+          <h2>Películas Destacadas</h2>
+          <p><a href="listado.html?cat=peliculas">Ver todo →</a></p>
+          <hr />
+        </header>
+
+        <article>
+          <a href="detalles.html?id=1">
+            <figure>
+              <img
+                loading="lazy"
+                src="https://image.tmdb.org/t/p/w400/m0psah5Ttchm7Jlp74NZ5xDe6C8.jpg"
+                alt="Póster de Intercambiados"
+              />
+            </figure>
+            <h3>Intercambiados</h3>
+            <p>Nathan Greno</p>
+            <p><span aria-hidden="true">★★★★☆</span> 4.4 de 5</p>
+            <p>2026 · United States of America · 102 min</p>
+          </a>
+        </article>
+
+        <article>
+          <a href="detalles.html?id=2">
+            <figure>
+              <img
+                loading="lazy"
+                src="https://image.tmdb.org/t/p/w400/l6V3TEoJlGh3ztAFxK2hemHfDJ2.jpg"
+                alt="Póster de Sueño de fuga"
+              />
+            </figure>
+            <h3>Sueño de fuga</h3>
+            <p>Frank Darabont</p>
+            <p><span aria-hidden="true">★★★★☆</span> 4.3 de 5</p>
+            <p>1994 · United States of America · 143 min</p>
+          </a>
+        </article>
+
+        <article>
+          <a href="detalles.html?id=3">
+            <figure>
+              <img
+                loading="lazy"
+                src="https://image.tmdb.org/t/p/w400/tUeZeWzbw37sOIpDsuK8qq8Unor.jpg"
+                alt="Póster de El Padrino"
+              />
+            </figure>
+            <h3>El Padrino</h3>
+            <p>Francis Ford Coppola</p>
+            <p><span aria-hidden="true">★★★★☆</span> 4.3 de 5</p>
+            <p>1972 · United States of America · 175 min</p>
+          </a>
+        </article>
+
+        <article>
+          <a href="detalles.html?id=4">
+            <figure>
+              <img
+                loading="lazy"
+                src="https://image.tmdb.org/t/p/w400/cWpvRQcppLnXD0Kno4OZUzkA05R.jpg"
+                alt="Póster de Proyecto Fin del Mundo"
+              />
+            </figure>
+            <h3>Proyecto Fin del Mundo</h3>
+            <p>Phil Lord</p>
+            <p><span aria-hidden="true">★★★★☆</span> 4.2 de 5</p>
+            <p>2026 · United States of America · 156 min</p>
+          </a>
+        </article>
+      </section>
+
+      <section aria-label="Series">
+        <header>
+          <p>MEJOR VALORADOS</p>
+          <h2>Series Limitadas</h2>
+          <p><a href="listado.html?cat=series">Ver todo →</a></p>
+          <hr />
+        </header>
+
+        <article>
+          <a href="detalles.html?id=16">
+            <figure>
+              <img
+                loading="lazy"
+                src="https://image.tmdb.org/t/p/w400/pI4sEVVbswtyOL2uaFxZs2tPOnQ.jpg"
+                alt="Póster de Off Campus"
+              />
+            </figure>
+            <h3>Off Campus</h3>
+            <p>Gina Fattore</p>
+            <p><span aria-hidden="true">★★★★★</span> 4.5 de 5</p>
+            <p>2026 · United States of America</p>
+          </a>
+        </article>
+
+        <article>
+          <a href="detalles.html?id=17">
+            <figure>
+              <img
+                loading="lazy"
+                src="https://image.tmdb.org/t/p/w400/ztkUQFLlC19CCMYHW9o1zWhJRNq.jpg"
+                alt="Póster de Breaking Bad"
+              />
+            </figure>
+            <h3>Breaking Bad</h3>
+            <p>Vince Gilligan</p>
+            <p><span aria-hidden="true">★★★★☆</span> 4.4 de 5</p>
+            <p>2008 · United States of America</p>
+          </a>
+        </article>
+
+        <article>
+          <a href="detalles.html?id=18">
+            <figure>
+              <img
+                loading="lazy"
+                src="https://image.tmdb.org/t/p/w400/6A8IHWrtMLtadNXnMTjggvVY8cs.jpg"
+                alt="Póster de Frieren: Más allá del final del viaje"
+              />
+            </figure>
+            <h3>Frieren: Más allá del final del viaje</h3>
+            <p>Varios</p>
+            <p><span aria-hidden="true">★★★★☆</span> 4.3 de 5</p>
+            <p>2023 · Japan · 25 min</p>
+          </a>
+        </article>
+
+        <article>
+          <a href="detalles.html?id=19">
+            <figure>
+              <img
+                loading="lazy"
+                src="https://image.tmdb.org/t/p/w400/lZo7G1kEU70PHP1dCe46I0cUKiF.jpg"
+                alt="Póster de Contéstame 1988"
+              />
+            </figure>
+            <h3>Contéstame 1988</h3>
+            <p>신원호</p>
+            <p><span aria-hidden="true">★★★★☆</span> 4.3 de 5</p>
+            <p>2015 · South Korea · 90 min</p>
+          </a>
+        </article>
+      </section>
+
+      <section aria-label="Documentales">
+        <header>
+          <p>MEJOR VALORADOS</p>
+          <h2>Documental</h2>
+          <p><a href="listado.html?cat=documentales">Ver todo →</a></p>
+          <hr />
+        </header>
+
+        <article>
+          <a href="detalles.html?id=30">
+            <figure>
+              <img
+                loading="lazy"
+                src="https://image.tmdb.org/t/p/w400/699DbQ8eTecLmzjTLrao9D5bbpq.jpg"
+                alt="Póster de Nude"
+              />
+            </figure>
+            <h3>Nude</h3>
+            <p>Tony Sacco</p>
+            <p><span aria-hidden="true">★★★★★</span> 4.6 de 5</p>
+            <p>2017 · United States of America · 89 min</p>
+          </a>
+        </article>
+
+        <article>
+          <a href="detalles.html?id=31">
+            <figure>
+              <img
+                loading="lazy"
+                src="https://image.tmdb.org/t/p/w400/kucz66uCOc5vqRXd0xA7YtSUtg4.jpg"
+                alt="Póster de Break The Silence: The Movie"
+              />
+            </figure>
+            <h3>Break The Silence: The Movie</h3>
+            <p>Park Jun-soo</p>
+            <p><span aria-hidden="true">★★★★★</span> 4.5 de 5</p>
+            <p>2020 · South Korea · 90 min</p>
+          </a>
+        </article>
+
+        <article>
+          <a href="detalles.html?id=32">
+            <figure>
+              <img
+                loading="lazy"
+                src="https://image.tmdb.org/t/p/w400/gYO7mmLti4XtIszP6C7Uc7OQnOc.jpg"
+                alt="Póster de Las tres muertes de Marisela Escobedo"
+              />
+            </figure>
+            <h3>Las tres muertes de Marisela Escobedo</h3>
+            <p>Carlos Pérez Osorio</p>
+            <p><span aria-hidden="true">★★★★☆</span> 4.4 de 5</p>
+            <p>2020 · United States of America · 109 min</p>
+          </a>
+        </article>
+
+        <article>
+          <a href="detalles.html?id=33">
+            <figure>
+              <img
+                loading="lazy"
+                src="https://image.tmdb.org/t/p/w400/wPZDf3GMMldNcTWnpEiHkte6hYK.jpg"
+                alt="Póster de BTS: Permission to Dance on Stage – LA"
+              />
+            </figure>
+            <h3>BTS: Permission to Dance on Stage – LA</h3>
+            <p>Park Jun-soo</p>
+            <p><span aria-hidden="true">★★★★☆</span> 4.3 de 5</p>
+            <p>2022 · South Korea · 130 min</p>
+          </a>
+        </article>
+      </section>
     </main>
 
     <footer class="border-top py-4 mt-5 text-body-secondary">
