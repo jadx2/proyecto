@@ -88,8 +88,216 @@
     </nav>
 
     <main>
-      <!-- contenido detalle -->
-      <h2>Detalles</h2>
+      <p><a href="listado.html?cat=peliculas">← Volver a Películas</a></p>
+
+      <section aria-label="Tráiler">
+        <figure>
+          <iframe
+            src="https://www.youtube.com/embed/aqz-KE-bpKQ"
+            title="Tráiler de Intercambiados"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen
+          ></iframe>
+        </figure>
+      </section>
+
+      <section aria-label="Información de la película">
+        <div>
+          <figure>
+            <img
+              loading="lazy"
+              src="https://image.tmdb.org/t/p/w400/m0psah5Ttchm7Jlp74NZ5xDe6C8.jpg"
+              alt="Póster de Intercambiados"
+            />
+          </figure>
+
+          <table>
+            <caption>Ficha técnica</caption>
+            <tbody>
+              <tr>
+                <th scope="row">Tipo</th>
+                <td>Película</td>
+              </tr>
+              <tr>
+                <th scope="row">Año</th>
+                <td>2026</td>
+              </tr>
+              <tr>
+                <th scope="row">Duración</th>
+                <td>102 min</td>
+              </tr>
+              <tr>
+                <th scope="row">País</th>
+                <td>United States of America</td>
+              </tr>
+              <tr>
+                <th scope="row">Estreno</th>
+                <td>1 mayo 2026</td>
+              </tr>
+              <tr>
+                <th scope="row">Estudio</th>
+                <td>Skydance Animation</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <ul aria-label="Géneros">
+            <li>Aventura</li>
+            <li>Animación</li>
+            <li>Familia</li>
+            <li>Fantasía</li>
+          </ul>
+        </div>
+
+        <div>
+          <p>Película</p>
+          <h1>Intercambiados</h1>
+          <p>Dirigida por <em>Nathan Greno</em></p>
+
+          <p aria-label="Valoración promedio">
+            <span aria-hidden="true">★★★★☆</span>
+            <strong>4.4 / 5</strong>
+            <span>128 valoraciones</span>
+          </p>
+
+          <h2>Sinopsis</h2>
+          <p>
+            Una pequeña criatura del bosque y un ave majestuosa intercambian
+            cuerpos. Ahora, deben aliarse para sobrevivir a la aventura más
+            salvaje de sus vidas.
+          </p>
+
+          <h2>Reparto principal</h2>
+          <ul>
+            <li>Michael B. Jordan</li>
+            <li>Juno Temple</li>
+            <li>Tracy Morgan</li>
+            <li>Cedric the Entertainer</li>
+            <li>Justina Machado</li>
+          </ul>
+
+          <h2>Dirección</h2>
+          <p>Nathan Greno</p>
+        </div>
+      </section>
+
+      <section aria-label="Valoraciones">
+        <p>Valoraciones</p>
+        <h2>Califica esta película</h2>
+
+        <form>
+          <p id="ratingLabel">Tu calificación</p>
+          <div role="radiogroup" aria-labelledby="ratingLabel">
+            <button
+              type="button"
+              role="radio"
+              aria-checked="false"
+              data-value="1"
+              aria-label="1 estrella"
+            >
+              ★
+            </button>
+            <button
+              type="button"
+              role="radio"
+              aria-checked="false"
+              data-value="2"
+              aria-label="2 estrellas"
+            >
+              ★
+            </button>
+            <button
+              type="button"
+              role="radio"
+              aria-checked="false"
+              data-value="3"
+              aria-label="3 estrellas"
+            >
+              ★
+            </button>
+            <button
+              type="button"
+              role="radio"
+              aria-checked="false"
+              data-value="4"
+              aria-label="4 estrellas"
+            >
+              ★
+            </button>
+            <button
+              type="button"
+              role="radio"
+              aria-checked="false"
+              data-value="5"
+              aria-label="5 estrellas"
+            >
+              ★
+            </button>
+          </div>
+
+          <p>
+            <label for="reviewName">Nombre (opcional)</label>
+            <input
+              type="text"
+              id="reviewName"
+              name="reviewName"
+              placeholder="Anónimo"
+            />
+          </p>
+
+          <p>
+            <label for="reviewComment">Comentario</label>
+            <textarea
+              id="reviewComment"
+              name="reviewComment"
+              rows="4"
+              placeholder="¿Qué te pareció?"
+            ></textarea>
+          </p>
+
+          <p>
+            <button type="submit">Enviar valoración</button>
+          </p>
+        </form>
+
+        <h2>Valoraciones de la comunidad</h2>
+
+        <article>
+          <p>
+            <span role="img" aria-label="5 de 5">★★★★★</span>
+            <strong>Lucía Fernández</strong>
+            <time datetime="2026-05-20">20 mayo 2026</time>
+          </p>
+          <p>
+            Una aventura preciosa y muy bien animada. La disfruté de principio
+            a fin con toda la familia.
+          </p>
+        </article>
+
+        <article>
+          <p>
+            <span role="img" aria-label="4 de 5">★★★★☆</span>
+            <strong>Diego Ramírez</strong>
+            <time datetime="2026-05-15">15 mayo 2026</time>
+          </p>
+          <p>
+            La premisa del intercambio de cuerpos da mucho juego. Algo predecible
+            al final, pero entretenida.
+          </p>
+        </article>
+
+        <article>
+          <p>
+            <span role="img" aria-label="4 de 5">★★★★☆</span>
+            <strong>Valentina Cruz</strong>
+            <time datetime="2026-05-08">8 mayo 2026</time>
+          </p>
+          <p>
+            Los personajes son carismáticos y el ritmo no decae. Una buena opción
+            para una tarde de cine.
+          </p>
+        </article>
+      </section>
     </main>
 
     <footer class="border-top py-4 mt-5 text-body-secondary">
