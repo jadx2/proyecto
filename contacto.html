@@ -86,26 +86,71 @@
         </div>
       </div>
     </nav>
-
+    <!-- Contenido Contacto -->
     <main>
-      <!-- contenido contacto -->
-      <h2>Contacto</h2>
+      <header>
+        <small>ESCRÍBENOS</small>
+        <h2>Contáct<em>anos</em>.</h2>
+        <p>
+          Para consultas de programación, prensa o envíos. Leemos todo, tarde o
+          temprano.
+        </p>
+      </header>
+      <!-- Formulario -->
+      <section>
+        <form id="contacto-form">
+          <div>
+            <label for="nombre">Nombre</label>
+            <input type="text" id="nombre" required />
+          </div>
+
+          <div>
+            <label for="correo">Correo</label>
+            <input type="email" id="correo" required />
+          </div>
+
+          <div>
+            <label for="asunto">Asunto</label>
+            <select id="asunto" name="asunto" required>
+              <option value="" selected disabled>Selecciona un asunto</option>
+              <option value="programacion">Consulta de programación</option>
+              <option value="prensa">Prensa</option>
+              <option value="envio">Envío</option>
+              <option value="general">General</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="mensaje">Mensaje</label>
+            <textarea id="mensaje" rows="6" required></textarea>
+          </div>
+
+          <div>
+            <input type="checkbox" id="consent" required />
+            <label for="consent"
+              >Doy mi consentimiento para ser contactado con el correo
+              indicado.</label
+            >
+          </div>
+          <div>
+            <span>Prototipo · Envío Simulado</span>
+            <button type="submit">Enviar Mensaje</button>
+          </div>
+          <!-- Alerta de Éxito -->
+          <div id="alerta-exito" hidden>
+            <p>
+              <strong>¡Mensaje enviado exitosamente!</strong> Estaremos en
+              contacto con usted pronto.
+            </p>
+          </div>
+        </form>
+        <!-- Contacto -->
+        <nav>
+          <ul>
+            <li><a href="contacto.html" aria-current="page">Contacto</a></li>
+          </ul>
+        </nav>
+      </section>
     </main>
-
-    <footer class="border-top py-4 mt-5 text-body-secondary">
-      <div
-        class="container-fluid px-5 d-flex flex-wrap justify-content-between gap-3"
-      >
-        <div>
-          <p class="serif fs-4 mb-1 text-primary">Lumen</p>
-          <p class="nav-sm mb-0">Una muestra curada.</p>
-        </div>
-      </div>
-    </footer>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="js/data.js"></script>
-    <script src="js/ui.js"></script>
-    <script src="js/contacto.js"></script>
   </body>
 </html>
