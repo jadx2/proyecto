@@ -1,17 +1,10 @@
 <!doctype html>
-<html lang="es" data-bs-theme="dark">
+<html lang="es">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Detalles · Lumen</title>
 
-    <!-- Bootstrap 5.3.3 -->
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-    />
-
-    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -19,65 +12,56 @@
       rel="stylesheet"
     />
 
-    <!-- Styles -->
     <link rel="stylesheet" href="css/base.css" />
     <link rel="stylesheet" href="css/detalles.css" />
   </head>
-  <body class="fw-light">
-    <nav class="navbar navbar-expand-lg sticky-top glass border-bottom py-3">
-      <div class="container-fluid px-5">
-        <a class="navbar-brand" href="inicio.html">
-          <span class="serif fs-3 d-block lh-1">Lumen</span>
-          <span class="nav-sm tracked-lg text-uppercase" style="opacity: 0.6"
+  <body>
+    <nav>
+      <div>
+        <a href="inicio.html">
+          <span>Lumen</span>
+          <span style="opacity: 0.6"
             >La Biblioteca Audiovisual</span
           >
         </a>
 
         <button
-          class="navbar-toggler border-0"
           type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navMenu"
-          aria-controls="navMenu"
           aria-expanded="false"
           aria-label="Toggle navigation"
         >
-          <span class="navbar-toggler-icon"></span>
+          <span></span>
         </button>
 
-        <div class="collapse navbar-collapse justify-content-end" id="navMenu">
-          <ul class="navbar-nav gap-4">
-            <li class="nav-item">
+        <div class="nav-menu">
+          <ul>
+            <li>
               <a
-                class="nav-link nav-sm tracked-md text-uppercase active"
                 href="inicio.html"
                 >Inicio</a
               >
             </li>
-            <li class="nav-item">
+            <li>
               <a
-                class="nav-link nav-sm tracked-md text-uppercase"
                 href="listado.html?cat=series"
                 >Series</a
               >
             </li>
-            <li class="nav-item">
+            <li>
               <a
-                class="nav-link nav-sm tracked-md text-uppercase"
                 href="listado.html?cat=peliculas"
+                aria-current="page"
                 >Películas</a
               >
             </li>
-            <li class="nav-item">
+            <li>
               <a
-                class="nav-link nav-sm tracked-md text-uppercase"
                 href="listado.html?cat=documentales"
                 >Documentales</a
               >
             </li>
-            <li class="nav-item">
+            <li>
               <a
-                class="nav-link nav-sm tracked-md text-uppercase"
                 href="contacto.html"
                 >Contacto</a
               >
@@ -300,18 +284,16 @@
       </section>
     </main>
 
-    <footer class="border-top py-4 mt-5 text-body-secondary">
+    <footer>
       <div
-        class="container-fluid px-5 d-flex flex-wrap justify-content-between gap-3"
       >
         <div>
-          <p class="serif fs-4 mb-1 text-primary">Lumen</p>
-          <p class="nav-sm mb-0">Una muestra curada.</p>
+          <p>Lumen</p>
+          <p>Una muestra curada.</p>
         </div>
       </div>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="js/data.js"></script>
     <script src="js/ui.js"></script>
     <script src="js/detalles.js"></script>
