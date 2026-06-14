@@ -331,3 +331,246 @@
     <script src="js/listado.js"></script>
   </body>
 </html>
+<!doctype html>
+<html lang="es" data-bs-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lumen — Películas</title>
+
+    <!-- Bootstrap 5.3.3 -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&family=Inter:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/base.css" />
+    <link rel="stylesheet" href="css/listado.css" />
+  </head>
+  <body class="fw-light">
+
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg sticky-top glass border-bottom py-3">
+      <div class="container-fluid px-5">
+        <a class="navbar-brand" href="inicio.html">
+          <span class="serif fs-3 d-block lh-1">Lumen</span>
+          <span class="nav-sm tracked-lg text-uppercase" style="opacity: 0.6">La Biblioteca Audiovisual</span>
+        </a>
+
+        <button
+          class="navbar-toggler border-0"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navMenu"
+          aria-controls="navMenu"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse justify-content-end" id="navMenu">
+          <ul class="navbar-nav gap-4">
+            <li class="nav-item">
+              <a class="nav-link nav-sm tracked-md text-uppercase" href="inicio.html">Inicio</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link nav-sm tracked-md text-uppercase" href="listado.html?cat=series">Series</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link nav-sm tracked-md text-uppercase active" aria-current="page" href="listado.html?cat=peliculas">Películas</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link nav-sm tracked-md text-uppercase" href="listado.html?cat=documentales">Documentales</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link nav-sm tracked-md text-uppercase" href="contacto.html">Contacto</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- MAIN -->
+    <main class="container-fluid px-5 py-5">
+
+      <!-- PAGE HEADER -->
+      <header class="page-header mb-5">
+        <p class="nav-sm tracked-lg text-uppercase" style="opacity: 0.6">COLECCIÓN</p>
+        <h1 class="serif fs-1">Películas</h1>
+        <div class="d-flex gap-4 mt-2">
+          <span class="nav-sm text-body-secondary">Mostrando 1–8 de 15</span>
+          <span class="nav-sm text-body-secondary">Página 1 / 2</span>
+        </div>
+      </header>
+
+      <!-- GRID DE FILM CARDS -->
+      <section class="film-grid" aria-label="Listado de películas">
+
+        <!-- Card 1 -->
+        <article class="film-card">
+          <a href="detalles.html">
+            <figure class="poster">
+              <img src="img/poster1.jpg" alt="Título Película 1" loading="lazy">
+              <figcaption class="visually-hidden">Título Película 1</figcaption>
+            </figure>
+            <div class="film-card__info">
+              <h3 class="film-card__title">Título Película 1</h3>
+              <p class="film-card__year">2023</p>
+              <p class="film-card__genre">Acción</p>
+            </div>
+          </a>
+        </article>
+
+        <!-- Card 2 -->
+        <article class="film-card">
+          <a href="detalles.html">
+            <figure class="poster">
+              <img src="img/poster2.jpg" alt="Título Película 2" loading="lazy">
+              <figcaption class="visually-hidden">Título Película 2</figcaption>
+            </figure>
+            <div class="film-card__info">
+              <h3 class="film-card__title">Título Película 2</h3>
+              <p class="film-card__year">2022</p>
+              <p class="film-card__genre">Drama</p>
+            </div>
+          </a>
+        </article>
+
+        <!-- Card 3 -->
+        <article class="film-card">
+          <a href="detalles.html">
+            <figure class="poster">
+              <img src="img/poster3.jpg" alt="Título Película 3" loading="lazy">
+              <figcaption class="visually-hidden">Título Película 3</figcaption>
+            </figure>
+            <div class="film-card__info">
+              <h3 class="film-card__title">Título Película 3</h3>
+              <p class="film-card__year">2021</p>
+              <p class="film-card__genre">Comedia</p>
+            </div>
+          </a>
+        </article>
+
+        <!-- Card 4 -->
+        <article class="film-card">
+          <a href="detalles.html">
+            <figure class="poster">
+              <img src="img/poster4.jpg" alt="Título Película 4" loading="lazy">
+              <figcaption class="visually-hidden">Título Película 4</figcaption>
+            </figure>
+            <div class="film-card__info">
+              <h3 class="film-card__title">Título Película 4</h3>
+              <p class="film-card__year">2020</p>
+              <p class="film-card__genre">Terror</p>
+            </div>
+          </a>
+        </article>
+
+        <!-- Card 5 -->
+        <article class="film-card">
+          <a href="detalles.html">
+            <figure class="poster">
+              <img src="img/poster5.jpg" alt="Título Película 5" loading="lazy">
+              <figcaption class="visually-hidden">Título Película 5</figcaption>
+            </figure>
+            <div class="film-card__info">
+              <h3 class="film-card__title">Título Película 5</h3>
+              <p class="film-card__year">2019</p>
+              <p class="film-card__genre">Ciencia Ficción</p>
+            </div>
+          </a>
+        </article>
+
+        <!-- Card 6 -->
+        <article class="film-card">
+          <a href="detalles.html">
+            <figure class="poster">
+              <img src="img/poster6.jpg" alt="Título Película 6" loading="lazy">
+              <figcaption class="visually-hidden">Título Película 6</figcaption>
+            </figure>
+            <div class="film-card__info">
+              <h3 class="film-card__title">Título Película 6</h3>
+              <p class="film-card__year">2018</p>
+              <p class="film-card__genre">Thriller</p>
+            </div>
+          </a>
+        </article>
+
+        <!-- Card 7 -->
+        <article class="film-card">
+          <a href="detalles.html">
+            <figure class="poster">
+              <img src="img/poster7.jpg" alt="Título Película 7" loading="lazy">
+              <figcaption class="visually-hidden">Título Película 7</figcaption>
+            </figure>
+            <div class="film-card__info">
+              <h3 class="film-card__title">Título Película 7</h3>
+              <p class="film-card__year">2017</p>
+              <p class="film-card__genre">Animación</p>
+            </div>
+          </a>
+        </article>
+
+        <!-- Card 8 -->
+        <article class="film-card">
+          <a href="detalles.html">
+            <figure class="poster">
+              <img src="img/poster8.jpg" alt="Título Película 8" loading="lazy">
+              <figcaption class="visually-hidden">Título Película 8</figcaption>
+            </figure>
+            <div class="film-card__info">
+              <h3 class="film-card__title">Título Película 8</h3>
+              <p class="film-card__year">2016</p>
+              <p class="film-card__genre">Romance</p>
+            </div>
+          </a>
+        </article>
+
+      </section>
+
+      <!-- PAGINACIÓN -->
+      <nav class="paginacion mt-5" aria-label="Paginación">
+        <ul class="paginacion__lista">
+          <li class="paginacion__item paginacion__item--deshabilitado">
+            <a href="#" class="paginacion__link" aria-disabled="true">Ant.</a>
+          </li>
+          <li class="paginacion__item paginacion__item--activo">
+            <a href="#" class="paginacion__link" aria-current="page">1</a>
+          </li>
+          <li class="paginacion__item">
+            <a href="#" class="paginacion__link">2</a>
+          </li>
+          <li class="paginacion__item">
+            <a href="#" class="paginacion__link">Sig.</a>
+          </li>
+        </ul>
+      </nav>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="border-top py-4 mt-5 text-body-secondary">
+      <div class="container-fluid px-5 d-flex flex-wrap justify-content-between gap-3">
+        <div>
+          <p class="serif fs-4 mb-1 text-primary">Lumen</p>
+          <p class="nav-sm mb-0">Una muestra curada.</p>
+        </div>
+      </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/listado.js"></script>
+  </body>
+</html>

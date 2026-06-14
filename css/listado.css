@@ -1,0 +1,187 @@
+/* ============================================================
+   listado.css — Página de Listado (Películas / Series / Docs)
+   ============================================================ */
+
+/* ── 1. Page Header ────────────────────────────────────────── */
+.page-header {
+  padding-top: 3rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--bs-border-color);
+  margin-bottom: 3rem;
+}
+
+.page-header .eyebrow {
+  font-size: 0.72rem;
+  letter-spacing: 0.5em;
+  text-transform: uppercase;
+  color: var(--bs-body-color);
+  opacity: 0.5;
+  margin-bottom: 0.5rem;
+}
+
+.page-header h1 {
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(3rem, 8vw, 5.5rem);
+  font-weight: 400;
+  line-height: 1;
+  margin-bottom: 1.5rem;
+}
+
+.page-header .meta-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.page-header .meta-row span {
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  opacity: 0.5;
+}
+
+/* ── 2. Film Grid ──────────────────────────────────────────── */
+.film-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem 1.5rem;
+  margin-bottom: 4rem;
+}
+
+@media (max-width: 991px) {
+  .film-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 767px) {
+  .film-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem 1rem;
+  }
+}
+
+/* ── 3. Film Card ──────────────────────────────────────────── */
+.film-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.film-card a {
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.film-card .poster {
+  aspect-ratio: 2 / 3;
+  overflow: hidden;
+  margin-bottom: 0.75rem;
+}
+
+.film-card .poster img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(20%);
+  transition: transform 0.4s ease, filter 0.4s ease;
+}
+
+.film-card:hover .poster img {
+  transform: scale(1.04);
+  filter: grayscale(0%);
+}
+
+.film-card__info {
+  padding: 0 0.1rem;
+}
+
+.film-card__title {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1.1rem;
+  font-weight: 400;
+  color: var(--bs-body-color);
+  margin-bottom: 0.15rem;
+  line-height: 1.2;
+}
+
+.film-card__director {
+  font-family: "Cormorant Garamond", serif;
+  font-style: italic;
+  font-size: 0.9rem;
+  color: var(--bs-body-color);
+  opacity: 0.6;
+  margin-bottom: 0.35rem;
+}
+
+.film-card__rating {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  margin-bottom: 0.25rem;
+}
+
+.film-card__meta {
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--bs-body-color);
+  opacity: 0.45;
+}
+
+.film-card__meta span + span::before {
+  content: " · ";
+}
+
+/* ── 4. Paginación ─────────────────────────────────────────── */
+.paginacion {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 4rem;
+}
+
+.paginacion__lista {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.paginacion__link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.25rem;
+  height: 2.25rem;
+  padding: 0 0.75rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--bs-body-color);
+  border: 1px solid var(--bs-border-color);
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.paginacion__link:hover {
+  background: rgba(var(--bs-primary-rgb), 0.1);
+  color: var(--bs-primary);
+  border-color: var(--bs-primary);
+}
+
+.paginacion__item--activo .paginacion__link {
+  background: var(--bs-primary);
+  color: #0a0a0a;
+  border-color: var(--bs-primary);
+  font-weight: 500;
+}
+
+.paginacion__item--deshabilitado .paginacion__link {
+  opacity: 0.3;
+  pointer-events: none;
+  cursor: default;
+}
