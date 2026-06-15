@@ -1,158 +1,164 @@
-/* ============================================================
-   base.css — tokens + componentes compartidos
-   
-   Breakpoints (mobile-first):
-   - Móvil:   < 768px        (xs/sm) — base, sin media query
-   - Tablet:  768px – 991px  (md)    — @media (min-width: 768px)
-   - Desktop: ≥ 992px        (lg)    — @media (min-width: 992px)
-              ≥ 1200px       (xl)    — @media (min-width: 1200px)
-   
-   Preferir clases responsive de Bootstrap (col-md-*, d-lg-flex)
-   sobre media queries custom siempre que sea posible.
-   ============================================================ */
+:root {
+  --lumen-bg: #0a0a0a;
+  --lumen-text: #e8e6e1;
+  --lumen-muted: #9a958b;
+  --lumen-dim: #6d6a63;
+  --lumen-primary: #e8d9b0;
+  --lumen-border: #262626;
 
-/* ── 1. Token overrides ───────────────────────────────────── */
-:root,
-[data-bs-theme="dark"] {
-  --bs-body-bg: #0a0a0a;
-  --bs-body-color: #e8e6e1;
-  --bs-body-font-family: "Inter", sans-serif;
-  --bs-border-color: #262626;
-  --bs-primary: #e8d9b0;
-  --bs-primary-rgb: 232, 217, 176;
-  --bs-link-color: #e8d9b0;
-  --bs-link-hover-color: #ffffff;
-  --bs-pagination-border-radius: 0;
+  --lumen-font-body: "Inter", system-ui, sans-serif;
+  --lumen-font-serif: "Cormorant Garamond", Georgia, serif;
+
+  --lumen-pad-x: 24px;
 }
 
-/* ── 2. Typography ────────────────────────────────────────── */
-.serif {
-  font-family: "Cormorant Garamond", serif;
-}
-.tracked {
-  letter-spacing: 0.18em;
-}
-.tracked-md {
-  letter-spacing: 0.3em;
-}
-.tracked-lg {
-  letter-spacing: 0.5em;
-}
-.nav-sm {
-  font-size: 0.72rem;
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
-/* ── 3. Navbar ────────────────────────────────────────────── */
-.glass {
+body {
+  margin: 0;
+  background: var(--lumen-bg);
+  color: var(--lumen-text);
+  font-family: var(--lumen-font-body);
+  font-weight: 300;
+  -webkit-font-smoothing: antialiased;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: var(--lumen-primary);
+  text-decoration: none;
+}
+
+body > nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  border-bottom: 1px solid var(--lumen-border);
+
   background: rgba(10, 10, 10, 0.85);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
 }
 
-.nav-link {
-  position: relative;
+body > nav > div {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 17.6px var(--lumen-pad-x);
 }
 
-.nav-link.active::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 1px;
-  background: var(--bs-primary);
-}
-
-/* ── 4. Hero ──────────────────────────────────────────────── */
-.hero-bg {
-  position: relative;
-  overflow: hidden;
-}
-
-.hero-bg::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to bottom, rgba(10, 10, 10, 0) 40%, #0a0a0a 100%);
-}
-
-.hero-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-/* ── 5. Poster ────────────────────────────────── */
-.poster {
-  position: relative;
-  aspect-ratio: 2 / 3;
-  overflow: hidden;
-}
-
-.poster img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  filter: grayscale(20%);
-  transition:
-    transform 0.4s ease,
-    filter 0.4s ease;
-}
-
-.film-card:hover .poster img {
-  transform: scale(1.04);
-  filter: grayscale(0%);
-}
-
-/* ── 6. Estrellas de ratings ─────────────────────────────────────────────── */
-.stars {
-  display: inline-flex;
-  gap: 0.15rem;
-  font-size: 1rem;
-  color: var(--bs-primary);
-}
-
-.stars.lg {
-  font-size: 1.4rem;
-}
-.stars.sm {
-  font-size: 0.75rem;
-}
-.stars .empty {
-  opacity: 0.3;
-}
-
-.star-btn {
-  background: none;
-  border: none;
-  padding: 0;
-  cursor: pointer;
-  color: var(--bs-primary);
-  font-size: 1rem;
+body > nav > div > a {
+  color: var(--lumen-text);
   line-height: 1;
-  transition: transform 0.15s ease;
 }
 
-.star-btn:hover {
-  transform: scale(1.2);
+body > nav > div > a > span:first-child {
+  display: block;
+  font-family: var(--lumen-font-serif);
+  font-size: 28px;
+  line-height: 1;
 }
 
-/* ── 7. Formularios ─────────────────────────────── */
-.form-control,
-.form-select {
-  background-color: #141414;
-  border-color: var(--bs-border-color);
-  color: var(--bs-body-color);
+body > nav > div > a > span:last-child {
+  display: block;
+  margin-top: 3.2px;
+  font-size: 9.6px;
+  letter-spacing: 3.84px;
+  text-transform: uppercase;
 }
 
-.form-control:focus,
-.form-select:focus {
-  background-color: #141414;
-  border-color: var(--bs-primary);
-  color: var(--bs-body-color);
-  box-shadow: 0 0 0 0.2rem rgba(var(--bs-primary-rgb), 0.2);
+body > nav button {
+  display: none;
 }
 
-.form-control::placeholder {
-  color: #555;
+.nav-menu ul {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 28px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.nav-menu a {
+  position: relative;
+  color: var(--lumen-text);
+  font-size: 11.52px;
+  letter-spacing: 2.88px;
+  text-transform: uppercase;
+  transition: color 0.2s ease;
+}
+
+.nav-menu a:hover {
+  color: var(--lumen-primary);
+}
+
+.nav-menu a[aria-current="page"]::after {
+  content: "";
+  position: absolute;
+  left: 25%;
+  bottom: -6.4px;
+  width: 50%;
+  height: 1px;
+  background: var(--lumen-primary);
+  transform-origin: center;
+  animation: nav-underline 0.3s ease;
+}
+
+@keyframes nav-underline {
+  from {
+    transform: scaleX(0);
+  }
+}
+
+body > main {
+  padding: 0 var(--lumen-pad-x);
+}
+
+body > footer {
+  margin-top: 60px;
+  border-top: 1px solid var(--lumen-border);
+  padding: 32px var(--lumen-pad-x);
+  color: var(--lumen-muted);
+}
+
+body > footer p {
+  margin: 0;
+}
+
+body > footer p:first-child {
+  font-family: var(--lumen-font-serif);
+  font-weight: 500;
+  font-size: 28px;
+  line-height: 1;
+  color: var(--lumen-primary);
+}
+
+body > footer p:last-child {
+  margin-top: 6px;
+  font-family: var(--lumen-font-serif);
+  font-style: italic;
+  font-size: 14px;
+  color: var(--lumen-dim);
+}
+
+@media (min-width: 992px) {
+  :root {
+    --lumen-pad-x: 80px;
+  }
+
+  body > nav > div {
+    flex-wrap: nowrap;
+  }
 }

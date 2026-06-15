@@ -1,17 +1,10 @@
 <!doctype html>
-<html lang="es" data-bs-theme="dark">
+<html lang="es">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Detalles · Lumen</title>
 
-    <!-- Bootstrap 5.3.3 -->
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-    />
-
-    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -19,65 +12,56 @@
       rel="stylesheet"
     />
 
-    <!-- Styles -->
     <link rel="stylesheet" href="css/base.css" />
     <link rel="stylesheet" href="css/detalles.css" />
   </head>
-  <body class="fw-light">
-    <nav class="navbar navbar-expand-lg sticky-top glass border-bottom py-3">
-      <div class="container-fluid px-5">
-        <a class="navbar-brand" href="inicio.html">
-          <span class="serif fs-3 d-block lh-1">Lumen</span>
-          <span class="nav-sm tracked-lg text-uppercase" style="opacity: 0.6"
+  <body>
+    <nav>
+      <div>
+        <a href="inicio.html">
+          <span>Lumen</span>
+          <span style="opacity: 0.6"
             >La Biblioteca Audiovisual</span
           >
         </a>
 
         <button
-          class="navbar-toggler border-0"
           type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navMenu"
-          aria-controls="navMenu"
           aria-expanded="false"
           aria-label="Toggle navigation"
         >
-          <span class="navbar-toggler-icon"></span>
+          <span></span>
         </button>
 
-        <div class="collapse navbar-collapse justify-content-end" id="navMenu">
-          <ul class="navbar-nav gap-4">
-            <li class="nav-item">
+        <div class="nav-menu">
+          <ul>
+            <li>
               <a
-                class="nav-link nav-sm tracked-md text-uppercase active"
                 href="inicio.html"
                 >Inicio</a
               >
             </li>
-            <li class="nav-item">
+            <li>
               <a
-                class="nav-link nav-sm tracked-md text-uppercase"
                 href="listado.html?cat=series"
                 >Series</a
               >
             </li>
-            <li class="nav-item">
+            <li>
               <a
-                class="nav-link nav-sm tracked-md text-uppercase"
                 href="listado.html?cat=peliculas"
+                aria-current="page"
                 >Películas</a
               >
             </li>
-            <li class="nav-item">
+            <li>
               <a
-                class="nav-link nav-sm tracked-md text-uppercase"
                 href="listado.html?cat=documentales"
                 >Documentales</a
               >
             </li>
-            <li class="nav-item">
+            <li>
               <a
-                class="nav-link nav-sm tracked-md text-uppercase"
                 href="contacto.html"
                 >Contacto</a
               >
@@ -88,22 +72,228 @@
     </nav>
 
     <main>
-      <!-- contenido detalle -->
-      <h2>Detalles</h2>
+      <p><a href="listado.html?cat=peliculas">← Volver a Películas</a></p>
+
+      <section aria-label="Tráiler">
+        <figure>
+          <iframe
+            src="https://www.youtube.com/embed/aqz-KE-bpKQ"
+            title="Tráiler de Intercambiados"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen
+          ></iframe>
+        </figure>
+      </section>
+
+      <section aria-label="Información de la película">
+        <div>
+          <figure>
+            <img
+              loading="lazy"
+              src="https://image.tmdb.org/t/p/w400/m0psah5Ttchm7Jlp74NZ5xDe6C8.jpg"
+              alt="Póster de Intercambiados"
+            />
+          </figure>
+
+          <table>
+            <caption>Ficha técnica</caption>
+            <tbody>
+              <tr>
+                <th scope="row">Tipo</th>
+                <td>Película</td>
+              </tr>
+              <tr>
+                <th scope="row">Año</th>
+                <td>2026</td>
+              </tr>
+              <tr>
+                <th scope="row">Duración</th>
+                <td>102 min</td>
+              </tr>
+              <tr>
+                <th scope="row">País</th>
+                <td>United States of America</td>
+              </tr>
+              <tr>
+                <th scope="row">Estreno</th>
+                <td>1 mayo 2026</td>
+              </tr>
+              <tr>
+                <th scope="row">Estudio</th>
+                <td>Skydance Animation</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <ul aria-label="Géneros">
+            <li>Aventura</li>
+            <li>Animación</li>
+            <li>Familia</li>
+            <li>Fantasía</li>
+          </ul>
+        </div>
+
+        <div>
+          <p>Película</p>
+          <h1>Intercambiados</h1>
+          <p>Dirigida por <em>Nathan Greno</em></p>
+
+          <p aria-label="Valoración promedio">
+            <span aria-hidden="true">★★★★☆</span>
+            <strong>4.4 / 5</strong>
+            <span>128 valoraciones</span>
+          </p>
+
+          <h2>Sinopsis</h2>
+          <p>
+            Una pequeña criatura del bosque y un ave majestuosa intercambian
+            cuerpos. Ahora, deben aliarse para sobrevivir a la aventura más
+            salvaje de sus vidas.
+          </p>
+
+          <h2>Reparto principal</h2>
+          <ul>
+            <li>Michael B. Jordan</li>
+            <li>Juno Temple</li>
+            <li>Tracy Morgan</li>
+            <li>Cedric the Entertainer</li>
+            <li>Justina Machado</li>
+          </ul>
+
+          <h2>Dirección</h2>
+          <p>Nathan Greno</p>
+        </div>
+      </section>
+
+      <section aria-label="Valoraciones">
+        <p>Valoraciones</p>
+        <h2>Califica esta película</h2>
+
+        <form>
+          <p id="ratingLabel">Tu calificación</p>
+          <div role="radiogroup" aria-labelledby="ratingLabel">
+            <button
+              type="button"
+              role="radio"
+              aria-checked="false"
+              data-value="1"
+              aria-label="1 estrella"
+            >
+              ★
+            </button>
+            <button
+              type="button"
+              role="radio"
+              aria-checked="false"
+              data-value="2"
+              aria-label="2 estrellas"
+            >
+              ★
+            </button>
+            <button
+              type="button"
+              role="radio"
+              aria-checked="false"
+              data-value="3"
+              aria-label="3 estrellas"
+            >
+              ★
+            </button>
+            <button
+              type="button"
+              role="radio"
+              aria-checked="false"
+              data-value="4"
+              aria-label="4 estrellas"
+            >
+              ★
+            </button>
+            <button
+              type="button"
+              role="radio"
+              aria-checked="false"
+              data-value="5"
+              aria-label="5 estrellas"
+            >
+              ★
+            </button>
+          </div>
+
+          <p>
+            <label for="reviewName">Nombre (opcional)</label>
+            <input
+              type="text"
+              id="reviewName"
+              name="reviewName"
+              placeholder="Anónimo"
+            />
+          </p>
+
+          <p>
+            <label for="reviewComment">Comentario</label>
+            <textarea
+              id="reviewComment"
+              name="reviewComment"
+              rows="4"
+              placeholder="¿Qué te pareció?"
+            ></textarea>
+          </p>
+
+          <p>
+            <button type="submit">Enviar valoración</button>
+          </p>
+        </form>
+
+        <h2>Valoraciones de la comunidad</h2>
+
+        <article>
+          <p>
+            <span role="img" aria-label="5 de 5">★★★★★</span>
+            <strong>Lucía Fernández</strong>
+            <time datetime="2026-05-20">20 mayo 2026</time>
+          </p>
+          <p>
+            Una aventura preciosa y muy bien animada. La disfruté de principio
+            a fin con toda la familia.
+          </p>
+        </article>
+
+        <article>
+          <p>
+            <span role="img" aria-label="4 de 5">★★★★☆</span>
+            <strong>Diego Ramírez</strong>
+            <time datetime="2026-05-15">15 mayo 2026</time>
+          </p>
+          <p>
+            La premisa del intercambio de cuerpos da mucho juego. Algo predecible
+            al final, pero entretenida.
+          </p>
+        </article>
+
+        <article>
+          <p>
+            <span role="img" aria-label="4 de 5">★★★★☆</span>
+            <strong>Valentina Cruz</strong>
+            <time datetime="2026-05-08">8 mayo 2026</time>
+          </p>
+          <p>
+            Los personajes son carismáticos y el ritmo no decae. Una buena opción
+            para una tarde de cine.
+          </p>
+        </article>
+      </section>
     </main>
 
-    <footer class="border-top py-4 mt-5 text-body-secondary">
+    <footer>
       <div
-        class="container-fluid px-5 d-flex flex-wrap justify-content-between gap-3"
       >
         <div>
-          <p class="serif fs-4 mb-1 text-primary">Lumen</p>
-          <p class="nav-sm mb-0">Una muestra curada.</p>
+          <p>Lumen</p>
+          <p>Una muestra curada.</p>
         </div>
       </div>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="js/data.js"></script>
     <script src="js/ui.js"></script>
     <script src="js/detalles.js"></script>
