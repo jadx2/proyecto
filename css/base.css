@@ -1,14 +1,15 @@
 :root {
   --lumen-bg: #0a0a0a;
   --lumen-text: #e8e6e1;
-  --lumen-muted: rgba(232, 230, 225, 0.6);
+  --lumen-muted: #9a958b;
+  --lumen-dim: #6d6a63;
   --lumen-primary: #e8d9b0;
   --lumen-border: #262626;
 
   --lumen-font-body: "Inter", system-ui, sans-serif;
   --lumen-font-serif: "Cormorant Garamond", Georgia, serif;
 
-  --lumen-pad-x: 1.5rem;
+  --lumen-pad-x: 24px;
 }
 
 *,
@@ -52,8 +53,8 @@ body > nav > div {
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: 1rem;
-  padding: 1.1rem var(--lumen-pad-x);
+  gap: 16px;
+  padding: 18px var(--lumen-pad-x);
 }
 
 body > nav > div > a {
@@ -64,15 +65,15 @@ body > nav > div > a {
 body > nav > div > a > span:first-child {
   display: block;
   font-family: var(--lumen-font-serif);
-  font-size: 1.75rem;
+  font-size: 28px;
   line-height: 1;
 }
 
 body > nav > div > a > span:last-child {
   display: block;
-  margin-top: 0.2rem;
-  font-size: 0.6rem;
-  letter-spacing: 0.4em;
+  margin-top: 4px;
+  font-size: 10px;
+  letter-spacing: 4px;
   text-transform: uppercase;
 }
 
@@ -84,7 +85,7 @@ body > nav button {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 1.75rem;
+  gap: 28px;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -93,8 +94,8 @@ body > nav button {
 .nav-menu a {
   position: relative;
   color: var(--lumen-text);
-  font-size: 0.72rem;
-  letter-spacing: 0.25em;
+  font-size: 12px;
+  letter-spacing: 3px;
   text-transform: uppercase;
   transition: color 0.2s ease;
 }
@@ -107,7 +108,7 @@ body > nav button {
   content: "";
   position: absolute;
   left: 25%;
-  bottom: -0.4rem;
+  bottom: -6px;
   width: 50%;
   height: 1px;
   background: var(--lumen-primary);
@@ -121,10 +122,14 @@ body > nav button {
   }
 }
 
+body > main {
+  padding: 0 var(--lumen-pad-x);
+}
+
 body > footer {
-  margin-top: 4rem;
+  margin-top: 60px;
   border-top: 1px solid var(--lumen-border);
-  padding: 2.5rem var(--lumen-pad-x);
+  padding: 32px var(--lumen-pad-x);
   color: var(--lumen-muted);
 }
 
@@ -134,20 +139,23 @@ body > footer p {
 
 body > footer p:first-child {
   font-family: var(--lumen-font-serif);
-  font-size: 2rem;
+  font-weight: 500;
+  font-size: 28px;
   line-height: 1;
   color: var(--lumen-primary);
 }
 
 body > footer p:last-child {
-  margin-top: 0.4rem;
-  font-size: 0.8rem;
-  letter-spacing: 0.05em;
+  margin-top: 6px;
+  font-family: var(--lumen-font-serif);
+  font-style: italic;
+  font-size: 14px;
+  color: var(--lumen-dim);
 }
 
 @media (min-width: 992px) {
   :root {
-    --lumen-pad-x: 5rem;
+    --lumen-pad-x: 80px;
   }
 
   body > nav > div {
