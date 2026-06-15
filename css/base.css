@@ -54,7 +54,7 @@ body > nav > div {
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  padding: 17.6px var(--lumen-pad-x);
+  padding: 18px var(--lumen-pad-x);
 }
 
 body > nav > div > a {
@@ -71,9 +71,9 @@ body > nav > div > a > span:first-child {
 
 body > nav > div > a > span:last-child {
   display: block;
-  margin-top: 3.2px;
-  font-size: 9.6px;
-  letter-spacing: 3.84px;
+  margin-top: 4px;
+  font-size: 10px;
+  letter-spacing: 4px;
   text-transform: uppercase;
 }
 
@@ -94,8 +94,8 @@ body > nav button {
 .nav-menu a {
   position: relative;
   color: var(--lumen-text);
-  font-size: 11.52px;
-  letter-spacing: 2.88px;
+  font-size: 12px;
+  letter-spacing: 3px;
   text-transform: uppercase;
   transition: color 0.2s ease;
 }
@@ -108,7 +108,7 @@ body > nav button {
   content: "";
   position: absolute;
   left: 25%;
-  bottom: -6.4px;
+  bottom: -6px;
   width: 50%;
   height: 1px;
   background: var(--lumen-primary);
