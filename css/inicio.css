@@ -18,10 +18,11 @@
 .hero__slide--active {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  gap: 16px;
+  align-items: center;
+  gap: 12px;
   max-width: 560px;
   padding: 0 24px 64px;
+  text-align: center;
   overflow-wrap: break-word;
   z-index: 1;
 }
@@ -58,29 +59,12 @@
     );
 }
 
-.hero__eyebrow {
-  font-weight: 500;
-  font-size: 11px;
-  letter-spacing: 5px;
-  text-transform: uppercase;
-  color: var(--lumen-primary);
-}
-
 .hero__title {
   font-family: var(--lumen-font-serif);
   font-weight: 300;
   font-size: 48px;
   line-height: 0.92;
   color: var(--lumen-text);
-}
-
-.hero__director {
-  font-family: var(--lumen-font-serif);
-  font-style: italic;
-  font-weight: 400;
-  font-size: 28px;
-  line-height: 0.95;
-  color: var(--lumen-primary);
 }
 
 .hero__synopsis {
@@ -93,32 +77,22 @@
   opacity: 0.85;
 }
 
-.hero__rating {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  padding-top: 8px;
-  font-size: 18px;
-  color: var(--lumen-text);
-}
-
-.hero__rating span {
-  letter-spacing: 2px;
-  color: var(--lumen-primary);
-}
-
 .hero__meta {
   font-weight: 500;
   font-size: 11px;
-  letter-spacing: 4px;
+  letter-spacing: 3.5px;
   text-transform: uppercase;
   color: var(--lumen-dim);
 }
 
+.hero__cta {
+  padding-top: 24px;
+}
+
 .hero__cta a {
   font-weight: 500;
-  font-size: 11px;
-  letter-spacing: 4px;
+  font-size: 14px;
+  letter-spacing: 3.5px;
   text-transform: uppercase;
   color: var(--lumen-primary);
 }
@@ -129,13 +103,13 @@
   position: static;
 }
 
-/* Chevrones (sin círculo, como el hi-fi) */
+/* Chevrones (sin círculo, como el hi-fi). Ocultos en móvil. */
 .hero__nav {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
   z-index: 2;
-  display: inline-flex;
+  display: none;
   align-items: center;
   justify-content: center;
   width: 44px;
@@ -346,15 +320,17 @@
   }
 
   .hero__slide--active {
+    align-items: flex-start;
     padding: 0 48px 80px;
+    text-align: left;
   }
 
   .hero__title {
     font-size: 64px;
   }
 
-  .hero__director {
-    font-size: 44px;
+  .hero__nav {
+    display: inline-flex;
   }
 }
 
@@ -369,15 +345,11 @@
 
   .hero__slide--active {
     padding: 0 48px 94px;
-    gap: 18px;
+    gap: 12px;
   }
 
   .hero__title {
     font-size: 84px;
-  }
-
-  .hero__director {
-    font-size: 64px;
   }
 
   .hero__synopsis {
