@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&family=Inter:wght@300;400;500;600&display=swap");
+
 :root {
   --lumen-bg: #0a0a0a;
   --lumen-text: #e8e6e1;
@@ -15,11 +17,12 @@
 *,
 *::before,
 *::after {
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
 }
 
 body {
-  margin: 0;
   background: var(--lumen-bg);
   color: var(--lumen-text);
   font-family: var(--lumen-font-body);
@@ -75,6 +78,7 @@ body > nav > div > a > span:last-child {
   font-size: 10px;
   letter-spacing: 4px;
   text-transform: uppercase;
+  opacity: 0.6;
 }
 
 body > nav button {
@@ -86,8 +90,6 @@ body > nav button {
   flex-wrap: wrap;
   align-items: center;
   gap: 28px;
-  margin: 0;
-  padding: 0;
   list-style: none;
 }
 
@@ -131,10 +133,6 @@ body > footer {
   border-top: 1px solid var(--lumen-border);
   padding: 32px var(--lumen-pad-x);
   color: var(--lumen-muted);
-}
-
-body > footer p {
-  margin: 0;
 }
 
 body > footer p:first-child {
