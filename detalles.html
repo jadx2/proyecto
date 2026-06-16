@@ -72,10 +72,12 @@
     </nav>
 
     <main>
-      <p><a href="listado.html?cat=peliculas">← Volver a Películas</a></p>
+      <p class="volver">
+        <a href="listado.html?cat=peliculas">← Volver a Películas</a>
+      </p>
 
-      <section aria-label="Tráiler">
-        <figure>
+      <section class="trailer" aria-label="Tráiler">
+        <figure class="trailer__frame">
           <iframe
             src="https://www.youtube.com/embed/aqz-KE-bpKQ"
             title="Tráiler de Intercambiados"
@@ -85,9 +87,9 @@
         </figure>
       </section>
 
-      <section aria-label="Información de la película">
-        <div>
-          <figure>
+      <section class="detalle" aria-label="Información de la película">
+        <div class="detalle__aside">
+          <figure class="poster">
             <img
               loading="lazy"
               src="https://image.tmdb.org/t/p/w400/m0psah5Ttchm7Jlp74NZ5xDe6C8.jpg"
@@ -95,7 +97,7 @@
             />
           </figure>
 
-          <table>
+          <table class="ficha">
             <caption>Ficha técnica</caption>
             <tbody>
               <tr>
@@ -125,54 +127,68 @@
             </tbody>
           </table>
 
-          <ul aria-label="Géneros">
-            <li>Aventura</li>
-            <li>Animación</li>
-            <li>Familia</li>
-            <li>Fantasía</li>
+          <ul class="generos" aria-label="Géneros">
+            <li class="generos__item">Aventura</li>
+            <li class="generos__item">Animación</li>
+            <li class="generos__item">Familia</li>
+            <li class="generos__item">Fantasía</li>
           </ul>
         </div>
 
-        <div>
-          <p>Película</p>
-          <h1>Intercambiados</h1>
-          <p>Dirigida por <em>Nathan Greno</em></p>
+        <div class="detalle__main">
+          <p class="eyebrow">Película</p>
+          <h1 class="detalle__title">Intercambiados</h1>
+          <p class="detalle__director">Dirigida por <em>Nathan Greno</em></p>
 
-          <p aria-label="Valoración promedio">
-            <span aria-hidden="true">★★★★☆</span>
-            <strong>4.4 / 5</strong>
-            <span>128 valoraciones</span>
+          <p class="rating-big" aria-label="Valoración promedio">
+            <span class="rating-big__stars" aria-hidden="true">★★★★☆</span>
+            <strong class="rating-big__score">4.4 <span>/ 5</span></strong>
+            <span class="rating-big__count">128 valoraciones</span>
           </p>
 
-          <h2>Sinopsis</h2>
-          <p>
-            Una pequeña criatura del bosque y un ave majestuosa intercambian
-            cuerpos. Ahora, deben aliarse para sobrevivir a la aventura más
-            salvaje de sus vidas.
-          </p>
+          <section class="sinopsis">
+            <h2 class="detalle__heading">Sinopsis</h2>
+            <p class="sinopsis__text">
+              Una pequeña criatura del bosque y un ave majestuosa intercambian
+              cuerpos. Ahora, deben aliarse para sobrevivir a la aventura más
+              salvaje de sus vidas.
+            </p>
+          </section>
 
-          <h2>Reparto principal</h2>
-          <ul>
-            <li>Michael B. Jordan</li>
-            <li>Juno Temple</li>
-            <li>Tracy Morgan</li>
-            <li>Cedric the Entertainer</li>
-            <li>Justina Machado</li>
-          </ul>
+          <div class="creditos">
+            <section class="creditos__col">
+              <h2 class="creditos__heading">Reparto principal</h2>
+              <ul class="creditos__list">
+                <li>Michael B. Jordan</li>
+                <li>Juno Temple</li>
+                <li>Tracy Morgan</li>
+                <li>Cedric the Entertainer</li>
+                <li>Justina Machado</li>
+              </ul>
+            </section>
 
-          <h2>Dirección</h2>
-          <p>Nathan Greno</p>
+            <section class="creditos__col">
+              <h2 class="creditos__heading">Dirección</h2>
+              <p class="creditos__direccion">Nathan Greno</p>
+            </section>
+          </div>
         </div>
       </section>
 
-      <section aria-label="Valoraciones">
-        <p>Valoraciones</p>
-        <h2>Califica esta película</h2>
+      <section class="ratings" aria-label="Valoraciones">
+        <p class="eyebrow">Valoraciones</p>
+        <h2 class="ratings__title">Califica esta película</h2>
 
-        <form>
-          <p id="ratingLabel">Tu calificación</p>
-          <div role="radiogroup" aria-labelledby="ratingLabel">
+        <form class="review-form">
+          <div class="field field--rating">
+            <p class="field__label" id="ratingLabel">Tu calificación</p>
+            <div
+              class="star-picker"
+              role="radiogroup"
+              aria-labelledby="ratingLabel"
+            >
             <button
+              class="star-btn"
               type="button"
               role="radio"
               aria-checked="false"
@@ -182,6 +198,7 @@
               ★
             </button>
             <button
+              class="star-btn"
               type="button"
               role="radio"
               aria-checked="false"
@@ -191,6 +208,7 @@
               ★
             </button>
             <button
+              class="star-btn"
               type="button"
               role="radio"
               aria-checked="false"
@@ -200,6 +218,7 @@
               ★
             </button>
             <button
+              class="star-btn"
               type="button"
               role="radio"
               aria-checked="false"
@@ -209,6 +228,7 @@
               ★
             </button>
             <button
+              class="star-btn"
               type="button"
               role="radio"
               aria-checked="false"
@@ -217,11 +237,13 @@
             >
               ★
             </button>
+            </div>
           </div>
 
-          <p>
-            <label for="reviewName">Nombre (opcional)</label>
+          <p class="field">
+            <label class="field__label" for="reviewName">Nombre (opcional)</label>
             <input
+              class="field__input"
               type="text"
               id="reviewName"
               name="reviewName"
@@ -229,9 +251,10 @@
             />
           </p>
 
-          <p>
-            <label for="reviewComment">Comentario</label>
+          <p class="field field--comment">
+            <label class="field__label" for="reviewComment">Comentario</label>
             <textarea
+              class="field__input"
               id="reviewComment"
               name="reviewComment"
               rows="4"
@@ -239,48 +262,62 @@
             ></textarea>
           </p>
 
-          <p>
-            <button type="submit">Enviar valoración</button>
+          <p class="review-form__actions">
+            <button class="btn-enviar" type="submit">Enviar valoración</button>
           </p>
         </form>
 
-        <h2>Valoraciones de la comunidad</h2>
+        <h2 class="reviews__title">Valoraciones de la comunidad</h2>
 
-        <article>
-          <p>
-            <span role="img" aria-label="5 de 5">★★★★★</span>
-            <strong>Lucía Fernández</strong>
-            <time datetime="2026-05-20">20 mayo 2026</time>
-          </p>
-          <p>
-            Una aventura preciosa y muy bien animada. La disfruté de principio
-            a fin con toda la familia.
-          </p>
-        </article>
+        <div class="reviews">
+          <article class="review-card">
+            <p class="review-card__head">
+              <span class="review-card__stars" role="img" aria-label="5 de 5"
+                >★★★★★</span
+              >
+              <strong class="review-card__author">Lucía Fernández</strong>
+              <time class="review-card__date" datetime="2026-05-20"
+                >20 mayo 2026</time
+              >
+            </p>
+            <p class="review-card__text">
+              Una aventura preciosa y muy bien animada. La disfruté de principio
+              a fin con toda la familia.
+            </p>
+          </article>
 
-        <article>
-          <p>
-            <span role="img" aria-label="4 de 5">★★★★☆</span>
-            <strong>Diego Ramírez</strong>
-            <time datetime="2026-05-15">15 mayo 2026</time>
-          </p>
-          <p>
-            La premisa del intercambio de cuerpos da mucho juego. Algo predecible
-            al final, pero entretenida.
-          </p>
-        </article>
+          <article class="review-card">
+            <p class="review-card__head">
+              <span class="review-card__stars" role="img" aria-label="4 de 5"
+                >★★★★☆</span
+              >
+              <strong class="review-card__author">Diego Ramírez</strong>
+              <time class="review-card__date" datetime="2026-05-15"
+                >15 mayo 2026</time
+              >
+            </p>
+            <p class="review-card__text">
+              La premisa del intercambio de cuerpos da mucho juego. Algo
+              predecible al final, pero entretenida.
+            </p>
+          </article>
 
-        <article>
-          <p>
-            <span role="img" aria-label="4 de 5">★★★★☆</span>
-            <strong>Valentina Cruz</strong>
-            <time datetime="2026-05-08">8 mayo 2026</time>
-          </p>
-          <p>
-            Los personajes son carismáticos y el ritmo no decae. Una buena opción
-            para una tarde de cine.
-          </p>
-        </article>
+          <article class="review-card">
+            <p class="review-card__head">
+              <span class="review-card__stars" role="img" aria-label="4 de 5"
+                >★★★★☆</span
+              >
+              <strong class="review-card__author">Valentina Cruz</strong>
+              <time class="review-card__date" datetime="2026-05-08"
+                >8 mayo 2026</time
+              >
+            </p>
+            <p class="review-card__text">
+              Los personajes son carismáticos y el ritmo no decae. Una buena
+              opción para una tarde de cine.
+            </p>
+          </article>
+        </div>
       </section>
     </main>
 
