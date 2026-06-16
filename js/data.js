@@ -943,6 +943,10 @@ const Data = {
   featured(type, n = 4) {
     return Data.byType(type).slice(0, n);
   },
+  topRated(type, n = 4) {
+    const items = type ? Data.byType(type) : CONTENT;
+    return [...items].sort((a, b) => b.rating - a.rating).slice(0, n);
+  },
   paginate(items, page = 1, perPage = 8) {
     const total = items.length;
     const totalPages = Math.ceil(total / perPage);
@@ -961,6 +965,13 @@ const Categories = {
   peliculas: { type: "movie", label: "Películas" },
   series: { type: "series", label: "Series" },
   documentales: { type: "documentary", label: "Documentales" },
+};
+
+const getFormattedType = (type) => {
+  const match = Object.values(Categories).find(
+    (category) => category.type === type,
+  );
+  return match ? match.label : "";
 };
 
 const getParam = (name, fallback = undefined) => {
