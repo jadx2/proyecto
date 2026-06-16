@@ -5,13 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Detalles · Lumen</title>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&family=Inter:wght@300;400;500;600&display=swap"
-      rel="stylesheet"
-    />
-
     <link rel="stylesheet" href="css/base.css" />
     <link rel="stylesheet" href="css/detalles.css" />
   </head>
@@ -20,9 +13,7 @@
       <div>
         <a href="inicio.html">
           <span>Lumen</span>
-          <span style="opacity: 0.6"
-            >La Biblioteca Audiovisual</span
-          >
+          <span>La Biblioteca Audiovisual</span>
         </a>
 
         <button
@@ -36,35 +27,21 @@
         <div class="nav-menu">
           <ul>
             <li>
-              <a
-                href="inicio.html"
-                >Inicio</a
-              >
+              <a href="inicio.html">Inicio</a>
             </li>
             <li>
-              <a
-                href="listado.html?cat=series"
-                >Series</a
-              >
+              <a href="listado.html?cat=series">Series</a>
             </li>
             <li>
-              <a
-                href="listado.html?cat=peliculas"
-                aria-current="page"
+              <a href="listado.html?cat=peliculas" aria-current="page"
                 >Películas</a
               >
             </li>
             <li>
-              <a
-                href="listado.html?cat=documentales"
-                >Documentales</a
-              >
+              <a href="listado.html?cat=documentales">Documentales</a>
             </li>
             <li>
-              <a
-                href="contacto.html"
-                >Contacto</a
-              >
+              <a href="contacto.html">Contacto</a>
             </li>
           </ul>
         </div>
@@ -81,7 +58,15 @@
           <iframe
             src="https://www.youtube.com/embed/aqz-KE-bpKQ"
             title="Tráiler de Intercambiados"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allow="
+              accelerometer;
+              autoplay;
+              clipboard-write;
+              encrypted-media;
+              gyroscope;
+              picture-in-picture;
+              web-share;
+            "
             allowfullscreen
           ></iframe>
         </figure>
@@ -98,7 +83,9 @@
           </figure>
 
           <table class="ficha">
-            <caption>Ficha técnica</caption>
+            <caption>
+              Ficha técnica
+            </caption>
             <tbody>
               <tr>
                 <th scope="row">Tipo</th>
@@ -140,11 +127,13 @@
           <h1 class="detalle__title">Intercambiados</h1>
           <p class="detalle__director">Dirigida por <em>Nathan Greno</em></p>
 
-          <p class="rating-big" aria-label="Valoración promedio">
-            <span class="rating-big__stars" aria-hidden="true">★★★★☆</span>
-            <strong class="rating-big__score">4.4 <span>/ 5</span></strong>
-            <span class="rating-big__count">128 valoraciones</span>
-          </p>
+          <div class="rating-big" aria-label="Valoración promedio">
+            <p class="rating-big__stars" aria-hidden="true">★★★★☆</p>
+            <div class="rating-big__values">
+              <strong class="rating-big__score">4.4 <span>/ 5</span></strong>
+              <span class="rating-big__count">128 valoraciones</span>
+            </div>
+          </div>
 
           <section class="sinopsis">
             <h2 class="detalle__heading">Sinopsis</h2>
@@ -187,61 +176,63 @@
               role="radiogroup"
               aria-labelledby="ratingLabel"
             >
-            <button
-              class="star-btn"
-              type="button"
-              role="radio"
-              aria-checked="false"
-              data-value="1"
-              aria-label="1 estrella"
-            >
-              ★
-            </button>
-            <button
-              class="star-btn"
-              type="button"
-              role="radio"
-              aria-checked="false"
-              data-value="2"
-              aria-label="2 estrellas"
-            >
-              ★
-            </button>
-            <button
-              class="star-btn"
-              type="button"
-              role="radio"
-              aria-checked="false"
-              data-value="3"
-              aria-label="3 estrellas"
-            >
-              ★
-            </button>
-            <button
-              class="star-btn"
-              type="button"
-              role="radio"
-              aria-checked="false"
-              data-value="4"
-              aria-label="4 estrellas"
-            >
-              ★
-            </button>
-            <button
-              class="star-btn"
-              type="button"
-              role="radio"
-              aria-checked="false"
-              data-value="5"
-              aria-label="5 estrellas"
-            >
-              ★
-            </button>
+              <button
+                class="star-btn"
+                type="button"
+                role="radio"
+                aria-checked="false"
+                data-value="1"
+                aria-label="1 estrella"
+              >
+                ★
+              </button>
+              <button
+                class="star-btn"
+                type="button"
+                role="radio"
+                aria-checked="false"
+                data-value="2"
+                aria-label="2 estrellas"
+              >
+                ★
+              </button>
+              <button
+                class="star-btn"
+                type="button"
+                role="radio"
+                aria-checked="false"
+                data-value="3"
+                aria-label="3 estrellas"
+              >
+                ★
+              </button>
+              <button
+                class="star-btn"
+                type="button"
+                role="radio"
+                aria-checked="false"
+                data-value="4"
+                aria-label="4 estrellas"
+              >
+                ★
+              </button>
+              <button
+                class="star-btn"
+                type="button"
+                role="radio"
+                aria-checked="false"
+                data-value="5"
+                aria-label="5 estrellas"
+              >
+                ★
+              </button>
             </div>
           </div>
 
           <p class="field">
-            <label class="field__label" for="reviewName">Nombre (opcional)</label>
+            <label class="field__label" for="reviewName"
+              >Nombre (opcional)</label
+            >
             <input
               class="field__input"
               type="text"
@@ -322,8 +313,7 @@
     </main>
 
     <footer>
-      <div
-      >
+      <div>
         <div>
           <p>Lumen</p>
           <p>Una muestra curada.</p>

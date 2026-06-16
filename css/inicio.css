@@ -29,7 +29,6 @@
 .hero__media {
   position: absolute;
   inset: 0;
-  margin: 0;
   z-index: -1;
 }
 
@@ -60,7 +59,6 @@
 }
 
 .hero__eyebrow {
-  margin: 0;
   font-weight: 500;
   font-size: 11px;
   letter-spacing: 5px;
@@ -69,7 +67,6 @@
 }
 
 .hero__title {
-  margin: 0;
   font-family: var(--lumen-font-serif);
   font-weight: 300;
   font-size: 48px;
@@ -78,7 +75,6 @@
 }
 
 .hero__director {
-  margin: 0;
   font-family: var(--lumen-font-serif);
   font-style: italic;
   font-weight: 400;
@@ -88,7 +84,6 @@
 }
 
 .hero__synopsis {
-  margin: 0;
   max-width: 420px;
   font-family: var(--lumen-font-serif);
   font-style: italic;
@@ -102,7 +97,6 @@
   display: flex;
   align-items: center;
   gap: 14px;
-  margin: 0;
   padding-top: 8px;
   font-size: 18px;
   color: var(--lumen-text);
@@ -114,16 +108,11 @@
 }
 
 .hero__meta {
-  margin: 0;
   font-weight: 500;
   font-size: 11px;
   letter-spacing: 4px;
   text-transform: uppercase;
   color: var(--lumen-dim);
-}
-
-.hero__cta {
-  margin: 0;
 }
 
 .hero__cta a {
@@ -151,7 +140,6 @@
   justify-content: center;
   width: 44px;
   height: 44px;
-  padding: 0;
   font-size: 0;
   color: var(--lumen-primary);
   background: none;
@@ -204,15 +192,12 @@
   z-index: 2;
   display: flex;
   gap: 8px;
-  margin: 0;
-  padding: 0;
   list-style: none;
 }
 
 .hero__dot {
   width: 32px;
   height: 2px;
-  padding: 0;
   font-size: 0;
   background: color-mix(in srgb, var(--lumen-primary) 35%, transparent);
   border: none;
@@ -246,7 +231,6 @@
 .strip__eyebrow {
   grid-column: 1;
   grid-row: 1;
-  margin: 0;
   font-weight: 500;
   font-size: 11px;
   letter-spacing: 3px;
@@ -257,7 +241,6 @@
 .strip__title {
   grid-column: 1;
   grid-row: 2;
-  margin: 0;
   font-family: var(--lumen-font-serif);
   font-weight: 300;
   font-size: 40px;
@@ -270,7 +253,6 @@
   grid-row: 2;
   justify-self: end;
   align-self: end;
-  margin: 0;
 }
 
 .strip__viewall a {
@@ -282,10 +264,6 @@
 }
 
 /* CARD */
-.film-card {
-  margin: 0;
-}
-
 .film-card a {
   display: flex;
   flex-direction: column;
@@ -311,7 +289,6 @@
 }
 
 .film-card__title {
-  margin: 0;
   font-family: var(--lumen-font-serif);
   font-weight: 500;
   font-size: 22px;
@@ -321,7 +298,6 @@
 }
 
 .film-card__director {
-  margin: 0;
   font-family: var(--lumen-font-serif);
   font-style: italic;
   font-size: 16px;
@@ -332,7 +308,6 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  margin: 0;
   padding-top: 4px;
   font-size: 11px;
   color: var(--lumen-muted);
@@ -344,7 +319,6 @@
 }
 
 .film-card__meta {
-  margin: 0;
   font-weight: 500;
   font-size: 10px;
   letter-spacing: 2px;
