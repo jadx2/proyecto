@@ -24,11 +24,42 @@ const formatReleaseDate = (iso) => {
   return `${Number(day)} ${MONTHS_ES[Number(month) - 1]} ${year}`;
 };
 
-const backLinkHTML = (film) => {
+// Destino del back link según la página de procedencia (document.referrer):
+// desde el inicio vuelve al inicio; desde una categoría vuelve a esa categoría.
+// Sin referrer útil (link directo, recarga, origen externo) cae a la categoría
+// del propio título.
+const backTarget = (film) => {
+  const referrer = document.referrer;
+  if (referrer) {
+    const url = new URL(referrer);
+    if (url.origin === location.origin) {
+      if (url.pathname.endsWith("/inicio.html")) {
+        return { href: "inicio.html", label: "Volver al inicio" };
+      }
+      if (url.pathname.endsWith("/listado.html")) {
+        const cat = new URLSearchParams(url.search).get("cat");
+        if (Categories[cat]) {
+          return {
+            href: `listado.html?cat=${cat}`,
+            label: `Volver a ${Categories[cat].label}`,
+          };
+        }
+      }
+    }
+  }
+
   const key = catKeyForType(film.type);
+  return {
+    href: `listado.html?cat=${key}`,
+    label: `Volver a ${Categories[key].label}`,
+  };
+};
+
+const backLinkHTML = (film) => {
+  const { href, label } = backTarget(film);
   return `
     <p class="volver">
-      <a href="listado.html?cat=${key}">← Volver a ${Categories[key].label}</a>
+      <a href="${href}">← ${label}</a>
     </p>
   `;
 };
