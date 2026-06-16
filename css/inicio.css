@@ -11,20 +11,34 @@
   overflow: hidden;
 }
 
+/* Todas las diapositivas se apilan a pantalla completa; el cross-fade es por opacidad */
 .hero__slide {
-  display: none;
-}
-
-.hero__slide--active {
+  position: absolute;
+  inset: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: flex-end;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hero__slide--active {
+  opacity: 1;
+  pointer-events: auto;
+  z-index: 1;
+}
+
+/* Bloque de texto: hereda el layout que antes vivía en .hero__slide */
+.hero__content {
+  display: flex;
+  flex-direction: column;
   gap: 12px;
-  max-width: 560px;
+  max-width: 720px;
   padding: 0 24px 64px;
   text-align: center;
   overflow-wrap: break-word;
-  z-index: 1;
 }
 
 .hero__media {
@@ -97,13 +111,7 @@
   color: var(--lumen-primary);
 }
 
-/* Controles del hero */
-
-.hero__controls {
-  position: static;
-}
-
-/* Chevrones (sin círculo, como el hi-fi). Ocultos en móvil. */
+/* Chevrones */
 .hero__nav {
   position: absolute;
   top: 50%;
@@ -319,8 +327,11 @@
     min-height: 620px;
   }
 
-  .hero__slide--active {
+  .hero__slide {
     align-items: flex-start;
+  }
+
+  .hero__content {
     padding: 0 48px 80px;
     text-align: left;
   }
@@ -343,8 +354,8 @@
     min-height: 720px;
   }
 
-  .hero__slide--active {
-    padding: 0 48px 94px;
+  .hero__content {
+    padding: 0 48px 94px 80px;
     gap: 12px;
   }
 
