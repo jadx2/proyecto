@@ -961,6 +961,31 @@ const Data = {
   },
 };
 
+// User ratings persisted in localStorage under `ratings:${id}`.
+// Each entry: { stars, name, comment, date }. The seed for avgRating is
+// derived from film.rating (data.js has no per-item seedRatings list).
+const loadRatings = (id) => {
+  try {
+    return JSON.parse(localStorage.getItem(`ratings:${id}`)) || [];
+  } catch {
+    return [];
+  }
+};
+
+const saveRating = (id, rating) => {
+  const ratings = loadRatings(id);
+  ratings.unshift(rating);
+  localStorage.setItem(`ratings:${id}`, JSON.stringify(ratings));
+  return ratings;
+};
+
+const avgRating = (film) => {
+  const userStars = loadRatings(film.id).map((r) => r.stars);
+  const all = [film.rating, ...userStars];
+  const avg = all.reduce((sum, n) => sum + n, 0) / all.length;
+  return { avg: Math.round(avg * 10) / 10, count: all.length };
+};
+
 const Categories = {
   peliculas: { type: "movie", label: "Películas" },
   series: { type: "series", label: "Series" },
