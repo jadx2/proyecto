@@ -1,5 +1,7 @@
-// Envío simulado: la validación la hace el navegador con los `required` del
-// HTML; aquí solo evitamos la recarga y mostramos el aviso de éxito.
+// Envío simulado. El form tiene `novalidate`, así que la validación la dispara
+// este script con la API nativa: checkValidity() comprueba los `required` del
+// HTML y reportValidity() muestra los mensajes del navegador. Solo si todo es
+// válido se muestra el aviso de éxito.
 const form = document.getElementById("contacto-form");
 const exito = document.getElementById("alerta-exito");
 
