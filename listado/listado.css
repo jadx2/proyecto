@@ -65,6 +65,12 @@
   flex-direction: column;
 }
 
+/* La paginación oculta cards con el atributo [hidden]; sin esta regla, el
+   `display: flex` de arriba lo anula y las cards seguirían visibles. */
+.film-card[hidden] {
+  display: none;
+}
+
 .film-card a {
   display: flex;
   flex-direction: column;

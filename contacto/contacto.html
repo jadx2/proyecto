@@ -9,6 +9,30 @@
     <link rel="stylesheet" href="contacto.css" />
   </head>
   <body>
+    <nav>
+      <div>
+        <a href="../inicio/inicio.html">
+          <span>Lumen</span>
+          <span>La Biblioteca Audiovisual</span>
+        </a>
+
+        <input type="checkbox" id="nav-toggle" class="nav-toggle" />
+        <label class="nav-burger" for="nav-toggle" aria-label="Abrir menú">
+          <span></span>
+        </label>
+
+        <div class="nav-menu">
+          <ul>
+            <li><a href="../inicio/inicio.html">Inicio</a></li>
+            <li><a href="../listado/series.html">Series</a></li>
+            <li><a href="../listado/peliculas.html">Películas</a></li>
+            <li><a href="../listado/documentales.html">Documentales</a></li>
+            <li><a href="../contacto/contacto.html" aria-current="page">Contacto</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
     <main>
       <header>
         <small>ESCRÍBENOS</small>
@@ -69,6 +93,15 @@
       </section>
     </main>
 
-    <script src="../shared/layout.js"></script>
+    <footer>
+      <div>
+        <div>
+          <p>Lumen</p>
+          <p>Una muestra curada.</p>
+        </div>
+      </div>
+    </footer>
+
+    <script src="contacto.js"></script>
   </body>
 </html>

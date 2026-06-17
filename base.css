@@ -89,44 +89,61 @@ body > nav > div > a > span:last-child {
   opacity: 0.6;
 }
 
-/* Mobile-first: el botón hamburguesa muestra/oculta el menú bajo tablet */
-body > nav button {
+/*
+ * El menú móvil se abre con CSS puro: un checkbox oculto (.nav-toggle) cuyo
+ * estado :checked muestra el menú. La hamburguesa visible es su <label>.
+ */
+.nav-toggle {
+  /* Fuera de pantalla pero enfocable por teclado (no display:none) */
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+}
+
+/* Mobile-first: la hamburguesa muestra/oculta el menú bajo tablet */
+.nav-burger {
   display: block;
-  /* Reset del chrome nativo del botón para que solo se vean las barras */
   padding: 6px 4px;
-  border: none;
-  background: transparent;
   color: var(--lumen-text);
   cursor: pointer;
 }
 
 /* El span es la barra central; ::before y ::after son las barras superior e inferior */
-body > nav button span,
-body > nav button span::before,
-body > nav button span::after {
+.nav-burger span,
+.nav-burger span::before,
+.nav-burger span::after {
   display: block;
   width: 24px;
   height: 2px;
   background: var(--lumen-text);
 }
 
-body > nav button span {
+.nav-burger span {
   position: relative;
 }
 
-body > nav button span::before,
-body > nav button span::after {
+.nav-burger span::before,
+.nav-burger span::after {
   content: "";
   position: absolute;
   left: 0;
 }
 
-body > nav button span::before {
+.nav-burger span::before {
   top: -7px;
 }
 
-body > nav button span::after {
+.nav-burger span::after {
   top: 7px;
+}
+
+/* Foco por teclado sobre el checkbox oculto: resalta la hamburguesa */
+.nav-toggle:focus-visible ~ .nav-burger {
+  outline: 2px solid var(--lumen-primary);
+  outline-offset: 2px;
 }
 
 /*
@@ -147,7 +164,7 @@ body > nav button span::after {
   -webkit-backdrop-filter: blur(12px);
 }
 
-.nav-menu--open {
+.nav-toggle:checked ~ .nav-menu {
   display: block;
 }
 
@@ -232,9 +249,9 @@ body > footer p:last-child {
   color: var(--lumen-dim);
 }
 
-/* Desde tablet el menú es siempre visible y el botón sobra */
+/* Desde tablet el menú es siempre visible y la hamburguesa sobra */
 @media (min-width: 768px) {
-  body > nav button {
+  .nav-burger {
     display: none;
   }
 

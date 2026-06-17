@@ -9,7 +9,244 @@
     <link rel="stylesheet" href="detalles.css" />
   </head>
   <body>
-    <main id="app"></main>
+    <nav>
+      <div>
+        <a href="../inicio/inicio.html">
+          <span>Lumen</span>
+          <span>La Biblioteca Audiovisual</span>
+        </a>
+
+        <input type="checkbox" id="nav-toggle" class="nav-toggle" />
+        <label class="nav-burger" for="nav-toggle" aria-label="Abrir menú">
+          <span></span>
+        </label>
+
+        <div class="nav-menu">
+          <ul>
+            <li><a href="../inicio/inicio.html">Inicio</a></li>
+            <li><a href="../listado/series.html">Series</a></li>
+            <li><a href="../listado/peliculas.html">Películas</a></li>
+            <li><a href="../listado/documentales.html">Documentales</a></li>
+            <li><a href="../contacto/contacto.html">Contacto</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <main>
+      <p class="volver">
+        <a data-volver href="#">← Volver</a>
+      </p>
+
+      <section class="trailer" aria-label="Tráiler">
+        <figure class="trailer__frame">
+          <iframe
+            data-trailer
+            src=""
+            title="Tráiler"
+            allow="
+              accelerometer;
+              autoplay;
+              clipboard-write;
+              encrypted-media;
+              gyroscope;
+              picture-in-picture;
+              web-share;
+            "
+            allowfullscreen
+          ></iframe>
+        </figure>
+      </section>
+
+      <section class="detalle" aria-label="Información del título">
+        <div class="detalle__aside">
+          <figure class="poster">
+            <img data-poster loading="lazy" src="" alt="" />
+          </figure>
+
+          <table class="ficha">
+            <caption>
+              Ficha técnica
+            </caption>
+            <tbody>
+              <tr>
+                <th scope="row">Tipo</th>
+                <td data-ficha-tipo></td>
+              </tr>
+              <tr>
+                <th scope="row">Año</th>
+                <td data-ficha-anio></td>
+              </tr>
+              <tr data-ficha-duracion-row>
+                <th scope="row">Duración</th>
+                <td data-ficha-duracion></td>
+              </tr>
+              <tr>
+                <th scope="row">País</th>
+                <td data-ficha-pais></td>
+              </tr>
+              <tr>
+                <th scope="row">Estreno</th>
+                <td data-ficha-estreno></td>
+              </tr>
+              <tr>
+                <th scope="row">Estudio</th>
+                <td data-ficha-estudio></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <ul class="generos" data-generos aria-label="Géneros"></ul>
+        </div>
+
+        <div class="detalle__main">
+          <p class="eyebrow" data-eyebrow></p>
+          <h1 class="detalle__title" data-titulo></h1>
+          <p class="detalle__director">
+            Dirigida por <em data-director></em>
+          </p>
+
+          <div class="rating-big" aria-label="Valoración promedio">
+            <p class="rating-big__stars" data-rating-stars aria-hidden="true"></p>
+            <div class="rating-big__values">
+              <strong class="rating-big__score">
+                <span data-rating-score></span> <span>/ 5</span>
+              </strong>
+              <span class="rating-big__count" data-rating-count></span>
+            </div>
+          </div>
+
+          <section class="sinopsis">
+            <h2 class="detalle__heading">Sinopsis</h2>
+            <p class="sinopsis__text" data-sinopsis></p>
+          </section>
+
+          <div class="creditos">
+            <section class="creditos__col">
+              <h2 class="creditos__heading">Reparto principal</h2>
+              <ul class="creditos__list" data-reparto></ul>
+            </section>
+
+            <section class="creditos__col">
+              <h2 class="creditos__heading">Dirección</h2>
+              <p class="creditos__direccion" data-direccion></p>
+            </section>
+          </div>
+        </div>
+      </section>
+
+      <section class="ratings" aria-label="Valoraciones">
+        <p class="eyebrow">Valoraciones</p>
+        <h2 class="ratings__title">Califica este título</h2>
+
+        <form class="review-form" novalidate>
+          <div class="field field--rating">
+            <p class="field__label" id="ratingLabel">Tu calificación</p>
+            <div
+              class="star-picker"
+              role="radiogroup"
+              aria-labelledby="ratingLabel"
+            >
+              <button
+                class="star-btn"
+                type="button"
+                role="radio"
+                aria-checked="false"
+                data-value="1"
+                aria-label="1 estrella"
+              >
+                ★
+              </button>
+              <button
+                class="star-btn"
+                type="button"
+                role="radio"
+                aria-checked="false"
+                data-value="2"
+                aria-label="2 estrellas"
+              >
+                ★
+              </button>
+              <button
+                class="star-btn"
+                type="button"
+                role="radio"
+                aria-checked="false"
+                data-value="3"
+                aria-label="3 estrellas"
+              >
+                ★
+              </button>
+              <button
+                class="star-btn"
+                type="button"
+                role="radio"
+                aria-checked="false"
+                data-value="4"
+                aria-label="4 estrellas"
+              >
+                ★
+              </button>
+              <button
+                class="star-btn"
+                type="button"
+                role="radio"
+                aria-checked="false"
+                data-value="5"
+                aria-label="5 estrellas"
+              >
+                ★
+              </button>
+            </div>
+            <p class="field__error" data-error="stars" hidden>
+              Selecciona una calificación.
+            </p>
+          </div>
+
+          <p class="field">
+            <label class="field__label" for="reviewName">Nombre</label>
+            <input
+              class="field__input"
+              type="text"
+              id="reviewName"
+              name="reviewName"
+              required
+            />
+            <span class="field__error" data-error="name" hidden>
+              Ingresa tu nombre.
+            </span>
+          </p>
+
+          <p class="field field--comment">
+            <label class="field__label" for="reviewComment">Comentario</label>
+            <textarea
+              class="field__input"
+              id="reviewComment"
+              name="reviewComment"
+              rows="4"
+              placeholder="¿Qué te pareció?"
+            ></textarea>
+          </p>
+
+          <p class="review-form__actions">
+            <button class="btn-enviar" type="submit">Enviar valoración</button>
+          </p>
+        </form>
+
+        <h2 class="reviews__title">Valoraciones de la comunidad</h2>
+
+        <div class="reviews" data-reviews></div>
+      </section>
+    </main>
+
+    <footer>
+      <div>
+        <div>
+          <p>Lumen</p>
+          <p>Una muestra curada.</p>
+        </div>
+      </div>
+    </footer>
 
     <noscript>
       <p>Esta página necesita JavaScript para mostrar el detalle.</p>
@@ -18,7 +255,6 @@
     <script src="../shared/data.js"></script>
     <script src="../shared/helpers.js"></script>
     <script src="../shared/ui.js"></script>
-    <script src="../shared/layout.js"></script>
     <script src="detalles.js"></script>
   </body>
 </html>
