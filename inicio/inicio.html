@@ -3,10 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Detalles · Lumen</title>
+    <title>Lumen</title>
 
-    <link rel="stylesheet" href="css/base.css" />
-    <link rel="stylesheet" href="css/detalles.css" />
+    <link rel="stylesheet" href="../base.css" />
+    <link rel="stylesheet" href="inicio.css" />
   </head>
   <body>
     <nav>
@@ -27,19 +27,19 @@
         <div class="nav-menu">
           <ul>
             <li>
-              <a href="inicio.html">Inicio</a>
+              <a href="inicio.html" aria-current="page">Inicio</a>
             </li>
             <li>
-              <a href="listado.html?cat=series">Series</a>
+              <a href="../listado/listado.html?cat=series">Series</a>
             </li>
             <li>
-              <a href="listado.html?cat=peliculas">Películas</a>
+              <a href="../listado/listado.html?cat=peliculas">Películas</a>
             </li>
             <li>
-              <a href="listado.html?cat=documentales">Documentales</a>
+              <a href="../listado/listado.html?cat=documentales">Documentales</a>
             </li>
             <li>
-              <a href="contacto.html">Contacto</a>
+              <a href="../contacto/contacto.html">Contacto</a>
             </li>
           </ul>
         </div>
@@ -47,10 +47,6 @@
     </nav>
 
     <main id="app"></main>
-
-    <noscript>
-      <p>Esta página necesita JavaScript para mostrar el detalle.</p>
-    </noscript>
 
     <footer>
       <div>
@@ -61,8 +57,10 @@
       </div>
     </footer>
 
-    <script src="js/data.js"></script>
-    <script src="js/ui.js"></script>
-    <script src="js/detalles.js"></script>
+    <script src="../shared/data.js"></script>
+    <script src="../shared/helpers.js"></script>
+    <script src="../shared/ui.js"></script>
+    <script src="inicio.js"></script>
+    <script></script>
   </body>
 </html>

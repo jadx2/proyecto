@@ -1,11 +1,8 @@
-// Shared rendering helpers used across pages.
-
 const stars = (rating) => {
   const filled = Math.round(rating);
   return "★".repeat(filled) + "☆".repeat(5 - filled);
 };
 
-// META: series have runtime 0 and must omit the " · N min" segment.
 const filmMeta = (film) => {
   const base = `${film.year} · ${getFormattedType(film.type)}`;
   return film.runtime > 0 ? `${base} · ${film.runtime} min` : base;
@@ -13,7 +10,7 @@ const filmMeta = (film) => {
 
 const cardHTML = (film) => `
   <article class="film-card">
-    <a href="detalles.html?id=${film.id}">
+    <a href="../detalles/detalles.html?id=${film.id}">
       <figure class="poster">
         <img loading="lazy" src="${film.poster}" alt="Póster de ${film.title}" />
       </figure>
