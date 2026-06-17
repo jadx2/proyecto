@@ -105,10 +105,10 @@ const castHTML = (cast) => `
   </ul>
 `;
 
-// Form de valoración: solo markup. El comportamiento (star picker, envío,
-// persistencia) llega en M3.5 / M3.6.
+// Form de valoración: markup. El comportamiento (star picker, validación,
+// envío y persistencia) se cablea en wireRatingForm() tras montar.
 const ratingFormHTML = () => `
-  <form class="review-form">
+  <form class="review-form" novalidate>
     <div class="field field--rating">
       <p class="field__label" id="ratingLabel">Tu calificación</p>
       <div class="star-picker" role="radiogroup" aria-labelledby="ratingLabel">
@@ -129,17 +129,23 @@ const ratingFormHTML = () => `
           )
           .join("")}
       </div>
+      <p class="field__error" data-error="stars" hidden>
+        Selecciona una calificación.
+      </p>
     </div>
 
     <p class="field">
-      <label class="field__label" for="reviewName">Nombre (opcional)</label>
+      <label class="field__label" for="reviewName">Nombre</label>
       <input
         class="field__input"
         type="text"
         id="reviewName"
         name="reviewName"
-        placeholder="Anónimo"
+        required
       />
+      <span class="field__error" data-error="name" hidden>
+        Ingresa tu nombre.
+      </span>
     </p>
 
     <p class="field field--comment">
@@ -158,6 +164,39 @@ const ratingFormHTML = () => `
     </p>
   </form>
 `;
+
+const reviewCardHTML = (entry) => `
+  <article class="review-card">
+    <div class="review-card__head">
+      <p class="review-card__stars" aria-hidden="true">${stars(entry.stars)}</p>
+      <p class="review-card__author">${entry.name}</p>
+      <p class="review-card__date">${entry.date}</p>
+    </div>
+    ${entry.comment ? `<p class="review-card__text">${entry.comment}</p>` : ""}
+  </article>
+`;
+
+const reviewsHTML = (film) => {
+  const ratings = loadRatings(film.id);
+  if (ratings.length === 0) {
+    return `<p class="reviews__empty">Aún no hay valoraciones. ¡Sé el primero en opinar!</p>`;
+  }
+  return ratings.map(reviewCardHTML).join("");
+};
+
+const ratingBigHTML = (film) => {
+  const { avg, count } = avgRating(film);
+  const label = count === 1 ? "valoración" : "valoraciones";
+  return `
+    <div class="rating-big" aria-label="Valoración promedio">
+      <p class="rating-big__stars" aria-hidden="true">${stars(avg)}</p>
+      <div class="rating-big__values">
+        <strong class="rating-big__score">${avg} <span>/ 5</span></strong>
+        <span class="rating-big__count">${count} ${label}</span>
+      </div>
+    </div>
+  `;
+};
 
 const renderDetail = (film) => `
   ${backLinkHTML(film)}
@@ -197,13 +236,7 @@ const renderDetail = (film) => `
       <h1 class="detalle__title">${film.title}</h1>
       <p class="detalle__director">Dirigida por <em>${film.director}</em></p>
 
-      <div class="rating-big" aria-label="Valoración promedio">
-        <p class="rating-big__stars" aria-hidden="true">${stars(film.rating)}</p>
-        <div class="rating-big__values">
-          <strong class="rating-big__score">${film.rating} <span>/ 5</span></strong>
-          <span class="rating-big__count">Valoración del catálogo</span>
-        </div>
-      </div>
+      ${ratingBigHTML(film)}
 
       <section class="sinopsis">
         <h2 class="detalle__heading">Sinopsis</h2>
@@ -232,10 +265,93 @@ const renderDetail = (film) => `
 
     <h2 class="reviews__title">Valoraciones de la comunidad</h2>
 
-    <!-- Poblado en M3.5 (persistencia en localStorage). -->
-    <div class="reviews"></div>
+    <div class="reviews">${reviewsHTML(film)}</div>
   </section>
 `;
+
+// Cablea el star picker y el envío del form sobre el DOM recién montado.
+// Se vuelve a llamar tras cada re-render porque mount() reemplaza el markup.
+const wireRatingForm = (film) => {
+  const form = document.querySelector(".review-form");
+  if (!form) return;
+
+  const starButtons = Array.from(form.querySelectorAll(".star-btn"));
+  const starsError = form.querySelector('[data-error="stars"]');
+  const nameField = form.querySelector("#reviewName");
+  const nameError = form.querySelector('[data-error="name"]');
+  const commentField = form.querySelector("#reviewComment");
+
+  // Estrellas seleccionadas (0 = sin elegir). El picker no es un input nativo,
+  // así que se valida a mano contra esta variable.
+  let selectedStars = 0;
+
+  const paintStars = (value) => {
+    starButtons.forEach((button) => {
+      const buttonValue = Number(button.dataset.value);
+      button.setAttribute("aria-checked", buttonValue <= value ? "true" : "false");
+    });
+  };
+
+  starButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      selectedStars = Number(button.dataset.value);
+      paintStars(selectedStars);
+      starsError.hidden = true;
+    });
+  });
+
+  const showFieldError = (errorNode) => {
+    errorNode.hidden = false;
+    errorNode.parentElement.classList.add("field--error");
+  };
+
+  const clearFieldError = (errorNode) => {
+    errorNode.hidden = true;
+    errorNode.parentElement.classList.remove("field--error");
+  };
+
+  // Limpia el error de nombre en cuanto el usuario empieza a corregir.
+  nameField.addEventListener("input", () => clearFieldError(nameError));
+
+  form.addEventListener("submit", (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+
+    const hasStars = selectedStars > 0;
+    const nameIsValid = form.checkValidity();
+
+    if (!hasStars) showFieldError(starsError);
+    else starsError.hidden = true;
+
+    if (!nameIsValid) showFieldError(nameError);
+    else clearFieldError(nameError);
+
+    if (!hasStars || !nameIsValid) return;
+
+    const rating = {
+      stars: selectedStars,
+      name: nameField.value.trim(),
+      comment: commentField.value.trim(),
+      date: new Date().toLocaleDateString("es-ES", {
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+      }),
+    };
+
+    saveRating(film.id, rating);
+    alert("¡Gracias! Tu valoración se ha guardado.");
+
+    // Re-render para que el promedio y la nueva reseña aparezcan; el form
+    // recién montado se vuelve a cablear (selección y errores quedan limpios).
+    renderPage(film);
+  });
+};
+
+const renderPage = (film) => {
+  mount(renderDetail(film));
+  wireRatingForm(film);
+};
 
 const id = Number(getParam("id"));
 const film = Number.isNaN(id) ? null : Data.byId(id);
@@ -244,5 +360,5 @@ if (!film) {
   location.replace("inicio.html");
 } else {
   setActiveNav(catKeyForType(film.type));
-  mount(renderDetail(film));
+  renderPage(film);
 }

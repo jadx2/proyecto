@@ -310,6 +310,18 @@
   box-shadow: 0 0 0 1px var(--lumen-primary);
 }
 
+/* No hay token de error en base.css; el color de validación vive aquí. */
+.field__error {
+  font-weight: 500;
+  font-size: 11px;
+  letter-spacing: 1px;
+  color: #e05a5a;
+}
+
+.field--error .field__input {
+  border-color: #e05a5a;
+}
+
 textarea.field__input {
   min-height: 120px;
   resize: vertical;
@@ -387,6 +399,13 @@ textarea.field__input {
   display: flex;
   flex-direction: column;
   gap: 20px;
+}
+
+.reviews__empty {
+  font-family: var(--lumen-font-serif);
+  font-style: italic;
+  font-size: 16px;
+  color: var(--lumen-muted);
 }
 
 .review-card {
