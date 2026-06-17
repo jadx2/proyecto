@@ -41,17 +41,3 @@ const getParam = (name, fallback = undefined) => {
 const mount = (html) => {
   document.getElementById("app").innerHTML = html;
 };
-
-const setActiveNav = (key) => {
-  const links = document.querySelectorAll(".nav-menu a");
-  links.forEach((link) => link.removeAttribute("aria-current"));
-
-  const suffix = Categories[key]
-    ? `listado.html?cat=${key}`
-    : `${key}.html`;
-  links.forEach((link) => {
-    if (link.getAttribute("href").endsWith(suffix)) {
-      link.setAttribute("aria-current", "page");
-    }
-  });
-};

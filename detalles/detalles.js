@@ -366,6 +366,8 @@ const film = Number.isNaN(id) ? null : Data.byId(id);
 if (!film) {
   location.replace("../inicio/inicio.html");
 } else {
+  // layout.js ya inyectó el nav antes de este script: marcamos la categoría
+  // padre del título (una película resalta "Películas", etc.).
   setActiveNav(catKeyForType(film.type));
   renderPage(film);
 }

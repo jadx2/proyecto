@@ -1,5 +1,3 @@
-setActiveNav("inicio");
-
 const heroSlideHTML = (film, index, total) => `
   <section
     class="hero__slide${index === 0 ? " hero__slide--active" : ""}"

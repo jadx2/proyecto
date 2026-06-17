@@ -43,19 +43,29 @@ body > nav {
   top: 0;
   z-index: 100;
   border-bottom: 1px solid var(--lumen-border);
-
-  background: rgba(10, 10, 10, 0.85);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
 }
 
 body > nav > div {
+  /* Ancla para el menú móvil, que se posiciona absoluto debajo de esta barra */
+  position: relative;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
   gap: 16px;
   padding: 18px var(--lumen-pad-x);
+}
+
+body > nav > div::before {
+  /* El fondo difuminado vive en el pseudo, no en un ancestro de .nav-menu:
+     así el menú móvil (descendiente) puede muestrear la página y difuminar igual */
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: rgba(10, 10, 10, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }
 
 body > nav > div > a {
@@ -79,20 +89,81 @@ body > nav > div > a > span:last-child {
   opacity: 0.6;
 }
 
+/* Mobile-first: el botón hamburguesa muestra/oculta el menú bajo tablet */
 body > nav button {
-  display: none;
+  display: block;
+  /* Reset del chrome nativo del botón para que solo se vean las barras */
+  padding: 6px 4px;
+  border: none;
+  background: transparent;
+  color: var(--lumen-text);
+  cursor: pointer;
 }
 
+/* El span es la barra central; ::before y ::after son las barras superior e inferior */
+body > nav button span,
+body > nav button span::before,
+body > nav button span::after {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: var(--lumen-text);
+}
+
+body > nav button span {
+  position: relative;
+}
+
+body > nav button span::before,
+body > nav button span::after {
+  content: "";
+  position: absolute;
+  left: 0;
+}
+
+body > nav button span::before {
+  top: -7px;
+}
+
+body > nav button span::after {
+  top: 7px;
+}
+
+/*
+ * Móvil: el menú abierto es un overlay fuera del flujo. Así no empuja a <main>
+ * al abrirse en scroll-top, y al tener su propio fondo+blur se ve consistente
+ * sin depender del contenido que haya detrás de la barra.
+ */
+.nav-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  padding: 16px var(--lumen-pad-x);
+  border-bottom: 1px solid var(--lumen-border);
+  background: rgba(10, 10, 10, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.nav-menu--open {
+  display: block;
+}
+
+/* En móvil el menú abierto apila los enlaces en columna */
 .nav-menu ul {
   display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 28px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
   list-style: none;
 }
 
 .nav-menu a {
   position: relative;
+  /* El padding deja sitio a la barra de acento y mantiene alineados los inactivos */
+  padding-left: 12px;
   color: var(--lumen-text);
   font-size: 12px;
   letter-spacing: 3px;
@@ -104,21 +175,33 @@ body > nav button {
   color: var(--lumen-primary);
 }
 
+.nav-menu a[aria-current="page"] {
+  color: var(--lumen-primary);
+}
+
+/* Móvil: barra vertical dorada en el borde izquierdo del item activo */
 .nav-menu a[aria-current="page"]::after {
   content: "";
   position: absolute;
-  left: 25%;
-  bottom: -6px;
-  width: 50%;
-  height: 1px;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  height: auto;
   background: var(--lumen-primary);
-  transform-origin: center;
-  animation: nav-underline 0.3s ease;
+  transform-origin: left center;
+  animation: nav-accent 0.3s ease;
 }
 
 @keyframes nav-underline {
   from {
     transform: scaleX(0);
+  }
+}
+
+@keyframes nav-accent {
+  from {
+    transform: scaleY(0);
   }
 }
 
@@ -147,6 +230,54 @@ body > footer p:last-child {
   font-style: italic;
   font-size: 14px;
   color: var(--lumen-dim);
+}
+
+/* Desde tablet el menú es siempre visible y el botón sobra */
+@media (min-width: 768px) {
+  body > nav button {
+    display: none;
+  }
+
+  /* Desktop: el menú vuelve al flujo en fila; se anulan los ajustes del overlay móvil */
+  .nav-menu {
+    display: block;
+    position: static;
+    flex-basis: auto;
+    padding: 0;
+    border-bottom: none;
+    background: transparent;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
+  /* En desktop vuelve a fila horizontal, idéntico al diseño previo */
+  .nav-menu ul {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 28px;
+  }
+
+  /* Desktop resetea los ajustes móviles del item activo */
+  .nav-menu a {
+    padding-left: 0;
+  }
+
+  .nav-menu a[aria-current="page"] {
+    color: var(--lumen-text);
+  }
+
+  /* Desktop: subrayado centrado expansivo, idéntico al diseño previo */
+  .nav-menu a[aria-current="page"]::after {
+    left: 25%;
+    top: auto;
+    bottom: -6px;
+    width: 50%;
+    height: 1px;
+    background: var(--lumen-primary);
+    transform-origin: center;
+    animation: nav-underline 0.3s ease;
+  }
 }
 
 @media (min-width: 992px) {
