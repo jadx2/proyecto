@@ -2,6 +2,13 @@
 const catKeyForType = (type) =>
   Object.keys(Categories).find((key) => Categories[key].type === type);
 
+// El nav es estático: marcamos la categoría padre del título (una película
+// resalta "Películas", etc.) buscando su enlace por el archivo de destino.
+const markActiveNav = (catKey) => {
+  const link = document.querySelector(`.nav-menu a[href$="${catKey}.html"]`);
+  if (link) link.setAttribute("aria-current", "page");
+};
+
 const MONTHS_ES = [
   "enero",
   "febrero",
@@ -24,261 +31,122 @@ const formatReleaseDate = (iso) => {
   return `${Number(day)} ${MONTHS_ES[Number(month) - 1]} ${year}`;
 };
 
-// Destino del back link según la página de procedencia (document.referrer):
-// desde el inicio vuelve al inicio; desde una categoría vuelve a esa categoría.
-// Sin referrer útil (link directo, recarga, origen externo) cae a la categoría
-// del propio título.
-const backTarget = (film) => {
-  const referrer = document.referrer;
-  if (referrer) {
-    const url = new URL(referrer);
-    if (url.origin === location.origin) {
-      if (url.pathname.endsWith("inicio/inicio.html")) {
-        return { href: "../inicio/inicio.html", label: "Volver al inicio" };
-      }
-      if (url.pathname.endsWith("listado/listado.html")) {
-        const cat = new URLSearchParams(url.search).get("cat");
-        if (Categories[cat]) {
-          return {
-            href: `../listado/listado.html?cat=${cat}`,
-            label: `Volver a ${Categories[cat].label}`,
-          };
-        }
-      }
-    }
-  }
+const setText = (selector, value) => {
+  document.querySelector(selector).textContent = value;
+};
+
+// Llena una <ul> existente con un <li> por elemento (géneros, reparto).
+const fillList = (selector, items, itemClass) => {
+  const list = document.querySelector(selector);
+  items.forEach((value) => {
+    const li = document.createElement("li");
+    if (itemClass) li.className = itemClass;
+    li.textContent = value;
+    list.append(li);
+  });
+};
+
+// Vuelca los datos del título en los huecos estáticos de detalles.html.
+const fillDetail = (film) => {
+  document.title = `${film.title} · Lumen`;
 
   const key = catKeyForType(film.type);
-  return {
-    href: `../listado/listado.html?cat=${key}`,
-    label: `Volver a ${Categories[key].label}`,
-  };
+  const volver = document.querySelector("[data-volver]");
+  volver.href = `../listado/${key}.html`;
+  volver.textContent = `← Volver a ${Categories[key].label}`;
+
+  const trailer = document.querySelector("[data-trailer]");
+  trailer.src = film.trailer;
+  trailer.title = `Tráiler de ${film.title}`;
+
+  const poster = document.querySelector("[data-poster]");
+  poster.src = film.poster;
+  poster.alt = `Póster de ${film.title}`;
+
+  setText("[data-eyebrow]", getFormattedType(film.type));
+  setText("[data-titulo]", film.title);
+  setText("[data-director]", film.director);
+  setText("[data-sinopsis]", film.synopsis);
+  setText("[data-direccion]", film.director);
+
+  setText("[data-ficha-tipo]", getFormattedType(film.type));
+  setText("[data-ficha-anio]", film.year);
+  setText("[data-ficha-pais]", film.country);
+  setText("[data-ficha-estreno]", formatReleaseDate(film.releaseDate));
+  setText("[data-ficha-estudio]", film.studio);
+  // Las series tienen runtime 0: se oculta la fila de duración.
+  if (film.runtime > 0) {
+    setText("[data-ficha-duracion]", `${film.runtime} min`);
+  } else {
+    document.querySelector("[data-ficha-duracion-row]").hidden = true;
+  }
+
+  fillList("[data-generos]", film.genres, "generos__item");
+  fillList("[data-reparto]", film.cast);
 };
 
-const backLinkHTML = (film) => {
-  const { href, label } = backTarget(film);
-  return `
-    <p class="volver">
-      <a href="${href}">← ${label}</a>
-    </p>
-  `;
+// Promedio = rating base del título + estrellas guardadas en localStorage.
+const paintRating = (film) => {
+  const { avg, count } = avgRating(film);
+  setText("[data-rating-stars]", stars(avg));
+  setText("[data-rating-score]", avg);
+  setText("[data-rating-count]", `${count} ${count === 1 ? "valoración" : "valoraciones"}`);
 };
 
-const fichaRowHTML = (label, value) => `
-  <tr>
-    <th scope="row">${label}</th>
-    <td>${value}</td>
-  </tr>
-`;
+// Una reseña se arma con createElement/textContent (datos del usuario: nada
+// de innerHTML para no inyectar markup desde el nombre o el comentario).
+const reviewCard = (entry) => {
+  const article = document.createElement("article");
+  article.className = "review-card";
 
-const fichaHTML = (film) => {
-  const rows = [
-    fichaRowHTML("Tipo", getFormattedType(film.type)),
-    fichaRowHTML("Año", film.year),
-  ];
-  // Las series tienen runtime 0: se omite la fila de duración.
-  if (film.runtime > 0)
-    rows.push(fichaRowHTML("Duración", `${film.runtime} min`));
-  rows.push(
-    fichaRowHTML("País", film.country),
-    fichaRowHTML("Estreno", formatReleaseDate(film.releaseDate)),
-    fichaRowHTML("Estudio", film.studio),
-  );
+  const head = document.createElement("div");
+  head.className = "review-card__head";
 
-  return `
-    <table class="ficha">
-      <caption>
-        Ficha técnica
-      </caption>
-      <tbody>
-        ${rows.join("")}
-      </tbody>
-    </table>
-  `;
+  const starsLine = document.createElement("p");
+  starsLine.className = "review-card__stars";
+  starsLine.setAttribute("aria-hidden", "true");
+  starsLine.textContent = stars(entry.stars);
+
+  const author = document.createElement("p");
+  author.className = "review-card__author";
+  author.textContent = entry.name;
+
+  const date = document.createElement("p");
+  date.className = "review-card__date";
+  date.textContent = entry.date;
+
+  head.append(starsLine, author, date);
+  article.append(head);
+
+  if (entry.comment) {
+    const text = document.createElement("p");
+    text.className = "review-card__text";
+    text.textContent = entry.comment;
+    article.append(text);
+  }
+  return article;
 };
 
-const generosHTML = (genres) => `
-  <ul class="generos" aria-label="Géneros">
-    ${genres.map((genre) => `<li class="generos__item">${genre}</li>`).join("")}
-  </ul>
-`;
+const paintReviews = (film) => {
+  const container = document.querySelector("[data-reviews]");
+  container.textContent = "";
 
-const castHTML = (cast) => `
-  <ul class="creditos__list">
-    ${cast.map((person) => `<li>${person}</li>`).join("")}
-  </ul>
-`;
-
-// Form de valoración: markup. El comportamiento (star picker, validación,
-// envío y persistencia) se cablea en wireRatingForm() tras montar.
-const ratingFormHTML = () => `
-  <form class="review-form" novalidate>
-    <div class="field field--rating">
-      <p class="field__label" id="ratingLabel">Tu calificación</p>
-      <div class="star-picker" role="radiogroup" aria-labelledby="ratingLabel">
-        ${[1, 2, 3, 4, 5]
-          .map(
-            (value) => `
-        <button
-          class="star-btn"
-          type="button"
-          role="radio"
-          aria-checked="false"
-          data-value="${value}"
-          aria-label="${value} ${value === 1 ? "estrella" : "estrellas"}"
-        >
-          ★
-        </button>
-        `,
-          )
-          .join("")}
-      </div>
-      <p class="field__error" data-error="stars" hidden>
-        Selecciona una calificación.
-      </p>
-    </div>
-
-    <p class="field">
-      <label class="field__label" for="reviewName">Nombre</label>
-      <input
-        class="field__input"
-        type="text"
-        id="reviewName"
-        name="reviewName"
-        required
-      />
-      <span class="field__error" data-error="name" hidden>
-        Ingresa tu nombre.
-      </span>
-    </p>
-
-    <p class="field field--comment">
-      <label class="field__label" for="reviewComment">Comentario</label>
-      <textarea
-        class="field__input"
-        id="reviewComment"
-        name="reviewComment"
-        rows="4"
-        placeholder="¿Qué te pareció?"
-      ></textarea>
-    </p>
-
-    <p class="review-form__actions">
-      <button class="btn-enviar" type="submit">Enviar valoración</button>
-    </p>
-  </form>
-`;
-
-const reviewCardHTML = (entry) => `
-  <article class="review-card">
-    <div class="review-card__head">
-      <p class="review-card__stars" aria-hidden="true">${stars(entry.stars)}</p>
-      <p class="review-card__author">${entry.name}</p>
-      <p class="review-card__date">${entry.date}</p>
-    </div>
-    ${entry.comment ? `<p class="review-card__text">${entry.comment}</p>` : ""}
-  </article>
-`;
-
-const reviewsHTML = (film) => {
   const ratings = loadRatings(film.id);
   if (ratings.length === 0) {
-    return `<p class="reviews__empty">Aún no hay valoraciones. ¡Sé el primero en opinar!</p>`;
+    const empty = document.createElement("p");
+    empty.className = "reviews__empty";
+    empty.textContent = "Aún no hay valoraciones. ¡Sé el primero en opinar!";
+    container.append(empty);
+    return;
   }
-  return ratings.map(reviewCardHTML).join("");
+  ratings.forEach((entry) => container.append(reviewCard(entry)));
 };
 
-const ratingBigHTML = (film) => {
-  const { avg, count } = avgRating(film);
-  const label = count === 1 ? "valoración" : "valoraciones";
-  return `
-    <div class="rating-big" aria-label="Valoración promedio">
-      <p class="rating-big__stars" aria-hidden="true">${stars(avg)}</p>
-      <div class="rating-big__values">
-        <strong class="rating-big__score">${avg} <span>/ 5</span></strong>
-        <span class="rating-big__count">${count} ${label}</span>
-      </div>
-    </div>
-  `;
-};
-
-const renderDetail = (film) => `
-  ${backLinkHTML(film)}
-
-  <section class="trailer" aria-label="Tráiler">
-    <figure class="trailer__frame">
-      <iframe
-        src="${film.trailer}"
-        title="Tráiler de ${film.title}"
-        allow="
-          accelerometer;
-          autoplay;
-          clipboard-write;
-          encrypted-media;
-          gyroscope;
-          picture-in-picture;
-          web-share;
-        "
-        allowfullscreen
-      ></iframe>
-    </figure>
-  </section>
-
-  <section class="detalle" aria-label="Información del título">
-    <div class="detalle__aside">
-      <figure class="poster">
-        <img loading="lazy" src="${film.poster}" alt="Póster de ${film.title}" />
-      </figure>
-
-      ${fichaHTML(film)}
-
-      ${generosHTML(film.genres)}
-    </div>
-
-    <div class="detalle__main">
-      <p class="eyebrow">${getFormattedType(film.type)}</p>
-      <h1 class="detalle__title">${film.title}</h1>
-      <p class="detalle__director">Dirigida por <em>${film.director}</em></p>
-
-      ${ratingBigHTML(film)}
-
-      <section class="sinopsis">
-        <h2 class="detalle__heading">Sinopsis</h2>
-        <p class="sinopsis__text">${film.synopsis}</p>
-      </section>
-
-      <div class="creditos">
-        <section class="creditos__col">
-          <h2 class="creditos__heading">Reparto principal</h2>
-          ${castHTML(film.cast)}
-        </section>
-
-        <section class="creditos__col">
-          <h2 class="creditos__heading">Dirección</h2>
-          <p class="creditos__direccion">${film.director}</p>
-        </section>
-      </div>
-    </div>
-  </section>
-
-  <section class="ratings" aria-label="Valoraciones">
-    <p class="eyebrow">Valoraciones</p>
-    <h2 class="ratings__title">Califica este título</h2>
-
-    ${ratingFormHTML()}
-
-    <h2 class="reviews__title">Valoraciones de la comunidad</h2>
-
-    <div class="reviews">${reviewsHTML(film)}</div>
-  </section>
-`;
-
-// Cablea el star picker y el envío del form sobre el DOM recién montado.
-// Se vuelve a llamar tras cada re-render porque mount() reemplaza el markup.
+// Cablea el star picker y el envío del form (estático en el HTML). Tras
+// guardar, repinta promedio y reseñas y limpia el formulario; no hace falta
+// re-cablear porque el markup del form no se vuelve a crear.
 const wireRatingForm = (film) => {
   const form = document.querySelector(".review-form");
-  if (!form) return;
-
   const starButtons = Array.from(form.querySelectorAll(".star-btn"));
   const starsError = form.querySelector('[data-error="stars"]');
   const nameField = form.querySelector("#reviewName");
@@ -292,10 +160,7 @@ const wireRatingForm = (film) => {
   const paintStars = (value) => {
     starButtons.forEach((button) => {
       const buttonValue = Number(button.dataset.value);
-      button.setAttribute(
-        "aria-checked",
-        buttonValue <= value ? "true" : "false",
-      );
+      button.setAttribute("aria-checked", buttonValue <= value ? "true" : "false");
     });
   };
 
@@ -322,7 +187,6 @@ const wireRatingForm = (film) => {
 
   form.addEventListener("submit", (event) => {
     event.preventDefault();
-    event.stopPropagation();
 
     const hasStars = selectedStars > 0;
     const nameIsValid = form.checkValidity();
@@ -335,7 +199,7 @@ const wireRatingForm = (film) => {
 
     if (!hasStars || !nameIsValid) return;
 
-    const rating = {
+    saveRating(film.id, {
       stars: selectedStars,
       name: nameField.value.trim(),
       comment: commentField.value.trim(),
@@ -344,20 +208,16 @@ const wireRatingForm = (film) => {
         month: "long",
         year: "numeric",
       }),
-    };
+    });
 
-    saveRating(film.id, rating);
     alert("¡Gracias! Tu valoración se ha guardado.");
 
-    // Re-render para que el promedio y la nueva reseña aparezcan; el form
-    // recién montado se vuelve a cablear (selección y errores quedan limpios).
-    renderPage(film);
+    paintRating(film);
+    paintReviews(film);
+    form.reset();
+    selectedStars = 0;
+    paintStars(0);
   });
-};
-
-const renderPage = (film) => {
-  mount(renderDetail(film));
-  wireRatingForm(film);
 };
 
 const id = Number(getParam("id"));
@@ -366,8 +226,9 @@ const film = Number.isNaN(id) ? null : Data.byId(id);
 if (!film) {
   location.replace("../inicio/inicio.html");
 } else {
-  // layout.js ya inyectó el nav antes de este script: marcamos la categoría
-  // padre del título (una película resalta "Películas", etc.).
-  setActiveNav(catKeyForType(film.type));
-  renderPage(film);
+  markActiveNav(catKeyForType(film.type));
+  fillDetail(film);
+  paintRating(film);
+  paintReviews(film);
+  wireRatingForm(film);
 }

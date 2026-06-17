@@ -49,7 +49,7 @@ const stripHTML = (config) => `
       <p class="strip__eyebrow">MEJOR VALORADOS</p>
       <h2 class="strip__title">${config.title}</h2>
       <p class="strip__viewall">
-        <a href="../listado/listado.html?cat=${config.cat}">Ver todo →</a>
+        <a href="../listado/${config.cat}.html">Ver todo →</a>
       </p>
     </header>
     ${Data.topRated(config.type, 4).map(cardHTML).join("")}
