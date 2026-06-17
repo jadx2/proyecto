@@ -33,14 +33,14 @@ const backTarget = (film) => {
   if (referrer) {
     const url = new URL(referrer);
     if (url.origin === location.origin) {
-      if (url.pathname.endsWith("/inicio.html")) {
-        return { href: "inicio.html", label: "Volver al inicio" };
+      if (url.pathname.endsWith("inicio/inicio.html")) {
+        return { href: "../inicio/inicio.html", label: "Volver al inicio" };
       }
-      if (url.pathname.endsWith("/listado.html")) {
+      if (url.pathname.endsWith("listado/listado.html")) {
         const cat = new URLSearchParams(url.search).get("cat");
         if (Categories[cat]) {
           return {
-            href: `listado.html?cat=${cat}`,
+            href: `../listado/listado.html?cat=${cat}`,
             label: `Volver a ${Categories[cat].label}`,
           };
         }
@@ -50,7 +50,7 @@ const backTarget = (film) => {
 
   const key = catKeyForType(film.type);
   return {
-    href: `listado.html?cat=${key}`,
+    href: `../listado/listado.html?cat=${key}`,
     label: `Volver a ${Categories[key].label}`,
   };
 };
@@ -72,9 +72,13 @@ const fichaRowHTML = (label, value) => `
 `;
 
 const fichaHTML = (film) => {
-  const rows = [fichaRowHTML("Tipo", getFormattedType(film.type)), fichaRowHTML("Año", film.year)];
+  const rows = [
+    fichaRowHTML("Tipo", getFormattedType(film.type)),
+    fichaRowHTML("Año", film.year),
+  ];
   // Las series tienen runtime 0: se omite la fila de duración.
-  if (film.runtime > 0) rows.push(fichaRowHTML("Duración", `${film.runtime} min`));
+  if (film.runtime > 0)
+    rows.push(fichaRowHTML("Duración", `${film.runtime} min`));
   rows.push(
     fichaRowHTML("País", film.country),
     fichaRowHTML("Estreno", formatReleaseDate(film.releaseDate)),
@@ -288,7 +292,10 @@ const wireRatingForm = (film) => {
   const paintStars = (value) => {
     starButtons.forEach((button) => {
       const buttonValue = Number(button.dataset.value);
-      button.setAttribute("aria-checked", buttonValue <= value ? "true" : "false");
+      button.setAttribute(
+        "aria-checked",
+        buttonValue <= value ? "true" : "false",
+      );
     });
   };
 
@@ -357,7 +364,7 @@ const id = Number(getParam("id"));
 const film = Number.isNaN(id) ? null : Data.byId(id);
 
 if (!film) {
-  location.replace("inicio.html");
+  location.replace("../inicio/inicio.html");
 } else {
   setActiveNav(catKeyForType(film.type));
   renderPage(film);

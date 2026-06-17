@@ -14,7 +14,7 @@ const heroSlideHTML = (film, index, total) => `
       <p class="hero__meta">${filmMeta(film)}</p>
       <p class="hero__synopsis">${film.synopsis}</p>
       <p class="hero__cta">
-        <a href="detalles.html?id=${film.id}">Ver detalle →</a>
+        <a href="../detalles/detalles.html?id=${film.id}">Ver detalle →</a>
       </p>
     </div>
   </section>
@@ -51,7 +51,7 @@ const stripHTML = (config) => `
       <p class="strip__eyebrow">MEJOR VALORADOS</p>
       <h2 class="strip__title">${config.title}</h2>
       <p class="strip__viewall">
-        <a href="listado.html?cat=${config.cat}">Ver todo →</a>
+        <a href="../listado/listado.html?cat=${config.cat}">Ver todo →</a>
       </p>
     </header>
     ${Data.topRated(config.type, 4).map(cardHTML).join("")}
