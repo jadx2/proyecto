@@ -1,3 +1,19 @@
+<!--
+  ============================================================================
+  listado/series.html — CATÁLOGO de Series
+  ============================================================================
+  QUÉ ES: la cuadrícula con todas las series de la biblioteca, igual en
+  estructura que peliculas.html y documentales.html (solo cambian los títulos).
+
+  SU ROL: listar las series y enlazar al detalle de cada una vía
+  ../detalles/detalles.html?id=N (el "?id=N" identifica el título).
+
+  Las tarjetas están escritas a mano; el único script (paginacion.js, al final)
+  se encarga de la paginación. CSS: ../base.css + listado.css (compartido por
+  los tres catálogos). Para el detalle de la estructura de una tarjeta y del nav,
+  ver los comentarios de peliculas.html.
+  ============================================================================
+-->
 <!doctype html>
 <html lang="es">
   <head>
@@ -8,6 +24,7 @@
     <link rel="stylesheet" href="listado.css" />
   </head>
   <body>
+    <!-- <nav>: misma barra de siempre; aquí aria-current="page" va en "Series". -->
     <nav>
       <div>
         <a href="../inicio/inicio.html">
@@ -29,6 +46,7 @@
           <ul>
             <li><a href="../inicio/inicio.html">Inicio</a></li>
             <li>
+              <!-- Página actual: marcada con aria-current="page". -->
               <a href="../listado/series.html" aria-current="page">Series</a>
             </li>
             <li>
@@ -47,14 +65,22 @@
       <header class="page-header">
         <p class="eyebrow">COLECCIÓN</p>
         <h1>Series</h1>
+        <!-- data-rango y data-pagina: huecos que paginacion.js rellena con el
+             rango visible y la página actual. -->
         <div class="meta-row">
           <span data-rango></span>
           <span data-pagina></span>
         </div>
       </header>
 
+      <!-- Cuadrícula de tarjetas. data-grid: gancho para la paginación. -->
       <section class="film-grid" data-grid aria-label="Listado de Series">
+        <!-- ===== TARJETA REPRESENTATIVA (ver peliculas.html para el detalle de
+             cada parte: <article>, el enlace con ?id=N, <figure>/<img> con
+             src/alt/loading, el rating con aria-hidden, etc.). Aquí solo se anota
+             lo propio: nota: las series suelen no mostrar duración en .meta. ===== -->
         <article class="film-card">
+          <!-- "?id=16": las series empiezan en el id 16 en los datos. -->
           <a href="../detalles/detalles.html?id=16">
             <figure class="poster">
               <img src="https://image.tmdb.org/t/p/w400/pI4sEVVbswtyOL2uaFxZs2tPOnQ.jpg" alt="Off Campus" loading="lazy" />
@@ -66,6 +92,7 @@
                 <span aria-hidden="true">★★★★★</span>
                 <span>4.5</span>
               </p>
+              <!-- En series, .meta suele traer solo año y país (sin duración). -->
               <p class="film-card__meta">
                 <span>2026</span>
                 <span>United States of America</span>
@@ -73,6 +100,8 @@
             </div>
           </a>
         </article>
+        <!-- ===== Las demás tarjetas siguen la MISMA estructura; cambian id,
+             póster, título y datos. ===== -->
         <article class="film-card">
           <a href="../detalles/detalles.html?id=17">
             <figure class="poster">
@@ -328,9 +357,11 @@
         </article>
       </section>
 
+      <!-- Paginación: paginacion.js genera aquí los botones de página. -->
       <nav class="paginacion" data-paginacion aria-label="Paginación"></nav>
     </main>
 
+    <!-- Pie de página común. -->
     <footer>
       <div>
         <div>
@@ -340,6 +371,7 @@
       </div>
     </footer>
 
+    <!-- Único script (al final): arma la paginación del listado. -->
     <script src="paginacion.js"></script>
   </body>
 </html>

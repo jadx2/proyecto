@@ -1,12 +1,48 @@
+<!--
+  ============================================================================
+  index.html — PUERTA DE ENTRADA del sitio Lumen
+  ============================================================================
+  QUÉ ES: es la primera página que abre el navegador cuando alguien entra al
+  sitio (por convención, el archivo "index.html" es el que un servidor sirve
+  por defecto). Esta página NO muestra contenido: su único trabajo es REDIRIGIR
+  (reenviar) al usuario a la página de inicio real, que está en inicio/inicio.html.
+
+  POR QUÉ existe: así la dirección "raíz" del sitio funciona, pero mantenemos
+  cada página organizada en su propia carpeta (inicio/, listado/, contacto/...).
+
+  CÓMO se conecta: no carga CSS ni JS; es una página mínima de tránsito.
+  La redirección se hace con una etiqueta <meta> (ver más abajo), sin JavaScript.
+  ============================================================================
+-->
+<!-- <!doctype html>: le dice al navegador "esto es HTML5 (la versión moderna)". -->
 <!doctype html>
+<!-- <html lang="es">: la etiqueta raíz que envuelve TODO. lang="es" indica que
+     el idioma del contenido es español (ayuda a buscadores y lectores de pantalla). -->
 <html lang="es">
+  <!-- <head>: la "cabecera" del documento. Contiene información PARA el navegador
+       (configuración, título, estilos), NO contenido visible en la página. -->
   <head>
+    <!-- charset="UTF-8": define la codificación de caracteres. UTF-8 permite
+         mostrar tildes, ñ y símbolos correctamente (á, é, ñ, ★...). -->
     <meta charset="UTF-8" />
+    <!-- viewport: hace que la página se vea bien en móviles (diseño responsive).
+         width=device-width = usa el ancho real del dispositivo. -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- ESTA es la línea que hace la redirección automática.
+         http-equiv="refresh" recarga la página; content="0; url=..." significa
+         "espera 0 segundos y luego ve a inicio/inicio.html".
+         "inicio/inicio.html" es una RUTA RELATIVA: se busca a partir de la
+         ubicación de este archivo (entra a la carpeta inicio/ y abre inicio.html). -->
     <meta http-equiv="refresh" content="0; url=inicio/inicio.html" />
+    <!-- <title>: el texto que aparece en la pestaña del navegador. -->
     <title>Lumen</title>
   </head>
+  <!-- <body>: el "cuerpo", todo lo que SÍ se ve en la página. Aquí casi no hay
+       nada porque la redirección ocurre al instante. -->
   <body>
+    <!-- Texto de respaldo: solo se vería un instante (o si la redirección
+         fallara). El enlace <a href="..."> permite ir manualmente a inicio.
+         href = la dirección a la que apunta el enlace al hacer clic. -->
     <p>Redirigiendo a <a href="inicio/inicio.html">inicio</a>…</p>
   </body>
 </html>

@@ -1,56 +1,93 @@
+/* =====================================================================
+   inicio.css — ESTILOS ESPECÍFICOS DE LA PÁGINA DE INICIO (inicio.html)
+   ---------------------------------------------------------------------
+   Este archivo se carga DESPUÉS de base.css. base.css ya aporta el tema
+   oscuro, las variables --lumen-*, el reset universal y el "chrome" común
+   (nav, main, footer). Aquí solo añadimos lo PROPIO de la portada:
+     - el "hero": la gran imagen de cabecera con título y carrusel (slides).
+     - las "strips": franjas con tarjetas de películas destacadas (film-card).
+   Recordatorio: el contenido de inicio.html se rellena con JavaScript, pero
+   los estilos viven aquí.
+   ===================================================================== */
+
+/* #app es el <main> de inicio. El "#" selecciona por id (un id es único en la
+   página). Le quitamos el padding lateral que base.css pone a todos los <main>
+   para que el hero ocupe TODO el ancho ("full-bleed", de borde a borde). */
 #app {
   padding: 0;
 }
 
+/* .hero = la gran cabecera visual de la portada. position: relative la convierte
+   en "ancla" para los hijos posicionados de forma absoluta (los slides, flechas
+   y puntos). overflow: hidden recorta lo que se salga de sus límites. */
 .hero {
   position: relative;
   display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  min-height: 520px;
+  flex-direction: column;          /* apila el contenido en vertical */
+  justify-content: flex-end;       /* empuja el contenido hacia abajo del hero */
+  min-height: 520px;               /* altura mínima en móvil */
   overflow: hidden;
 }
 
+/* Cada .hero__slide es una "diapositiva" del carrusel. Todas se apilan en el
+   mismo sitio (inset: 0 = pegada a los 4 bordes del hero) y por defecto están
+   INVISIBLES (opacity: 0). transition hace que aparezcan/desaparezcan con un
+   fundido suave de 2 segundos. pointer-events: none evita que una slide oculta
+   reciba clics. */
 .hero__slide {
   position: absolute;
-  inset: 0;
+  inset: 0;                        /* cubre todo el hero */
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: center;             /* centra el contenido en móvil */
   justify-content: flex-end;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 2s cubic-bezier(0.4, 0, 0.2, 1);
+  opacity: 0;                      /* invisible hasta que se active */
+  pointer-events: none;            /* no captura clics mientras está oculta */
+  transition: opacity 2s cubic-bezier(0.4, 0, 0.2, 1);  /* fundido suave (la curva define el ritmo) */
 }
 
+/* Modificador --active: la slide actualmente visible. La convención del proyecto
+   usa el sufijo --modifier para estados. La hacemos visible y la traemos al
+   frente con z-index. */
 .hero__slide--active {
-  opacity: 1;
-  pointer-events: auto;
-  z-index: 1;
+  opacity: 1;                      /* visible */
+  pointer-events: auto;            /* vuelve a aceptar clics */
+  z-index: 1;                      /* por encima de las slides ocultas */
 }
 
+/* El bloque de texto del hero (título, sinopsis, botón). Flex en columna con
+   separación entre líneas; max-width limita el ancho del texto para que sea
+   legible. overflow-wrap: break-word parte palabras muy largas si hace falta. */
 .hero__content {
   display: flex;
   flex-direction: column;
   gap: 12px;
   max-width: 720px;
-  padding: 0 24px 64px;
-  text-align: center;
+  padding: 0 24px 64px;            /* sin relleno arriba, 24px a los lados, 64px abajo */
+  text-align: center;              /* centrado en móvil */
   overflow-wrap: break-word;
 }
 
+/* La imagen de fondo del slide. z-index: -1 la manda DETRÁS del texto. */
 .hero__media {
   position: absolute;
   inset: 0;
   z-index: -1;
 }
 
+/* La imagen llena toda la caja. object-fit: cover recorta la imagen para que
+   cubra el espacio sin deformarse (como background-size: cover). */
 .hero__media img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
+/* Velo oscuro sobre la imagen, hecho con ::after. Sin él, el texto blanco
+   sería ilegible sobre fotos claras. Son DOS degradados (gradients) superpuestos:
+   uno de abajo hacia arriba y otro de izquierda a derecha, que oscurecen los
+   bordes donde va el texto. color-mix mezcla el color de fondo con transparente
+   en distintos porcentajes para lograr el desvanecido. */
 .hero__media::after {
   content: "";
   position: absolute;
@@ -71,14 +108,18 @@
     );
 }
 
+/* Título grande del hero, en fuente serif. line-height: 0.92 junta las líneas
+   para un look más compacto y editorial. */
 .hero__title {
   font-family: var(--lumen-font-serif);
   font-weight: 300;
-  font-size: 48px;
+  font-size: 48px;                 /* tamaño en móvil; crece en pantallas grandes */
   line-height: 0.92;
   color: var(--lumen-text);
 }
 
+/* La sinopsis bajo el título, en cursiva. opacity: 0.85 la atenúa un poco para
+   que el título mande. */
 .hero__synopsis {
   max-width: 420px;
   font-family: var(--lumen-font-serif);
@@ -89,6 +130,8 @@
   opacity: 0.85;
 }
 
+/* Metadatos del hero (año, género, etc.): texto pequeño, en mayúsculas y muy
+   espaciado, en color apagado. */
 .hero__meta {
   font-weight: 500;
   font-size: 11px;
@@ -97,10 +140,13 @@
   color: var(--lumen-dim);
 }
 
+/* Contenedor del botón de llamada a la acción ("call to action"). Solo añade
+   espacio por encima. */
 .hero__cta {
   padding-top: 24px;
 }
 
+/* El enlace-botón del hero: texto en mayúsculas, espaciado y dorado. */
 .hero__cta a {
   font-weight: 500;
   font-size: 14px;
@@ -109,100 +155,123 @@
   color: var(--lumen-primary);
 }
 
+/* Flechas de navegación del carrusel (anterior/siguiente). Posicionadas a media
+   altura del hero. translateY(-50%) las sube la mitad de su propia altura para
+   centrarlas verticalmente de forma exacta. En móvil están ocultas (display: none)
+   y se muestran en pantallas mayores. */
 .hero__nav {
   position: absolute;
   top: 50%;
-  transform: translateY(-50%);
-  z-index: 2;
-  display: none;
+  transform: translateY(-50%);     /* centrado vertical fino */
+  z-index: 2;                      /* por encima de las slides */
+  display: none;                   /* ocultas en móvil */
   align-items: center;
   justify-content: center;
   width: 44px;
   height: 44px;
-  font-size: 0;
+  font-size: 0;                    /* esconde cualquier texto del botón (usamos el ::before) */
   color: var(--lumen-primary);
-  background: none;
+  background: none;                /* botón transparente */
   border: none;
   cursor: pointer;
   transition:
-    transform 0.2s ease,
+    transform 0.2s ease,           /* anima el agrandado al pasar el ratón */
     color 0.2s ease;
 }
 
+/* El símbolo de la flecha se dibuja con ::before (definimos el carácter en las
+   variantes --prev/--next de abajo). */
 .hero__nav::before {
   font-size: 22px;
   line-height: 1;
 }
 
 .hero__nav--prev {
-  left: 12px;
+  left: 12px;                      /* flecha "anterior" pegada a la izquierda */
 }
 
 .hero__nav--prev::before {
-  content: "‹";
+  content: "‹";                    /* carácter de flecha izquierda */
 }
 
 .hero__nav--next {
-  right: 12px;
+  right: 12px;                     /* flecha "siguiente" pegada a la derecha */
 }
 
 .hero__nav--next::before {
-  content: "›";
+  content: "›";                    /* carácter de flecha derecha */
 }
 
+/* Al pasar el ratón, la flecha crece un poco y cambia de color. */
 .hero__nav:hover {
-  transform: translateY(-50%) scale(1.25);
+  transform: translateY(-50%) scale(1.25);  /* mantiene el centrado y agranda al 125% */
   color: var(--lumen-text);
 }
 
+/* Contorno de foco por teclado para flechas y puntos, por accesibilidad. */
 .hero__nav:focus-visible,
 .hero__dot:focus-visible {
   outline: 2px solid var(--lumen-primary);
   outline-offset: 3px;
 }
 
+/* Contenedor de los "puntos" indicadores del carrusel, centrado abajo.
+   translateX(-50%) lo centra horizontalmente de forma exacta. */
 .hero__dots {
   position: absolute;
   bottom: 28px;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translateX(-50%);     /* centrado horizontal fino */
   z-index: 2;
   display: flex;
   gap: 8px;
   list-style: none;
 }
 
+/* Cada punto es en realidad una rayita. font-size: 0 oculta su texto interno. */
 .hero__dot {
   width: 32px;
   height: 2px;
   font-size: 0;
-  background: color-mix(in srgb, var(--lumen-primary) 35%, transparent);
+  background: color-mix(in srgb, var(--lumen-primary) 35%, transparent);  /* dorado al 35% (apagado) */
   border: none;
   cursor: pointer;
 }
 
+/* El punto de la slide activa se ve dorado pleno. */
 .hero__dot--active {
   background: var(--lumen-primary);
 }
 
+/* ---------------------------------------------------------------------
+   .strip = franja/sección de tarjetas destacadas bajo el hero.
+   Aquí entra CSS GRID: display: grid crea una rejilla de filas y columnas.
+   grid-template-columns: repeat(2, 1fr) = 2 columnas de igual ancho
+   (1fr = "una fracción" del espacio disponible). En móvil van 2 por fila.
+   --------------------------------------------------------------------- */
 .strip {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  column-gap: 20px;
-  row-gap: 40px;
+  grid-template-columns: repeat(2, 1fr);  /* 2 columnas iguales */
+  column-gap: 20px;                        /* separación entre columnas */
+  row-gap: 40px;                           /* separación entre filas */
   padding: 56px var(--lumen-pad-x);
 }
 
+/* La cabecera de la franja ocupa TODA la fila. grid-column: 1 / -1 = "desde la
+   primera línea de columna hasta la última", es decir, de lado a lado de la
+   rejilla, sin importar cuántas columnas haya. */
 .strip__header {
   grid-column: 1 / -1;
   display: grid;
-  grid-template-columns: 1fr auto;
-  align-items: end;
+  grid-template-columns: 1fr auto;  /* dos columnas: título flexible + "ver todo" justo */
+  align-items: end;                 /* alinea por la base */
   row-gap: 8px;
   padding-bottom: 20px;
   border-bottom: 1px solid var(--lumen-border);
 }
 
+/* "Eyebrow" = la etiqueta pequeña encima del título (ej. "DESTACADOS").
+   Se coloca en la columna 1, fila 1 de la rejilla de la cabecera. */
 .strip__eyebrow {
   grid-column: 1;
   grid-row: 1;
@@ -213,6 +282,7 @@
   color: var(--lumen-primary);
 }
 
+/* Título de la franja (columna 1, fila 2). */
 .strip__title {
   grid-column: 1;
   grid-row: 2;
@@ -223,11 +293,12 @@
   color: var(--lumen-text);
 }
 
+/* Enlace "Ver todo": columna 2, fila 2, alineado a la derecha y abajo. */
 .strip__viewall {
   grid-column: 2;
   grid-row: 2;
-  justify-self: end;
-  align-self: end;
+  justify-self: end;                /* se pega a la derecha de su celda */
+  align-self: end;                  /* se pega a la base de su celda */
 }
 
 .strip__viewall a {
@@ -238,6 +309,9 @@
   color: var(--lumen-primary);
 }
 
+/* El enlace que envuelve cada tarjeta de película. Lo hacemos flex en columna
+   para apilar póster, título, etc. color: inherit hace que herede el color del
+   texto en vez del dorado de los enlaces. */
 .film-card a {
   display: flex;
   flex-direction: column;
@@ -246,22 +320,29 @@
   color: inherit;
 }
 
+/* .poster = la caja de la imagen (cartel) de la película. aspect-ratio fija la
+   proporción 299:420 (alto/ancho de un póster) para que todas tengan la misma
+   forma aunque la imagen real varíe. overflow: hidden recorta el zoom del hover. */
 .poster {
   margin: 0 0 8px;
   aspect-ratio: 299 / 420;
   overflow: hidden;
 }
 
+/* La imagen del póster llena su caja y, al pasar el ratón (ver media query de
+   hover), hará un zoom suave gracias a estas transiciones. filter: grayscale(20%)
+   la desatura un poco para un look uniforme. */
 .poster img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  filter: grayscale(20%);
+  filter: grayscale(20%);          /* 20% en blanco y negro */
   transition:
-    transform 0.4s ease,
-    filter 0.4s ease;
+    transform 0.4s ease,           /* anima el zoom */
+    filter 0.4s ease;              /* anima la vuelta al color */
 }
 
+/* Título de la tarjeta, en serif. */
 .film-card__title {
   font-family: var(--lumen-font-serif);
   font-weight: 500;
@@ -271,6 +352,7 @@
   overflow-wrap: break-word;
 }
 
+/* Director, en cursiva y color secundario. */
 .film-card__director {
   font-family: var(--lumen-font-serif);
   font-style: italic;
@@ -278,6 +360,7 @@
   color: var(--lumen-muted);
 }
 
+/* Fila de valoración (estrellas + nota). Flex en fila con separación. */
 .film-card__rating {
   display: flex;
   align-items: center;
@@ -287,11 +370,13 @@
   color: var(--lumen-muted);
 }
 
+/* El número/estrellas de la valoración en dorado. */
 .film-card__rating span {
   letter-spacing: 1px;
   color: var(--lumen-primary);
 }
 
+/* Metadatos de la tarjeta (año, duración): pequeños, en mayúsculas, apagados. */
 .film-card__meta {
   font-weight: 500;
   font-size: 10px;
@@ -300,16 +385,22 @@
   color: var(--lumen-dim);
 }
 
+/* EFECTO HOVER SOLO EN DISPOSITIVOS CON RATÓN. Esta media query comprueba que
+   el dispositivo PUEDA hacer hover y tenga puntero fino (un ratón), para no
+   activar el efecto en pantallas táctiles donde "hover" no tiene sentido.
+   Al pasar el ratón por la tarjeta, su póster hace zoom y recupera el color. */
 @media (hover: hover) and (pointer: fine) {
   .film-card:hover .poster img {
-    transform: scale(1.04);
-    filter: grayscale(0%);
+    transform: scale(1.04);        /* agranda la imagen un 4% */
+    filter: grayscale(0%);         /* color pleno */
   }
 }
 
+/* A partir de tablet (≥768px): más columnas, hero más alto y texto alineado a
+   la izquierda. */
 @media (min-width: 768px) {
   .strip {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, 1fr);  /* 3 tarjetas por fila */
     column-gap: 28px;
   }
 
@@ -317,6 +408,7 @@
     min-height: 620px;
   }
 
+  /* El contenido del slide se alinea a la izquierda en pantallas mayores. */
   .hero__slide {
     align-items: flex-start;
   }
@@ -330,14 +422,16 @@
     font-size: 64px;
   }
 
+  /* Ahora sí mostramos las flechas del carrusel (había display:none en móvil). */
   .hero__nav {
     display: inline-flex;
   }
 }
 
+/* A partir de escritorio (≥992px): aún más columnas y un hero más grande. */
 @media (min-width: 992px) {
   .strip {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(4, 1fr);  /* 4 tarjetas por fila */
   }
 
   .hero {

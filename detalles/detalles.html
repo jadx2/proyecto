@@ -1,3 +1,28 @@
+<!--
+  ============================================================================
+  detalles/detalles.html — PÁGINA DE DETALLE de un título
+  ============================================================================
+  QUÉ ES: la ficha completa de UNA película/serie/documental (póster, tráiler,
+  sinopsis, reparto, ficha técnica y valoraciones).
+
+  ¿QUÉ título muestra? Depende de la dirección con la que se llega. Las tarjetas
+  del catálogo enlazan así: detalles.html?id=1, detalles.html?id=2, etc.
+  Eso "?id=NÚMERO" es un PARÁMETRO en la URL (un dato que viaja en la dirección).
+  detalles.js lee ese id, busca el título con Data.byId(id) y rellena la ficha.
+
+  PLANTILLA VACÍA: casi todos los huecos de esta página están en blanco y se
+  marcan con atributos data-* (data-poster, data-titulo, data-sinopsis...).
+  Esos atributos son "etiquetas" personalizadas que JavaScript usa para ENCONTRAR
+  cada hueco y meterle el dato correcto. No hacen nada por sí solos; son ganchos
+  para el JS (no se confunden con las clases, que son ganchos para el CSS).
+
+  ORDEN DE SCRIPTS (al final, obligatorio): data.js → helpers.js → ui.js →
+  detalles.js. Cada uno usa lo definido por el anterior (detalles.js necesita
+  que "Data" y las funciones de ui.js ya existan).
+
+  CSS: ../base.css (común) + detalles.css (propio de esta ficha).
+  ============================================================================
+-->
 <!doctype html>
 <html lang="es">
   <head>
@@ -5,10 +30,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Detalles · Lumen</title>
 
+    <!-- Estilos compartidos + estilos propios de la ficha de detalle. -->
     <link rel="stylesheet" href="../base.css" />
     <link rel="stylesheet" href="detalles.css" />
   </head>
   <body>
+    <!-- <nav>: misma barra de navegación de siempre. Aquí ningún enlace lleva
+         aria-current="page" porque "Detalles" no es una sección fija del menú
+         (se llega a ella desde una tarjeta del catálogo). -->
     <nav>
       <div>
         <a href="../inicio/inicio.html">
@@ -38,13 +67,26 @@
       </div>
     </nav>
 
+    <!-- <main>: contenido principal = la ficha completa del título. -->
     <main>
+      <!-- Enlace "Volver". data-volver: gancho para detalles.js, que define a
+           dónde regresar. href="#" es un destino provisional ("#" = aquí mismo);
+           el JS controla la acción real. -->
       <p class="volver">
         <a data-volver href="#">← Volver</a>
       </p>
 
+      <!-- SECCIÓN TRÁILER. aria-label="Tráiler" da nombre a esta sección para
+           lectores de pantalla (la sección no tiene un título visible). -->
       <section class="trailer" aria-label="Tráiler">
+        <!-- <figure>: contenedor semántico para un contenido multimedia. -->
         <figure class="trailer__frame">
+          <!-- <iframe>: una "ventana" que incrusta otra página (aquí, el video
+               de YouTube). data-trailer: gancho; detalles.js le pone el src real
+               del video del título. src="" empieza vacío.
+               allow=...: permisos que el video puede usar (autoplay, pantalla
+               completa, etc.). allowfullscreen: habilita el botón de pantalla
+               completa. title: nombre accesible del marco. -->
           <iframe
             data-trailer
             src=""
@@ -63,17 +105,35 @@
         </figure>
       </section>
 
+      <!-- SECCIÓN INFORMACIÓN DEL TÍTULO. Se divide en dos columnas:
+           .detalle__aside (póster + ficha técnica) y .detalle__main (texto). -->
       <section class="detalle" aria-label="Información del título">
+        <!-- Columna lateral: póster, tabla de datos y géneros. -->
         <div class="detalle__aside">
           <figure class="poster">
+            <!-- <img>: la imagen del póster. data-poster: gancho; detalles.js le
+                 pone el src (la dirección de la imagen) y el alt (texto
+                 alternativo descriptivo) reales. Empiezan vacíos.
+                 loading="lazy" = carga la imagen solo cuando esté por verse
+                 (mejora el rendimiento). -->
             <img data-poster loading="lazy" src="" alt="" />
           </figure>
 
+          <!-- <table>: TABLA con la ficha técnica (pares dato-valor). Se usa
+               tabla porque son datos tabulares (atributo → valor). -->
           <table class="ficha">
+            <!-- <caption>: el título/leyenda de la tabla. -->
             <caption>
               Ficha técnica
             </caption>
             <tbody>
+              <!-- PATRÓN DE FILA (se repite para cada dato):
+                   <tr> = una fila. <th scope="row"> = celda de encabezado de esa
+                   fila (el nombre del dato, ej. "Tipo"); scope="row" indica que
+                   ese encabezado describe SU fila (accesibilidad).
+                   <td data-ficha-tipo> = celda vacía donde detalles.js escribe el
+                   valor. Cada data-ficha-* identifica un dato distinto.
+                   Las demás filas siguen exactamente esta misma estructura. -->
               <tr>
                 <th scope="row">Tipo</th>
                 <td data-ficha-tipo></td>
@@ -82,6 +142,8 @@
                 <th scope="row">Año</th>
                 <td data-ficha-anio></td>
               </tr>
+              <!-- Esta fila lleva data-ficha-duracion-row en el <tr>: así el JS
+                   puede OCULTAR la fila entera si el título no tiene duración. -->
               <tr data-ficha-duracion-row>
                 <th scope="row">Duración</th>
                 <td data-ficha-duracion></td>
@@ -101,57 +163,97 @@
             </tbody>
           </table>
 
+          <!-- Lista de géneros, vacía. data-generos: detalles.js le agrega un
+               <li> por cada género del título. -->
           <ul class="generos" data-generos aria-label="Géneros"></ul>
         </div>
 
+        <!-- Columna principal: textos del título. -->
         <div class="detalle__main">
+          <!-- "eyebrow" = pequeño texto encima del título (ej. el tipo). Vacío;
+               lo llena detalles.js vía data-eyebrow. -->
           <p class="eyebrow" data-eyebrow></p>
+          <!-- <h1>: el título principal de la página (el más importante; debe
+               haber uno solo). data-titulo: lo rellena el JS con el nombre. -->
           <h1 class="detalle__title" data-titulo></h1>
           <p class="detalle__director">
+            <!-- Texto fijo + <em data-director>: el nombre del director lo pone
+                 el JS dentro del <em> (cursiva). -->
             Dirigida por <em data-director></em>
           </p>
 
+          <!-- Bloque de valoración promedio. -->
           <div class="rating-big" aria-label="Valoración promedio">
+            <!-- Estrellas (★). aria-hidden="true": lo OCULTA a lectores de
+                 pantalla (es decorativo; el número de al lado ya da la info).
+                 data-rating-stars: el JS pinta las estrellas según la nota. -->
             <p class="rating-big__stars" data-rating-stars aria-hidden="true"></p>
             <div class="rating-big__values">
               <strong class="rating-big__score">
+                <!-- data-rating-score: el JS escribe el número (ej. 4.4); el
+                     "/ 5" es texto fijo. -->
                 <span data-rating-score></span> <span>/ 5</span>
               </strong>
+              <!-- data-rating-count: el JS escribe cuántas valoraciones hay. -->
               <span class="rating-big__count" data-rating-count></span>
             </div>
           </div>
 
+          <!-- Sinopsis. data-sinopsis: el JS mete el texto del argumento. -->
           <section class="sinopsis">
             <h2 class="detalle__heading">Sinopsis</h2>
             <p class="sinopsis__text" data-sinopsis></p>
           </section>
 
+          <!-- Créditos: reparto y dirección. -->
           <div class="creditos">
             <section class="creditos__col">
               <h2 class="creditos__heading">Reparto principal</h2>
+              <!-- data-reparto: el JS agrega un <li> por cada actor/actriz. -->
               <ul class="creditos__list" data-reparto></ul>
             </section>
 
             <section class="creditos__col">
               <h2 class="creditos__heading">Dirección</h2>
+              <!-- data-direccion: el JS escribe aquí el nombre del director. -->
               <p class="creditos__direccion" data-direccion></p>
             </section>
           </div>
         </div>
       </section>
 
+      <!-- SECCIÓN VALORACIONES: formulario para que el usuario califique con
+           estrellas + el listado de valoraciones de la comunidad. -->
       <section class="ratings" aria-label="Valoraciones">
         <p class="eyebrow">Valoraciones</p>
         <h2 class="ratings__title">Califica este título</h2>
 
+        <!-- Formulario de reseña. novalidate: lo valida nuestro JS, no el navegador. -->
         <form class="review-form" novalidate>
           <div class="field field--rating">
+            <!-- id="ratingLabel": sirve para que el grupo de estrellas de abajo
+                 lo referencie como su "etiqueta" (ver aria-labelledby). -->
             <p class="field__label" id="ratingLabel">Tu calificación</p>
+            <!-- SELECTOR DE ESTRELLAS. role="radiogroup": le dice a la tecnología
+                 de asistencia que estos botones funcionan como un grupo donde se
+                 elige UNA sola opción (como botones de radio).
+                 aria-labelledby="ratingLabel": toma como nombre el texto del <p>
+                 de arriba (gracias a su id). -->
             <div
               class="star-picker"
               role="radiogroup"
               aria-labelledby="ratingLabel"
             >
+              <!-- PATRÓN DE BOTÓN-ESTRELLA (se repite 5 veces, de 1 a 5):
+                   type="button" = botón normal que NO envía el formulario (solo
+                   selecciona la nota). role="radio" + aria-checked="false" = se
+                   comporta como opción de radio, de momento sin marcar.
+                   data-value="1" = la nota que representa (gancho para el JS).
+                   aria-label = nombre accesible ("1 estrella"), porque el
+                   contenido visible es solo el símbolo ★. detalles.js escucha los
+                   clics, marca la elegida y actualiza aria-checked.
+                   Las estrellas 3, 4 y 5 son idénticas, solo cambia data-value
+                   y el aria-label. -->
               <button
                 class="star-btn"
                 type="button"
@@ -203,11 +305,15 @@
                 ★
               </button>
             </div>
+            <!-- Mensaje de error de las estrellas. hidden = oculto; el JS lo
+                 muestra si se intenta enviar sin elegir nota.
+                 data-error="stars": lo asocia con este campo concreto. -->
             <p class="field__error" data-error="stars" hidden>
               Selecciona una calificación.
             </p>
           </div>
 
+          <!-- Campo Nombre. <label for="reviewName"> conecta con el input por id. -->
           <p class="field">
             <label class="field__label" for="reviewName">Nombre</label>
             <input
@@ -217,11 +323,14 @@
               name="reviewName"
               required
             />
+            <!-- Error de nombre (oculto hasta que el JS lo necesite mostrar). -->
             <span class="field__error" data-error="name" hidden>
               Ingresa tu nombre.
             </span>
           </p>
 
+          <!-- Campo Comentario (opcional: no lleva required).
+               placeholder = texto guía dentro de la caja, que desaparece al escribir. -->
           <p class="field field--comment">
             <label class="field__label" for="reviewComment">Comentario</label>
             <textarea
@@ -233,6 +342,7 @@
             ></textarea>
           </p>
 
+          <!-- Botón de envío. type="submit" dispara el envío (validado por el JS). -->
           <p class="review-form__actions">
             <button class="btn-enviar" type="submit">Enviar valoración</button>
           </p>
@@ -240,10 +350,13 @@
 
         <h2 class="reviews__title">Valoraciones de la comunidad</h2>
 
+        <!-- Contenedor vacío. data-reviews: detalles.js inserta aquí cada
+             valoración (las existentes y las que el usuario vaya enviando). -->
         <div class="reviews" data-reviews></div>
       </section>
     </main>
 
+    <!-- Pie de página común. -->
     <footer>
       <div>
         <div>
@@ -253,10 +366,14 @@
       </div>
     </footer>
 
+    <!-- <noscript>: SOLO se muestra si el navegador tiene JavaScript DESACTIVADO.
+         Como esta ficha se arma con JS, avisamos que sin JS no funcionará. -->
     <noscript>
       <p>Esta página necesita JavaScript para mostrar el detalle.</p>
     </noscript>
 
+    <!-- Scripts al final, en orden obligatorio: data → helpers → ui → detalles.
+         detalles.js es el último porque usa "Data" y las funciones de ui.js. -->
     <script src="../shared/data.js"></script>
     <script src="../shared/helpers.js"></script>
     <script src="../shared/ui.js"></script>

@@ -1,27 +1,56 @@
+/*
+ * data.js — LA "BASE DE DATOS" DEL SITIO (la única fuente de la verdad)
+ * ---------------------------------------------------------------------
+ * QUÉ HACE: define el catálogo completo (películas, series y documentales)
+ * y un objeto ayudante llamado `Data` con funciones para buscar/filtrar ese
+ * catálogo. Este proyecto NO tiene servidor ni base de datos real: todos los
+ * datos viven aquí, escritos a mano en JavaScript.
+ *
+ * CUÁNDO SE CARGA: es el PRIMER script de cada página (orden obligatorio:
+ * data.js → ui.js → helpers.js → script de la página). Va primero porque
+ * los demás archivos usan lo que aquí se define; si se cargara después,
+ * `CONTENT` y `Data` no existirían todavía y la página fallaría.
+ *
+ * QUÉ DEFINE (globales): `CONTENT` (el arreglo de datos) y `Data` (el ayudante).
+ * Al declararlas con `const` en el nivel superior del archivo, quedan
+ * disponibles para todos los scripts que se carguen después.
+ *
+ * FLUJO DE DATOS: data.js (datos) → ui.js/helpers.js (dan forma a esos datos)
+ * → script de cada página (los pinta en el HTML que ve el usuario).
+ *
+ * OJO: esto es JavaScript, NO un archivo JSON. Las claves van SIN comillas
+ * (id, type, title...). En JSON serían obligatorias las comillas dobles.
+ */
+
+// `const` = constante: una "caja" cuyo nombre no se puede reasignar.
+// `CONTENT` es un arreglo (lista) `[ ... ]` de objetos `{ ... }`; cada
+// objeto es una ficha (una película, serie o documental).
 const CONTENT = [
+  // --- REGISTRO DE EJEMPLO, explicado campo por campo ---
+  // Los demás registros siguen EXACTAMENTE esta misma estructura.
   {
-    id: 1,
-    type: "movie",
-    title: "Intercambiados",
-    year: 2026,
-    director: "Nathan Greno",
-    runtime: 102,
-    country: "United States of America",
-    synopsis:
+    id: 1, // identificador único; la URL detalles.html?id=1 lo usa para encontrar esta ficha
+    type: "movie", // tipo en inglés: "movie" | "series" | "documentary" (filtra el listado)
+    title: "Intercambiados", // título visible en tarjetas, hero y página de detalle
+    year: 2026, // año de estreno; se muestra en la "ficha técnica" y bajo el título
+    director: "Nathan Greno", // director; aparece en la tarjeta y en el detalle
+    runtime: 102, // duración en minutos; si es 0 se oculta (las series no la muestran)
+    country: "United States of America", // país de origen; se muestra en la ficha técnica
+    synopsis: // resumen de la trama; se muestra en el hero y en el detalle
       "Una pequeña criatura del bosque y un ave majestuosa intercambian cuerpos. Ahora, deben aliarse para sobrevivir a la aventura más salvaje de sus vidas.",
-    poster: "https://image.tmdb.org/t/p/w400/m0psah5Ttchm7Jlp74NZ5xDe6C8.jpg",
-    trailer: "https://www.youtube.com/embed/aqz-KE-bpKQ",
-    cast: [
+    poster: "https://image.tmdb.org/t/p/w400/m0psah5Ttchm7Jlp74NZ5xDe6C8.jpg", // URL de la imagen del póster
+    trailer: "https://www.youtube.com/embed/aqz-KE-bpKQ", // URL del tráiler embebido (YouTube) en el detalle
+    cast: [ // reparto: lista de actores; se pinta como lista en el detalle
       "Michael B. Jordan",
       "Juno Temple",
       "Tracy Morgan",
       "Cedric the Entertainer",
       "Justina Machado",
     ],
-    releaseDate: "2026-05-01",
-    studio: "Skydance Animation",
-    genres: ["Aventura", "Animación", "Familia", "Fantasía"],
-    rating: 4.4,
+    releaseDate: "2026-05-01", // fecha de estreno en formato "AAAA-MM-DD"; detalles.js la convierte a texto en español
+    studio: "Skydance Animation", // estudio productor; aparece en la ficha técnica
+    genres: ["Aventura", "Animación", "Familia", "Fantasía"], // géneros; se pintan como etiquetas en el detalle
+    rating: 4.4, // valoración base (0 a 5); ordena los "mejor valorados" y promedia con las del usuario
   },
   {
     id: 2,
@@ -925,33 +954,57 @@ const CONTENT = [
   },
 ];
 
+// `Data` = objeto ayudante. Agrupa funciones (llamadas "métodos") para
+// consultar `CONTENT` sin repetir código. Cualquier script posterior llama,
+// por ejemplo, `Data.byId(5)` para obtener una ficha. Es la ÚNICA forma en
+// que las páginas acceden a los datos.
 const Data = {
+  // all(): devuelve TODO el catálogo (el arreglo completo `CONTENT`).
   all() {
     return CONTENT;
   },
+  // byId(id): busca y devuelve la ficha cuyo `id` coincide.
+  // .find() recorre el arreglo y devuelve el PRIMER elemento que cumpla
+  // la condición; `f` es cada ficha y `f.id === id` la compara.
+  // `?? null`: si .find() no encuentra nada (devuelve undefined), entrega
+  // `null` en su lugar (un "no existe" más explícito). Lo usa detalles.js.
   byId(id) {
     return CONTENT.find((f) => f.id === id) ?? null;
   },
+  // byType(type): devuelve TODAS las fichas de un tipo ("movie", "series"...).
+  // .filter() crea un arreglo NUEVO solo con los elementos que cumplen la
+  // condición. Lo usa el listado para mostrar una sola categoría.
   byType(type) {
     return CONTENT.filter((f) => f.type === type);
   },
+  // featured(type, n): primeras `n` fichas de un tipo (n=4 por defecto).
+  // .slice(0, n) corta el arreglo desde la posición 0 hasta la `n`.
   featured(type, n = 4) {
     return Data.byType(type).slice(0, n);
   },
+  // topRated(type, n): las `n` fichas mejor valoradas. Si se pasa `type`,
+  // filtra por ese tipo; si no, usa todo el catálogo. Lo usa la home.
   topRated(type, n = 4) {
     const items = type ? Data.byType(type) : CONTENT;
+    // [...items] = copia del arreglo (con el "spread" ...) para NO alterar el
+    // original al ordenar. .sort() con (b.rating - a.rating) ordena de mayor
+    // a menor rating; luego .slice corta las primeras `n`.
     return [...items].sort((a, b) => b.rating - a.rating).slice(0, n);
   },
+  // paginate(items, page, perPage): divide una lista en "páginas" de
+  // `perPage` elementos. Devuelve un objeto con la página pedida y sus datos.
+  // (La paginación visual real la hace listado/paginacion.js; este método
+  // queda disponible como utilidad.)
   paginate(items, page = 1, perPage = 8) {
-    const total = items.length;
-    const totalPages = Math.ceil(total / perPage);
-    const start = (page - 1) * perPage;
+    const total = items.length; // cuántos elementos hay en total
+    const totalPages = Math.ceil(total / perPage); // nº de páginas (redondea hacia arriba)
+    const start = (page - 1) * perPage; // índice donde empieza la página pedida
     return {
-      items: items.slice(start, start + perPage),
-      page,
-      perPage,
-      total,
-      totalPages,
+      items: items.slice(start, start + perPage), // solo los elementos de esa página
+      page, // (atajo de page: page) la página devuelta
+      perPage, // elementos por página
+      total, // total de elementos
+      totalPages, // total de páginas
     };
   },
 };

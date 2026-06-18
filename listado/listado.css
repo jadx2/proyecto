@@ -1,3 +1,18 @@
+/* =====================================================================
+   listado.css — ESTILOS DE LA PÁGINA DE CATÁLOGO (listado.html)
+   ---------------------------------------------------------------------
+   Se carga DESPUÉS de base.css, que ya da el tema oscuro, las variables
+   --lumen-* y el chrome común (nav/main/footer). Aquí estilamos lo propio
+   del catálogo:
+     - .page-header: la cabecera con el título de la categoría.
+     - .film-grid: la rejilla de tarjetas de películas/series/documentales.
+     - .film-card: cada tarjeta del catálogo.
+     - .paginacion: los botones de páginas (1, 2, 3, anterior/siguiente).
+   La categoría mostrada depende del parámetro ?cat= de la URL, que lee el JS.
+   ===================================================================== */
+
+/* Cabecera de la página: bloque en columna con el "eyebrow", el título y una
+   fila de metadatos. Flex en vertical con separación entre elementos. */
 .page-header {
   display: flex;
   flex-direction: column;
@@ -6,6 +21,9 @@
   padding-bottom: 56px;
 }
 
+/* .eyebrow = etiqueta pequeña sobre el título (ej. "PELÍCULAS"). Aquí la
+   estilamos solo cuando está DENTRO de .page-header (selector descendiente:
+   ".page-header .eyebrow" = un .eyebrow que cuelga de un .page-header). */
 .page-header .eyebrow {
   font-weight: 500;
   font-size: 11px;
@@ -14,23 +32,28 @@
   color: var(--lumen-primary);
 }
 
+/* El título principal <h1> de la cabecera: enorme y en serif. line-height: 0.95
+   junta las líneas si el título ocupa dos renglones. */
 .page-header h1 {
   font-family: var(--lumen-font-serif);
   font-weight: 300;
-  font-size: 96px;
+  font-size: 96px;                 /* muy grande en móvil; es el protagonista */
   line-height: 0.95;
   color: var(--lumen-text);
 }
 
+/* Fila de metadatos bajo el título (ej. "X resultados"). Flex en fila que separa
+   sus extremos, con una línea inferior como separador de la rejilla. */
 .page-header .meta-row {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-between;  /* empuja los elementos a los extremos */
   align-items: flex-start;
   padding-top: 16px;
   padding-bottom: 20px;
   border-bottom: 1px solid var(--lumen-border);
 }
 
+/* Cada texto dentro de la fila de metadatos: pequeño, en mayúsculas, apagado. */
 .page-header .meta-row span {
   font-weight: 500;
   font-size: 11px;
@@ -39,36 +62,53 @@
   color: var(--lumen-muted);
 }
 
+/* ---------------------------------------------------------------------
+   .film-grid = la REJILLA de tarjetas del catálogo (CSS Grid).
+   repeat(4, 1fr) = 4 columnas iguales en escritorio. El gap "40px 28px"
+   define dos separaciones: 40px entre filas y 28px entre columnas.
+   --------------------------------------------------------------------- */
 .film-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 40px 28px;
+  gap: 40px 28px;                  /* gap fila / gap columna */
   margin-top: 40px;
   margin-bottom: 40px;
 }
 
+/* OJO: aquí el proyecto usa media queries con max-width (no min-width). max-width
+   significa "cuando la pantalla sea de ese ancho o MENOS". Es el enfoque inverso:
+   reducimos columnas en pantallas pequeñas. A 991px o menos (tablet hacia abajo),
+   pasamos de 4 a 2 columnas. */
 @media (max-width: 991px) {
   .film-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, 1fr);  /* 2 columnas */
   }
 }
 
+/* A 767px o menos (móvil): seguimos en 2 columnas pero con menos separación
+   para aprovechar el espacio. */
 @media (max-width: 767px) {
   .film-grid {
     grid-template-columns: repeat(2, 1fr);
-    gap: 20px 16px;
+    gap: 20px 16px;                /* separaciones más pequeñas en móvil */
   }
 }
 
+/* Cada tarjeta del catálogo: caja flex en columna. */
 .film-card {
   display: flex;
   flex-direction: column;
 }
 
+/* [hidden] selecciona la tarjeta cuando el HTML le pone el atributo "hidden"
+   (lo usa el JS para filtrar/ocultar resultados). La quitamos de la vista. */
 .film-card[hidden] {
   display: none;
 }
 
+/* El enlace que envuelve la tarjeta entera. height: 100% hace que todas las
+   tarjetas de una fila tengan la misma altura. color: inherit evita el dorado
+   de enlace y usa el color de texto normal. */
 .film-card a {
   display: flex;
   flex-direction: column;
@@ -78,11 +118,16 @@
   color: inherit;
 }
 
+/* El póster dentro de la tarjeta. aspect-ratio 299:450 fija la proporción para
+   que todos los carteles tengan la misma forma. overflow: hidden recorta el
+   zoom del hover. */
 .film-card .poster {
   aspect-ratio: 299 / 450;
   overflow: hidden;
 }
 
+/* La imagen del póster cubre su caja, levemente desaturada, lista para animar
+   el zoom y el color en el hover. */
 .film-card .poster img {
   width: 100%;
   height: 100%;
@@ -93,17 +138,21 @@
     filter 0.4s ease;
 }
 
+/* Al pasar el ratón por la tarjeta, su póster hace un zoom suave y recupera el
+   color pleno. */
 .film-card:hover .poster img {
   transform: scale(1.04);
   filter: grayscale(0%);
 }
 
+/* Bloque de texto de la tarjeta (título, director, etc.) apilado en columna. */
 .film-card__info {
   display: flex;
   flex-direction: column;
   gap: 6px;
 }
 
+/* Título de la tarjeta, en serif. */
 .film-card__title {
   font-family: var(--lumen-font-serif);
   font-weight: 500;
@@ -112,6 +161,7 @@
   color: var(--lumen-text);
 }
 
+/* Director, en cursiva y color secundario. */
 .film-card__director {
   font-family: var(--lumen-font-serif);
   font-weight: 400;
@@ -120,6 +170,7 @@
   color: var(--lumen-muted);
 }
 
+/* Fila de valoración (nota + nº de votos). Flex en fila. */
 .film-card__rating {
   display: flex;
   align-items: center;
@@ -129,15 +180,18 @@
   font-size: 11px;
 }
 
+/* :first-child = el PRIMER <span> de la fila (la nota): en dorado. */
 .film-card__rating span:first-child {
   letter-spacing: 1px;
   color: var(--lumen-primary);
 }
 
+/* :last-child = el ÚLTIMO <span> (el nº de votos): en color secundario. */
 .film-card__rating span:last-child {
   color: var(--lumen-muted);
 }
 
+/* Metadatos de la tarjeta (año, duración): pequeños, en mayúsculas, apagados. */
 .film-card__meta {
   font-weight: 500;
   font-size: 10px;
@@ -146,10 +200,17 @@
   color: var(--lumen-dim);
 }
 
+/* Separador entre metadatos. El selector "span + span" apunta a un span que va
+   JUSTO DESPUÉS de otro span (hermano adyacente); su ::before inserta " · " como
+   separador. Así el primer span no lleva punto delante, pero los siguientes sí. */
 .film-card__meta span + span::before {
   content: " · ";
 }
 
+/* ---------------------------------------------------------------------
+   .paginacion = la barra de páginas al final del catálogo.
+   Flex centrado horizontalmente.
+   --------------------------------------------------------------------- */
 .paginacion {
   display: flex;
   justify-content: center;
@@ -157,16 +218,22 @@
   margin-bottom: 40px;
 }
 
+/* La lista <ul> de botones de página, en fila y sin viñetas. */
 .paginacion__lista {
   display: flex;
   align-items: flex-start;
   list-style: none;
 }
 
+/* Truco para que los botones compartan borde sin doblarlo: cada ítem que sigue
+   a otro (item + item) se solapa 1px a la izquierda (margin-left: -1px), de modo
+   que los bordes adyacentes se fusionan en una sola línea. */
 .paginacion__item + .paginacion__item {
   margin-left: -1px;
 }
 
+/* Cada botón de página. inline-flex para centrar su contenido; transition para
+   un cambio de color suave en el hover. */
 .paginacion__link {
   display: inline-flex;
   align-items: center;
@@ -185,18 +252,23 @@
     color 0.2s ease;
 }
 
+/* Al pasar el ratón: fondo dorado muy tenue, texto y borde dorados. */
 .paginacion__link:hover {
-  background: rgba(232, 217, 176, 0.1);
+  background: rgba(232, 217, 176, 0.1);   /* dorado al 10% de opacidad */
   color: var(--lumen-primary);
   border-color: var(--lumen-primary);
 }
 
+/* La página ACTUAL (modificador --activo): se pinta en dorado pleno con el texto
+   oscuro, para destacar dónde estás. */
 .paginacion__item--activo .paginacion__link {
   background: var(--lumen-primary);
   color: var(--lumen-bg);
   border-color: var(--lumen-primary);
 }
 
+/* Botón DESHABILITADO (ej. "anterior" en la primera página). pointer-events: none
+   lo hace no clicable y cursor: default quita la manita. */
 .paginacion__item--deshabilitado .paginacion__link {
   color: var(--lumen-dim);
   pointer-events: none;

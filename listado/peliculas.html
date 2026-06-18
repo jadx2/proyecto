@@ -1,13 +1,38 @@
+<!--
+  ============================================================================
+  listado/peliculas.html — CATÁLOGO de Películas
+  ============================================================================
+  QUÉ ES: la cuadrícula (grid) con todas las películas de la biblioteca, cada
+  una en una "tarjeta" con su póster, director, nota y datos.
+
+  SU ROL: mostrar el listado y permitir entrar al detalle de cada título.
+
+  IMPORTANTE — aquí las tarjetas SÍ están escritas a mano en el HTML (a
+  diferencia de inicio o detalles, que se llenan con JS). Lo único que aporta el
+  JavaScript en esta página es la PAGINACIÓN (dividir las tarjetas en páginas).
+  Por eso solo se carga un script al final: paginacion.js.
+
+  CÓMO se llega al detalle: cada tarjeta es un enlace a
+  ../detalles/detalles.html?id=N, donde N es el número del título. Ese "?id=N"
+  es el parámetro que la página de detalle lee para saber qué mostrar.
+
+  CSS: ../base.css (común) + listado.css (estilos del grid; las tres páginas de
+  catálogo —películas, series, documentales— comparten esta misma hoja).
+  ============================================================================
+-->
 <!doctype html>
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Películas · Lumen</title>
+    <!-- Estilos comunes + estilos del catálogo (compartidos por los 3 listados). -->
     <link rel="stylesheet" href="../base.css" />
     <link rel="stylesheet" href="listado.css" />
   </head>
   <body>
+    <!-- <nav>: misma barra de navegación. Aquí el aria-current="page" va en
+         "Películas" porque es la página actual. -->
     <nav>
       <div>
         <a href="../inicio/inicio.html">
@@ -32,6 +57,7 @@
               <a href="../listado/series.html">Series</a>
             </li>
             <li>
+              <!-- Enlace de la página actual, marcado con aria-current="page". -->
               <a href="../listado/peliculas.html" aria-current="page">Películas</a>
             </li>
             <li>
@@ -43,29 +69,53 @@
       </div>
     </nav>
 
+    <!-- <main>: contenido principal = encabezado + cuadrícula + paginación. -->
     <main>
+      <!-- Encabezado de la colección. -->
       <header class="page-header">
         <p class="eyebrow">COLECCIÓN</p>
         <h1>Películas</h1>
+        <!-- Fila de metadatos. Los dos <span> están vacíos: paginacion.js
+             escribe en data-rango el rango visible (ej. "1–8 de 15") y en
+             data-pagina la página actual (ej. "Página 1 de 2"). -->
         <div class="meta-row">
           <span data-rango></span>
           <span data-pagina></span>
         </div>
       </header>
 
+      <!-- LA CUADRÍCULA. data-grid: paginacion.js la usa para encontrar todas
+           las tarjetas y mostrar/ocultar las que tocan según la página.
+           aria-label da nombre a la sección para lectores de pantalla. -->
       <section class="film-grid" data-grid aria-label="Listado de Películas">
+        <!-- ===== TARJETA REPRESENTATIVA (explicada en detalle) =====
+             <article>: etiqueta semántica para un contenido independiente y
+             reutilizable (cada película es una "unidad" por sí sola), por eso se
+             usa <article> en vez de un <div> genérico. -->
         <article class="film-card">
+          <!-- Toda la tarjeta es un enlace al detalle. "?id=1" = el id de ESTA
+               película; detalles.html lo lee para mostrar la ficha correcta. -->
           <a href="../detalles/detalles.html?id=1">
+            <!-- <figure> + <img>: el póster. src = dirección de la imagen (aquí,
+                 el CDN de imágenes TMDB). alt = texto alternativo que describe la
+                 imagen (se lee si la imagen no carga / para accesibilidad).
+                 loading="lazy" = cargar la imagen solo cuando vaya a verse. -->
             <figure class="poster">
               <img src="https://image.tmdb.org/t/p/w400/m0psah5Ttchm7Jlp74NZ5xDe6C8.jpg" alt="Intercambiados" loading="lazy" />
             </figure>
+            <!-- Bloque de información textual de la tarjeta. -->
             <div class="film-card__info">
+              <!-- <h3>: el título de la tarjeta. Es h3 (no h1) porque va por
+                   debajo del <h1> "Películas" en la jerarquía de la página. -->
               <h3 class="film-card__title">Intercambiados</h3>
               <p class="film-card__director">Nathan Greno</p>
               <p class="film-card__rating">
+                <!-- Estrellas decorativas: aria-hidden="true" las oculta a los
+                     lectores de pantalla (el número de al lado ya da la nota). -->
                 <span aria-hidden="true">★★★★☆</span>
                 <span>4.4</span>
               </p>
+              <!-- Metadatos: año, país y duración (los <span> se estilan en fila). -->
               <p class="film-card__meta">
                 <span>2026</span>
                 <span>United States of America</span>
@@ -74,6 +124,8 @@
             </div>
           </a>
         </article>
+        <!-- ===== Las siguientes tarjetas siguen EXACTAMENTE la misma estructura;
+             solo cambian el id del enlace, el póster, el título y los datos. ===== -->
         <article class="film-card">
           <a href="../detalles/detalles.html?id=2">
             <figure class="poster">
@@ -356,9 +408,14 @@
         </article>
       </section>
 
+      <!-- PAGINACIÓN. Va vacía: paginacion.js genera dentro los botones de
+           página (1, 2, …) según cuántas tarjetas haya. data-paginacion es el
+           gancho que usa el JS. Se usa <nav> porque es navegación entre páginas.
+           aria-label le da nombre accesible. -->
       <nav class="paginacion" data-paginacion aria-label="Paginación"></nav>
     </main>
 
+    <!-- Pie de página común. -->
     <footer>
       <div>
         <div>
@@ -368,6 +425,8 @@
       </div>
     </footer>
 
+    <!-- Único script: arma la paginación y muestra/oculta tarjetas por página.
+         Va al final para que la cuadrícula ya exista cuando el JS la lea. -->
     <script src="paginacion.js"></script>
   </body>
 </html>

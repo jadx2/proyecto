@@ -1,13 +1,33 @@
+<!--
+  ============================================================================
+  listado/documentales.html — CATÁLOGO de Documentales
+  ============================================================================
+  QUÉ ES: la cuadrícula con todos los documentales de la biblioteca. Tiene la
+  MISMA estructura que peliculas.html y series.html; solo cambian los títulos.
+
+  SU ROL: listar los documentales y enlazar al detalle de cada uno vía
+  ../detalles/detalles.html?id=N (el "?id=N" identifica el título para que la
+  página de detalle sepa cuál mostrar).
+
+  Las tarjetas están escritas a mano en el HTML; el único script (paginacion.js,
+  al final del <body>) se encarga de la PAGINACIÓN (dividir las tarjetas en
+  páginas). CSS: ../base.css (común) + listado.css (compartido por los tres
+  catálogos). Para el detalle de la estructura de una tarjeta y del nav, ver los
+  comentarios de peliculas.html.
+  ============================================================================
+-->
 <!doctype html>
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Documentales · Lumen</title>
+    <!-- Estilos comunes + estilos del catálogo (compartidos por los 3 listados). -->
     <link rel="stylesheet" href="../base.css" />
     <link rel="stylesheet" href="listado.css" />
   </head>
   <body>
+    <!-- <nav>: misma barra de siempre; aquí aria-current="page" va en "Documentales". -->
     <nav>
       <div>
         <a href="../inicio/inicio.html">
@@ -35,6 +55,7 @@
               <a href="../listado/peliculas.html">Películas</a>
             </li>
             <li>
+              <!-- Página actual: marcada con aria-current="page". -->
               <a href="../listado/documentales.html" aria-current="page">Documentales</a>
             </li>
             <li><a href="../contacto/contacto.html">Contacto</a></li>
@@ -47,13 +68,20 @@
       <header class="page-header">
         <p class="eyebrow">COLECCIÓN</p>
         <h1>Documentales</h1>
+        <!-- data-rango y data-pagina: huecos que paginacion.js rellena con el
+             rango visible (ej. "1–8 de 13") y la página actual. -->
         <div class="meta-row">
           <span data-rango></span>
           <span data-pagina></span>
         </div>
       </header>
 
+      <!-- Cuadrícula de tarjetas. data-grid: gancho para la paginación. -->
       <section class="film-grid" data-grid aria-label="Listado de Documentales">
+        <!-- ===== TARJETA REPRESENTATIVA (ver peliculas.html para el detalle de
+             cada parte: <article>, el enlace con ?id=N, <figure>/<img> con
+             src/alt/loading, el rating con aria-hidden, etc.). Los documentales
+             empiezan en el id 30 en los datos. ===== -->
         <article class="film-card">
           <a href="../detalles/detalles.html?id=30">
             <figure class="poster">
@@ -74,6 +102,8 @@
             </div>
           </a>
         </article>
+        <!-- ===== Las demás tarjetas siguen la MISMA estructura; cambian id,
+             póster, título y datos. ===== -->
         <article class="film-card">
           <a href="../detalles/detalles.html?id=31">
             <figure class="poster">
@@ -316,9 +346,11 @@
         </article>
       </section>
 
+      <!-- Paginación: paginacion.js genera aquí los botones de página. -->
       <nav class="paginacion" data-paginacion aria-label="Paginación"></nav>
     </main>
 
+    <!-- Pie de página común. -->
     <footer>
       <div>
         <div>
@@ -328,6 +360,7 @@
       </div>
     </footer>
 
+    <!-- Único script (al final): arma la paginación del listado. -->
     <script src="paginacion.js"></script>
   </body>
 </html>

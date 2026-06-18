@@ -1,34 +1,94 @@
+<!--
+  ============================================================================
+  inicio/inicio.html — PÁGINA DE INICIO (home) del sitio Lumen
+  ============================================================================
+  QUÉ ES: la página principal a la que llega el usuario tras la redirección de
+  index.html. Es la "portada" de la biblioteca audiovisual.
+
+  SU ROL: presenta el sitio. Su contenido central (el hero y las tiras de
+  títulos destacados) NO está escrito a mano aquí: se GENERA con JavaScript.
+  Por eso el <main> está vacío (id="app") y se rellena al cargar la página.
+
+  CÓMO CARGA SUS SCRIPTS (¡el orden importa!): al final del <body> se cargan,
+  EN ESTE ORDEN EXACTO:
+    1) ../shared/data.js  → crea los datos (la lista de ~42 películas/series/
+       documentales) y el ayudante global "Data" para consultarlos.
+    2) ../shared/helpers.js → funciones utilitarias compartidas.
+    3) ../shared/ui.js    → funciones que arman trozos de HTML (tarjetas, etc.).
+    4) inicio.js          → el "controlador" de ESTA página: usa Data y ui para
+       construir el contenido y meterlo dentro de <main id="app">.
+  POR QUÉ ese orden: cada archivo usa lo que definió el anterior. Si inicio.js
+  se cargara primero, "Data" o las funciones de ui.js aún no existirían y daría
+  error. El navegador ejecuta los <script> de arriba hacia abajo.
+
+  CÓMO se conecta al CSS: en el <head> se enlazan dos hojas de estilo:
+  ../base.css (estilos comunes a todo el sitio: colores, tipografía, nav, footer)
+  e inicio.css (estilos propios de esta página).
+  ============================================================================
+-->
 <!doctype html>
 <html lang="es">
+  <!-- <head>: configuración y enlaces (no se ve en la página). -->
   <head>
+    <!-- Codificación para que tildes y ñ se muestren bien. -->
     <meta charset="UTF-8" />
+    <!-- Hace la página adaptable a móviles (responsive). -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Texto de la pestaña del navegador. -->
     <title>Lumen</title>
 
+    <!-- <link rel="stylesheet" href="...">: conecta una hoja de estilos CSS.
+         "../base.css" sube un nivel (../) desde la carpeta inicio/ hasta la raíz
+         del proyecto y toma base.css = estilos COMPARTIDOS por todas las páginas. -->
     <link rel="stylesheet" href="../base.css" />
+    <!-- "inicio.css" (misma carpeta) = estilos SOLO de esta página. -->
     <link rel="stylesheet" href="inicio.css" />
   </head>
+  <!-- <body>: lo que sí se ve. -->
   <body>
+    <!-- <nav>: la barra de navegación superior. Usamos la etiqueta semántica
+         <nav> (en vez de un <div> genérico) porque su contenido SON los enlaces
+         de navegación principales; así buscadores y lectores de pantalla lo
+         reconocen como "el menú". -->
     <nav>
       <div>
+        <!-- Logo: es un enlace que lleva a la página de inicio. Los dos <span>
+             permiten estilar por separado el nombre "Lumen" y el subtítulo. -->
         <a href="../inicio/inicio.html">
           <span>Lumen</span>
           <span>La Biblioteca Audiovisual</span>
         </a>
 
+        <!-- MENÚ HAMBURGUESA (truco solo-CSS, sin JavaScript):
+             Este checkbox invisible guarda el estado "menú abierto/cerrado".
+             id="nav-toggle" lo identifica de forma única para vincularlo al
+             <label> de abajo. aria-label da un nombre accesible al control
+             (lo que anuncia un lector de pantalla, ya que no tiene texto visible). -->
         <input
           type="checkbox"
           id="nav-toggle"
           class="nav-toggle"
           aria-label="Abrir menú"
         />
+        <!-- El <label> con for="nav-toggle" actúa como botón: al tocarlo se
+             marca/desmarca el checkbox de arriba (porque "for" lo apunta por su id).
+             El CSS detecta si el checkbox está marcado para mostrar/ocultar el menú. -->
         <label class="nav-burger" for="nav-toggle">
           <span></span>
         </label>
 
+        <!-- .nav-menu: el contenedor de los enlaces. La clase es el "gancho"
+             que usa el CSS de base.css para dar estilo y mostrar/ocultar el menú. -->
         <div class="nav-menu">
+          <!-- <ul> + <li>: una lista (los ítems del menú). Se usa lista porque
+               el menú es, conceptualmente, una lista de opciones. -->
           <ul>
+            <!-- aria-current="page": marca el enlace de la página ACTUAL (aquí,
+                 Inicio). El CSS lo resalta y el lector de pantalla avisa "página
+                 actual". Cada página pone este atributo en SU propio enlace. -->
             <li><a href="../inicio/inicio.html" aria-current="page">Inicio</a></li>
+            <!-- Los demás enlaces llevan a las otras páginas. "../listado/..."
+                 sube a la raíz y entra a la carpeta listado/. -->
             <li><a href="../listado/series.html">Series</a></li>
             <li><a href="../listado/peliculas.html">Películas</a></li>
             <li><a href="../listado/documentales.html">Documentales</a></li>
@@ -38,8 +98,14 @@
       </div>
     </nav>
 
+    <!-- <main id="app">: el contenido PRINCIPAL de la página. Va vacío a
+         propósito: el archivo inicio.js lo busca por su id="app" y le inserta
+         dentro el hero y las tiras de títulos destacados. Es el "lienzo" que
+         JavaScript pinta. Solo debe haber UN <main> por página. -->
     <main id="app"></main>
 
+    <!-- <footer>: el "pie de página". Etiqueta semántica para la información
+         final del sitio (créditos, nombre). Se repite igual en todas las páginas. -->
     <footer>
       <div>
         <div>
@@ -49,6 +115,10 @@
       </div>
     </footer>
 
+    <!-- SCRIPTS al FINAL del <body> (no en el <head>): así el HTML ya existe
+         cuando el JS se ejecuta, y la página se ve antes (no se bloquea esperando
+         el JS). El ORDEN es obligatorio: data → helpers → ui → inicio
+         (cada uno necesita lo que definió el anterior). src = la ruta del archivo. -->
     <script src="../shared/data.js"></script>
     <script src="../shared/helpers.js"></script>
     <script src="../shared/ui.js"></script>

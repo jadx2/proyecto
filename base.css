@@ -1,100 +1,169 @@
+/* =====================================================================
+   base.css — LA HOJA DE ESTILOS BASE (COMPARTIDA) DE TODO EL SITIO LUMEN
+   ---------------------------------------------------------------------
+   QUÉ ES: una "hoja de estilos" (stylesheet) es el archivo donde le decimos
+   al navegador cómo se ven las cosas: colores, tamaños, espacios, tipografía.
+   El HTML pone el CONTENIDO; el CSS pone la APARIENCIA.
+
+   DE QUÉ SE ENCARGA ESTE ARCHIVO:
+     1) Importar las fuentes (tipografías) desde internet.
+     2) Definir los "tokens" de diseño: variables de color y medidas que se
+        reutilizan en todo el sitio (los nombres empiezan con --lumen-*).
+     3) Un "reset" universal que pone todo a cero para empezar parejos.
+     4) El "chrome" compartido: la barra de navegación (nav), el contenido
+        principal (main) y el pie de página (footer) que aparecen en TODAS
+        las páginas.
+
+   RELACIÓN CON LOS DEMÁS CSS: este archivo se carga PRIMERO en cada página.
+   Define lo común a todo el sitio. Luego cada página carga SU PROPIO archivo
+   (inicio.css, listado.css, detalles.css, contacto.css) que añade los estilos
+   específicos de esa página. Como base.css va primero, sus variables --lumen-*
+   están disponibles para todos.
+   ===================================================================== */
+
+/* @import = "trae e incrusta otro CSS aquí". Esto NO es un comentario: es una
+   instrucción real de CSS que descarga las fuentes Cormorant Garamond (serif,
+   elegante, para títulos) e Inter (sans-serif, para texto) desde el CDN de
+   Google Fonts (un CDN es un servidor de internet que reparte archivos).
+   Los números (400;500;700) son los "pesos" (grosor de la letra) disponibles;
+   ital indica que también traemos la versión en cursiva. */
 @import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&family=Inter:wght@300;400;500;600&display=swap");
 
+/* :root es el elemento raíz del documento (en la práctica, el <html>). Aquí
+   declaramos VARIABLES CSS (también llamadas "custom properties" o "tokens").
+   Una variable CSS es un valor con nombre que guardamos una vez y reutilizamos
+   en muchos lugares con var(--nombre). Ventaja: si cambiamos el color aquí,
+   cambia en TODO el sitio de golpe. Por convención del proyecto, todas empiezan
+   con --lumen-. */
 :root {
-  --lumen-bg: #0a0a0a;
-  --lumen-text: #e8e6e1;
-  --lumen-muted: #9a958b;
-  --lumen-dim: #6d6a63;
-  --lumen-primary: #e8d9b0;
-  --lumen-border: #262626;
-  --lumen-font-body: "Inter", system-ui, sans-serif;
-  --lumen-font-serif: "Cormorant Garamond", Georgia, serif;
-  --lumen-pad-x: 24px;
+  --lumen-bg: #0a0a0a;        /* color de fondo: casi negro (tema oscuro) */
+  --lumen-text: #e8e6e1;      /* color de texto principal: blanco hueso */
+  --lumen-muted: #9a958b;     /* texto secundario, menos protagonista (gris) */
+  --lumen-dim: #6d6a63;       /* texto aún más apagado (gris más oscuro) */
+  --lumen-primary: #e8d9b0;   /* color de acento/marca: dorado suave */
+  --lumen-border: #262626;    /* color de bordes y líneas separadoras */
+  --lumen-font-body: "Inter", system-ui, sans-serif;          /* fuente para texto corrido */
+  --lumen-font-serif: "Cormorant Garamond", Georgia, serif;   /* fuente para títulos */
+  --lumen-pad-x: 24px;        /* relleno horizontal estándar; crece en pantallas grandes */
 }
 
+/* RESET UNIVERSAL. El selector * significa "todos los elementos"; ::before y
+   ::after son pseudo-elementos (cajas extra que CSS puede crear, ver más abajo).
+   Los navegadores traen márgenes/rellenos por defecto distintos entre sí; aquí
+   los ponemos a cero para partir todos desde el mismo punto y evitar sorpresas.
+   box-sizing: border-box es CLAVE para principiantes: hace que el width/height
+   que definamos INCLUYA el padding y el borde, en vez de sumarlos por fuera.
+   Así, "100px de ancho" son 100px reales, no 100px + relleno + borde. */
 *,
 *::before,
 *::after {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+  margin: 0;                  /* sin margen exterior por defecto */
+  padding: 0;                 /* sin relleno interior por defecto */
+  box-sizing: border-box;     /* el tamaño incluye borde y relleno (modelo de caja predecible) */
 }
 
+/* El <body> es el contenedor de todo lo visible. Aquí fijamos el TEMA OSCURO
+   para toda la página: fondo oscuro y texto claro usando nuestras variables. */
 body {
-  background: var(--lumen-bg);
-  color: var(--lumen-text);
-  font-family: var(--lumen-font-body);
-  font-weight: 300;
-  -webkit-font-smoothing: antialiased;
+  background: var(--lumen-bg);          /* usa el token de fondo definido en :root */
+  color: var(--lumen-text);             /* color de texto heredado por los hijos */
+  font-family: var(--lumen-font-body);  /* fuente base para todo el texto */
+  font-weight: 300;                     /* grosor "ligero" por defecto */
+  -webkit-font-smoothing: antialiased;  /* suaviza el dibujo de la letra en Safari/Chrome de Mac */
 }
 
+/* Todas las imágenes. max-width: 100% evita que una imagen se desborde de su
+   contenedor (nunca más ancha que su caja). display: block quita un pequeño
+   hueco que los navegadores dejan debajo de las imágenes "inline". */
 img {
   max-width: 100%;
   display: block;
 }
 
+/* Todos los enlaces. Les damos el color de marca y les quitamos el subrayado
+   por defecto (text-decoration: none) para un look más limpio. */
 a {
   color: var(--lumen-primary);
   text-decoration: none;
 }
 
+/* ---------------------------------------------------------------------
+   BARRA DE NAVEGACIÓN (el <nav> que es hijo directo de <body>).
+   El selector body > nav apunta SOLO al nav que cuelga directamente del body
+   (el ">" significa "hijo directo", no nieto). Es la barra superior del sitio.
+   --------------------------------------------------------------------- */
 body > nav {
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  border-bottom: 1px solid var(--lumen-border);
+  position: sticky;   /* "pegajosa": se queda fija arriba al hacer scroll */
+  top: 0;             /* se pega al borde superior de la ventana */
+  z-index: 100;       /* z-index controla qué capa va delante; 100 = por encima del contenido */
+  border-bottom: 1px solid var(--lumen-border);  /* línea inferior sutil */
 }
 
+/* El contenedor interno de la barra (un <div> dentro del nav). Aquí entra FLEXBOX.
+   display: flex coloca a los hijos en una fila flexible. Con flex podemos
+   alinear y distribuir el espacio fácilmente. */
 body > nav > div {
-  position: relative;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  padding: 18px var(--lumen-pad-x);
+  position: relative;              /* ancla a los hijos con position:absolute (ver ::before) */
+  display: flex;                   /* activa flexbox: hijos en línea */
+  flex-wrap: wrap;                 /* permite que los hijos salten de línea si no caben */
+  align-items: center;             /* centra verticalmente los hijos */
+  justify-content: space-between;  /* separa los extremos: logo a la izquierda, menú a la derecha */
+  gap: 16px;                       /* gap = espacio entre los hijos del flex */
+  padding: 18px var(--lumen-pad-x);/* relleno: 18px arriba/abajo, el token a los lados */
 }
 
+/* PSEUDO-ELEMENTO ::before: crea una "caja fantasma" antes del contenido del div,
+   sin tocar el HTML. La usamos como fondo translúcido con desenfoque. Necesita
+   content: "" para existir aunque esté vacía. */
 body > nav > div::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background: rgba(10, 10, 10, 0.85);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  content: "";                     /* obligatorio para que el pseudo-elemento aparezca */
+  position: absolute;              /* se posiciona respecto al div (que es relative) */
+  inset: 0;                        /* inset:0 = top/right/bottom/left a 0: cubre toda la barra */
+  z-index: -1;                     /* se manda detrás del contenido de la barra */
+  background: rgba(10, 10, 10, 0.85);         /* negro semitransparente (el 0.85 es la opacidad) */
+  backdrop-filter: blur(12px);                /* desenfoca lo que queda DETRÁS de la barra */
+  -webkit-backdrop-filter: blur(12px);        /* lo mismo para Safari (prefijo -webkit-) */
 }
 
+/* El enlace del logo dentro de la barra. line-height: 1 junta las dos líneas
+   del logo (nombre + subtítulo) sin espacio extra. */
 body > nav > div > a {
   color: var(--lumen-text);
   line-height: 1;
 }
 
+/* Primera línea del logo: el nombre "Lumen" en fuente serif y grande. */
 body > nav > div > a > span:first-child {
-  display: block;
+  display: block;                   /* ocupa su propia línea */
   font-family: var(--lumen-font-serif);
   font-size: 28px;
   line-height: 1;
 }
 
+/* Segunda línea del logo: subtítulo pequeño en mayúsculas y muy espaciado. */
 body > nav > div > a > span:last-child {
   display: block;
-  margin-top: 4px;
+  margin-top: 4px;                  /* pequeña separación respecto al nombre */
   font-size: 10px;
-  letter-spacing: 4px;
-  text-transform: uppercase;
-  opacity: 0.6;
+  letter-spacing: 4px;              /* separa las letras entre sí */
+  text-transform: uppercase;        /* fuerza MAYÚSCULAS visualmente */
+  opacity: 0.6;                     /* lo atenúa al 60% para que sea secundario */
 }
 
+/* .nav-toggle es el checkbox invisible que controla si el menú móvil está
+   abierto o cerrado (truco "CSS-only" sin JavaScript). Estas propiedades lo
+   ocultan visualmente pero lo dejan accesible para teclado/lectores de pantalla. */
 .nav-toggle {
   position: absolute;
   width: 1px;
   height: 1px;
   margin: -1px;
   overflow: hidden;
-  clip: rect(0 0 0 0);
+  clip: rect(0 0 0 0);              /* recorta la caja a nada: invisible pero presente */
 }
 
+/* .nav-burger es el icono de "hamburguesa" (tres rayas) que se toca en móvil
+   para abrir el menú. cursor: pointer muestra la manita al pasar el ratón. */
 .nav-burger {
   display: block;
   padding: 6px 4px;
@@ -102,6 +171,9 @@ body > nav > div > a > span:last-child {
   cursor: pointer;
 }
 
+/* Las tres rayas de la hamburguesa: una es el <span> real y las otras dos son
+   pseudo-elementos (::before y ::after) del mismo span. Aquí les damos a las
+   tres el mismo tamaño y color de barra. */
 .nav-burger span,
 .nav-burger span::before,
 .nav-burger span::after {
@@ -111,10 +183,14 @@ body > nav > div > a > span:last-child {
   background: var(--lumen-text);
 }
 
+/* El span central necesita ser "relative" para que sus pseudo-elementos
+   (las otras dos rayas) se posicionen respecto a él. */
 .nav-burger span {
   position: relative;
 }
 
+/* Las rayas superior e inferior: existen como pseudo-elementos y se colocan
+   de forma absoluta respecto al span central. */
 .nav-burger span::before,
 .nav-burger span::after {
   content: "";
@@ -123,97 +199,125 @@ body > nav > div > a > span:last-child {
 }
 
 .nav-burger span::before {
-  top: -7px;
+  top: -7px;    /* raya de arriba: 7px por encima del centro */
 }
 
 .nav-burger span::after {
-  top: 7px;
+  top: 7px;     /* raya de abajo: 7px por debajo del centro */
 }
 
+/* ACCESIBILIDAD POR TECLADO. :focus-visible se activa cuando el elemento recibe
+   foco navegando con el teclado (Tab). El selector ~ dice "hermano posterior":
+   cuando el checkbox oculto tiene foco, dibujamos un contorno en la hamburguesa
+   que está después de él, para que el usuario de teclado sepa dónde está. */
 .nav-toggle:focus-visible ~ .nav-burger {
-  outline: 2px solid var(--lumen-primary);
-  outline-offset: 2px;
+  outline: 2px solid var(--lumen-primary);  /* contorno dorado */
+  outline-offset: 2px;                       /* separa el contorno del elemento */
 }
 
+/* .nav-menu es el panel con los enlaces de navegación. En MÓVIL empieza OCULTO
+   (display: none) y aparece como un panel desplegable bajo la barra. */
 .nav-menu {
-  display: none;
-  position: absolute;
-  top: 100%;
+  display: none;                   /* oculto por defecto en móvil */
+  position: absolute;              /* flota bajo la barra sin empujar el contenido */
+  top: 100%;                       /* justo debajo de la barra (100% de su altura) */
   left: 0;
-  right: 0;
+  right: 0;                        /* de borde a borde horizontal */
   padding: 16px var(--lumen-pad-x);
   border-bottom: 1px solid var(--lumen-border);
-  background: rgba(10, 10, 10, 0.85);
+  background: rgba(10, 10, 10, 0.85);   /* mismo fondo translúcido que la barra */
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
 }
 
+/* EL TRUCO DEL MENÚ SIN JS: cuando el checkbox .nav-toggle está marcado
+   (:checked), mostramos el menú hermano (~). Tocar la hamburguesa marca el
+   checkbox y, por esta regla, el menú aparece. */
 .nav-toggle:checked ~ .nav-menu {
   display: block;
 }
 
+/* La lista <ul> de enlaces dentro del menú. En móvil va en COLUMNA (uno debajo
+   de otro). list-style: none quita los puntos de la lista. */
 .nav-menu ul {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  flex-direction: column;          /* apila los <li> verticalmente */
+  align-items: flex-start;         /* alinea a la izquierda */
   gap: 16px;
   list-style: none;
 }
 
+/* Cada enlace del menú. transition hace que el cambio de color al pasar el
+   ratón sea SUAVE (0.2s) en vez de instantáneo. */
 .nav-menu a {
-  position: relative;
+  position: relative;              /* para anclar el indicador ::after de la página activa */
   padding-left: 12px;
   color: var(--lumen-text);
   font-size: 12px;
   letter-spacing: 3px;
   text-transform: uppercase;
-  transition: color 0.2s ease;
+  transition: color 0.2s ease;     /* anima el color durante 0.2 segundos */
 }
 
+/* :hover = "cuando el cursor está encima". El enlace se vuelve dorado. */
 .nav-menu a:hover {
   color: var(--lumen-primary);
 }
 
+/* [aria-current="page"] selecciona el enlace de la página en la que estamos.
+   aria-current es un atributo de accesibilidad que marca el ítem actual; aquí
+   lo aprovechamos también para resaltarlo en dorado. */
 .nav-menu a[aria-current="page"] {
   color: var(--lumen-primary);
 }
 
+/* Indicador visual de la página activa: una barrita vertical a la izquierda del
+   enlace (en móvil), dibujada con el pseudo-elemento ::after. */
 .nav-menu a[aria-current="page"]::after {
   content: "";
   position: absolute;
   left: 0;
   top: 0;
-  bottom: 0;
+  bottom: 0;                        /* top:0 + bottom:0 = ocupa toda la altura del enlace */
   width: 2px;
   height: auto;
   background: var(--lumen-primary);
-  transform-origin: left center;
-  animation: nav-accent 0.3s ease;
+  transform-origin: left center;    /* punto desde el que crece la animación */
+  animation: nav-accent 0.3s ease;  /* reproduce la animación definida abajo */
 }
 
+/* @keyframes define una ANIMACIÓN con nombre. Esta hace que algo "crezca" en
+   horizontal desde 0 (scaleX(0)) hasta su tamaño normal. Se usa en escritorio
+   para el subrayado del enlace activo. */
 @keyframes nav-underline {
   from {
-    transform: scaleX(0);
+    transform: scaleX(0);           /* empieza sin ancho y se expande */
   }
 }
 
+/* Animación para la barrita vertical del móvil: crece desde 0 en vertical. */
 @keyframes nav-accent {
   from {
-    transform: scaleY(0);
+    transform: scaleY(0);           /* empieza sin alto y se expande */
   }
 }
 
+/* El <main> directo del body: la zona de contenido principal de cada página.
+   Le damos relleno horizontal con el token (NO ponemos margin/padding a 0 aquí
+   porque el reset universal ya lo hizo; solo añadimos el padding lateral). */
 body > main {
   padding: 0 var(--lumen-pad-x);
 }
 
+/* El pie de página, igual en todas las páginas. */
 body > footer {
-  margin-top: 60px;
+  margin-top: 60px;                 /* separa el footer del contenido de arriba */
   border-top: 1px solid var(--lumen-border);
   padding: 32px var(--lumen-pad-x);
   color: var(--lumen-muted);
 }
 
+/* Primer párrafo del footer: el nombre de la marca en serif y color dorado. */
 body > footer p:first-child {
   font-family: var(--lumen-font-serif);
   font-weight: 500;
@@ -222,6 +326,7 @@ body > footer p:first-child {
   color: var(--lumen-primary);
 }
 
+/* Último párrafo del footer: una frase/lema en cursiva y color apagado. */
 body > footer p:last-child {
   margin-top: 6px;
   font-family: var(--lumen-font-serif);
@@ -230,54 +335,76 @@ body > footer p:last-child {
   color: var(--lumen-dim);
 }
 
+/* =====================================================================
+   MEDIA QUERIES — DISEÑO RESPONSIVO (MOBILE-FIRST)
+   ---------------------------------------------------------------------
+   Una "media query" aplica estilos SOLO si se cumple una condición de pantalla.
+   Trabajamos "mobile-first": los estilos de arriba son para MÓVIL, y aquí abajo
+   AÑADIMOS cambios para pantallas más anchas. min-width: 768px significa
+   "cuando el ancho de la pantalla sea de 768px o MÁS" (tablet en adelante).
+   ===================================================================== */
+
+/* A partir de tablet (≥768px): la barra ya no necesita la hamburguesa y el
+   menú se muestra siempre, en horizontal. */
 @media (min-width: 768px) {
+  /* Ocultamos la hamburguesa: en tablet/escritorio el menú es siempre visible. */
   .nav-burger {
     display: none;
   }
 
+  /* El menú deja de ser un panel flotante y pasa a formar parte de la barra. */
   .nav-menu {
-    display: block;
-    position: static;
+    display: block;                 /* siempre visible */
+    position: static;               /* vuelve al flujo normal (ya no flota) */
     flex-basis: auto;
     padding: 0;
     border-bottom: none;
-    background: transparent;
+    background: transparent;        /* sin fondo propio: usa el de la barra */
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
   }
 
+  /* Los enlaces ahora van en FILA (horizontal) en lugar de en columna. */
   .nav-menu ul {
-    flex-direction: row;
+    flex-direction: row;            /* uno al lado del otro */
     flex-wrap: wrap;
     align-items: center;
     gap: 28px;
   }
 
   .nav-menu a {
-    padding-left: 0;
+    padding-left: 0;                /* ya no hace falta el hueco de la barrita lateral */
   }
 
+  /* En escritorio el enlace activo NO se pinta de dorado; se distingue con un
+     subrayado fino (ver regla siguiente). */
   .nav-menu a[aria-current="page"] {
     color: var(--lumen-text);
   }
 
+  /* El indicador de página activa cambia de barrita vertical (móvil) a
+     SUBRAYADO horizontal centrado bajo el enlace. */
   .nav-menu a[aria-current="page"]::after {
-    left: 25%;
+    left: 25%;                      /* empieza al 25% para quedar centrado */
     top: auto;
-    bottom: -6px;
-    width: 50%;
+    bottom: -6px;                   /* justo debajo del texto */
+    width: 50%;                     /* mitad del ancho del enlace */
     height: 1px;
     background: var(--lumen-primary);
     transform-origin: center;
-    animation: nav-underline 0.3s ease;
+    animation: nav-underline 0.3s ease;   /* se expande desde el centro */
   }
 }
 
+/* A partir de escritorio (≥992px). */
 @media (min-width: 992px) {
+  /* Aumentamos el relleno horizontal de TODO el sitio cambiando el token:
+     como muchas reglas usan var(--lumen-pad-x), todas se ensanchan a la vez. */
   :root {
     --lumen-pad-x: 80px;
   }
 
+  /* En pantallas grandes no dejamos que la barra parta en dos líneas. */
   body > nav > div {
     flex-wrap: nowrap;
   }

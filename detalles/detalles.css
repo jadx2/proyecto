@@ -1,3 +1,17 @@
+/* =====================================================================
+   detalles.css — ESTILOS DE LA PÁGINA DE DETALLE (detalles.html)
+   ---------------------------------------------------------------------
+   Se carga DESPUÉS de base.css (tema oscuro, variables --lumen-* y chrome
+   común nav/main/footer ya vienen de ahí). Aquí estilamos la ficha completa
+   de UNA película/serie/documental:
+     - .volver y .eyebrow: navegación y etiqueta superior.
+     - .trailer: el video incrustado (iframe) con proporción fija.
+     - .detalle: el layout de dos zonas (lateral con póster/ficha + principal).
+     - .ficha, .generos, .rating-big, .sinopsis, .creditos: bloques de datos.
+     - .ratings + .review-form + .reviews: zona de reseñas (formulario y lista).
+   ===================================================================== */
+
+/* .eyebrow = etiqueta pequeña en mayúsculas sobre un título (ej. el tipo de obra). */
 .eyebrow {
   font-weight: 500;
   font-size: 11px;
@@ -6,10 +20,12 @@
   color: var(--lumen-primary);
 }
 
+/* Contenedor del enlace "Volver" al catálogo. Solo da espacio vertical. */
 .volver {
   padding: 40px 0 24px;
 }
 
+/* El enlace "Volver": texto pequeño y apagado, con transición de color suave. */
 .volver a {
   font-weight: 500;
   font-size: 11px;
@@ -19,14 +35,19 @@
   transition: color 0.2s ease;
 }
 
+/* Al pasar el ratón, "Volver" se vuelve dorado. */
 .volver a:hover {
   color: var(--lumen-primary);
 }
 
+/* Contenedor del tráiler. Solo aporta espaciado vertical. */
 .trailer {
   padding: 16px 0 40px;
 }
 
+/* El marco del tráiler. position: relative para que el iframe se posicione
+   dentro. aspect-ratio 21:9 (formato cine) reserva una caja con esa proporción
+   para que el video no descuadre el layout. Fondo negro mientras carga. */
 .trailer__frame {
   position: relative;
   aspect-ratio: 21 / 9;
@@ -34,6 +55,8 @@
   background: #000;
 }
 
+/* El iframe (el video incrustado de YouTube/Vimeo) se estira para llenar el
+   marco completo. inset: 0 lo pega a los 4 bordes; border: 0 quita el recuadro. */
 .trailer__frame iframe {
   position: absolute;
   inset: 0;
@@ -42,36 +65,50 @@
   border: 0;
 }
 
+/* ---------------------------------------------------------------------
+   .detalle = el layout principal de la ficha. En móvil es UNA sola columna
+   (grid-template-columns: 1fr). En escritorio pasará a dos columnas
+   (lateral + principal) en la media query de ≥992px.
+   --------------------------------------------------------------------- */
 .detalle {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: 1fr;      /* una columna en móvil: todo apilado */
   gap: 40px;
   padding: 16px 0 56px;
 }
 
+/* La columna lateral (póster + ficha técnica + géneros), apilada en vertical. */
 .detalle__aside {
   display: flex;
   flex-direction: column;
   gap: 28px;
 }
 
+/* El póster de la ficha. aspect-ratio 2:3 es la proporción típica de un cartel.
+   overflow: hidden recorta la imagen a la caja. */
 .poster {
   aspect-ratio: 2 / 3;
   overflow: hidden;
 }
 
+/* La imagen del póster cubre toda su caja sin deformarse. */
 .poster img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
+/* .ficha es una TABLA de datos técnicos (año, duración, idioma...).
+   border-collapse: collapse fusiona los bordes de celdas en una sola línea
+   (en vez de bordes dobles separados). */
 .ficha {
   width: 100%;
   border: 1px solid var(--lumen-border);
   border-collapse: collapse;
 }
 
+/* El <caption> es el título de la tabla, útil para lectores de pantalla. Lo
+   ocultamos visualmente (recortándolo a 1px) pero lo dejamos accesible. */
 .ficha caption {
   position: absolute;
   width: 1px;
@@ -83,16 +120,22 @@
   border: 0;
 }
 
+/* Línea separadora entre filas. "tr + tr" = una fila que va DESPUÉS de otra
+   (hermano adyacente); a sus celdas (th/td) les ponemos borde superior. Así la
+   primera fila no lleva línea arriba, pero las siguientes sí. */
 .ficha tr + tr th,
 .ficha tr + tr td {
   border-top: 1px solid var(--lumen-border);
 }
 
+/* Relleno común para todas las celdas de la ficha. */
 .ficha th,
 .ficha td {
   padding: 14px 18px;
 }
 
+/* Las cabeceras de fila (<th>): nombre del dato, a la izquierda, en mayúsculas
+   y apagado. white-space: nowrap evita que el texto del campo parta en dos líneas. */
 .ficha th {
   text-align: left;
   font-weight: 500;
@@ -103,6 +146,7 @@
   white-space: nowrap;
 }
 
+/* Los valores de la ficha (<td>): a la derecha, en serif. */
 .ficha td {
   text-align: right;
   font-family: var(--lumen-font-serif);
@@ -110,6 +154,8 @@
   color: var(--lumen-text);
 }
 
+/* Lista de géneros como "chips" (etiquetas). Flex con wrap para que salten de
+   línea si no caben; sin viñetas. */
 .generos {
   display: flex;
   flex-wrap: wrap;
@@ -117,6 +163,7 @@
   list-style: none;
 }
 
+/* Cada chip de género: fondo gris, texto pequeño en mayúsculas. */
 .generos__item {
   padding: 7px 12px;
   font-weight: 500;
@@ -127,12 +174,14 @@
   background: var(--lumen-border);
 }
 
+/* La columna principal (título, sinopsis, créditos...), apilada en vertical. */
 .detalle__main {
   display: flex;
   flex-direction: column;
   gap: 20px;
 }
 
+/* Título de la obra: muy grande, en serif. line-height: 0.92 lo compacta. */
 .detalle__title {
   font-family: var(--lumen-font-serif);
   font-weight: 300;
@@ -141,6 +190,7 @@
   color: var(--lumen-text);
 }
 
+/* Director, en cursiva y color secundario. */
 .detalle__director {
   font-family: var(--lumen-font-serif);
   font-style: italic;
@@ -148,6 +198,7 @@
   color: var(--lumen-muted);
 }
 
+/* Bloque de valoración destacada (estrellas + nota + nº de votos), en fila. */
 .rating-big {
   display: flex;
   align-items: center;
@@ -155,18 +206,21 @@
   padding: 8px 0;
 }
 
+/* Columna con la nota numérica y el conteo, apilada. */
 .rating-big__values {
   display: flex;
   flex-direction: column;
   gap: 2px;
 }
 
+/* Las estrellas grandes, en dorado. */
 .rating-big__stars {
   font-size: 32px;
   letter-spacing: 4px;
   color: var(--lumen-primary);
 }
 
+/* La nota numérica grande (ej. 8.4). */
 .rating-big__score {
   font-family: var(--lumen-font-serif);
   font-weight: 300;
@@ -174,12 +228,14 @@
   color: var(--lumen-text);
 }
 
+/* El "/10" junto a la nota: más pequeño, en cursiva y apagado. */
 .rating-big__score span {
   font-style: italic;
   font-size: 16px;
   color: var(--lumen-muted);
 }
 
+/* El número de votos: texto diminuto en mayúsculas. */
 .rating-big__count {
   font-weight: 500;
   font-size: 10px;
@@ -188,12 +244,14 @@
   color: var(--lumen-dim);
 }
 
+/* Bloque de sinopsis (encabezado + texto), apilado. */
 .sinopsis {
   display: flex;
   flex-direction: column;
   gap: 16px;
 }
 
+/* Subtítulos de sección dentro del detalle (ej. "Sinopsis"), en serif. */
 .detalle__heading {
   font-family: var(--lumen-font-serif);
   font-weight: 300;
@@ -201,6 +259,8 @@
   color: var(--lumen-text);
 }
 
+/* El párrafo de sinopsis. line-height: 1.65 da aire entre líneas para que sea
+   cómodo de leer. */
 .sinopsis__text {
   font-weight: 300;
   font-size: 16px;
@@ -208,6 +268,8 @@
   color: var(--lumen-text);
 }
 
+/* Sección de créditos (reparto/equipo). En móvil una sola columna; en pantallas
+   mayores pasará a dos (ver media queries). */
 .creditos {
   display: grid;
   grid-template-columns: 1fr;
@@ -215,12 +277,14 @@
   padding-top: 24px;
 }
 
+/* Cada columna de créditos, apilada. */
 .creditos__col {
   display: flex;
   flex-direction: column;
   gap: 12px;
 }
 
+/* Encabezado de cada columna de créditos (ej. "REPARTO"), pequeño y apagado. */
 .creditos__heading {
   font-weight: 500;
   font-size: 10px;
@@ -229,6 +293,7 @@
   color: var(--lumen-muted);
 }
 
+/* La lista de nombres de créditos, apilada y sin viñetas. */
 .creditos__list {
   display: flex;
   flex-direction: column;
@@ -236,6 +301,7 @@
   list-style: none;
 }
 
+/* Cada nombre del reparto y el nombre de dirección comparten estilo serif. */
 .creditos__list li,
 .creditos__direccion {
   font-family: var(--lumen-font-serif);
@@ -243,11 +309,15 @@
   color: var(--lumen-text);
 }
 
+/* El nombre de dirección se destaca un poco más: en cursiva y mayor. */
 .creditos__direccion {
   font-style: italic;
   font-size: 24px;
 }
 
+/* ---------------------------------------------------------------------
+   .ratings = la zona de reseñas, separada del detalle por una línea superior.
+   --------------------------------------------------------------------- */
 .ratings {
   display: flex;
   flex-direction: column;
@@ -257,6 +327,7 @@
   border-top: 1px solid var(--lumen-border);
 }
 
+/* Título de la zona de reseñas, grande y en serif. */
 .ratings__title {
   font-family: var(--lumen-font-serif);
   font-weight: 300;
@@ -265,18 +336,22 @@
   color: var(--lumen-text);
 }
 
+/* El formulario para dejar una reseña. En móvil es una columna; en escritorio
+   pasará a rejilla de dos columnas (ver media query de ≥992px). */
 .review-form {
   display: flex;
   flex-direction: column;
   gap: 28px;
 }
 
+/* .field = un grupo etiqueta+control de formulario, apilado en vertical. */
 .field {
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
 
+/* La etiqueta <label> del campo: texto pequeño en mayúsculas. */
 .field__label {
   font-weight: 500;
   font-size: 10px;
@@ -285,6 +360,9 @@
   color: var(--lumen-muted);
 }
 
+/* El control de entrada (input/textarea). Fondo transparente con borde fino;
+   transition para animar suavemente el cambio de borde al enfocarlo.
+   border-radius: 0 deja las esquinas rectas (sin redondear). */
 .field__input {
   width: 100%;
   padding: 14px 16px;
@@ -300,16 +378,23 @@
     box-shadow 0.2s ease;
 }
 
+/* ::placeholder estiliza el texto de ayuda que aparece dentro del campo vacío.
+   Lo ponemos en color tenue. */
 .field__input::placeholder {
   color: var(--lumen-dim);
 }
 
+/* :focus = cuando el campo está activo (el usuario hace clic o tabula a él).
+   Quitamos el contorno por defecto y lo sustituimos por un borde dorado más un
+   box-shadow (sombra) de 1px que simula un borde doble nítido. */
 .field__input:focus {
   outline: none;
   border-color: var(--lumen-primary);
   box-shadow: 0 0 0 1px var(--lumen-primary);
 }
 
+/* Mensaje de error de un campo: texto rojo y pequeño. El JS lo muestra cuando
+   la validación falla. */
 .field__error {
   font-weight: 500;
   font-size: 11px;
@@ -317,25 +402,32 @@
   color: #e05a5a;
 }
 
+/* Cuando un campo tiene el modificador --error, su input se pinta con borde rojo
+   para señalar el problema visualmente. */
 .field--error .field__input {
   border-color: #e05a5a;
 }
 
+/* El textarea (área de texto multilínea) tiene una altura mínima y solo se puede
+   redimensionar en vertical (resize: vertical), no en horizontal. */
 textarea.field__input {
   min-height: 120px;
   resize: vertical;
 }
 
+/* Selector de estrellas (los botones para puntuar). En fila con separación. */
 .star-picker {
   display: flex;
   gap: 8px;
 }
 
+/* Cada botón-estrella: grande, gris apagado por defecto, sin fondo ni borde.
+   transition para animar el color y un pequeño salto al pasar el ratón. */
 .star-btn {
   padding: 0 4px;
   font-size: 36px;
   line-height: 1;
-  color: #3a3a3a;
+  color: #3a3a3a;                  /* gris oscuro = estrella "apagada" */
   background: none;
   border: none;
   cursor: pointer;
@@ -344,27 +436,36 @@ textarea.field__input {
     color 0.15s ease;
 }
 
+/* La estrella se ilumina (dorado) al pasar el ratón O cuando está marcada.
+   [aria-checked="true"] es un atributo de accesibilidad que el JS pone en las
+   estrellas seleccionadas. */
 .star-btn:hover,
 .star-btn[aria-checked="true"] {
   color: var(--lumen-primary);
 }
 
+/* Además, al pasar el ratón la estrella sube 2px (pequeño rebote). */
 .star-btn:hover {
   transform: translateY(-2px);
 }
 
+/* Contorno de foco por teclado en las estrellas (accesibilidad). */
 .star-btn:focus-visible {
   outline: 2px solid var(--lumen-primary);
   outline-offset: 3px;
 }
 
+/* Zona de acciones del formulario (el botón Enviar), alineada a la derecha y
+   separada por una línea superior. */
 .review-form__actions {
   display: flex;
-  justify-content: flex-end;
+  justify-content: flex-end;       /* empuja el botón a la derecha */
   padding-top: 28px;
   border-top: 1px solid var(--lumen-border);
 }
 
+/* El botón "Enviar": dorado con texto oscuro. transition para invertir colores
+   suavemente al pasar el ratón. */
 .btn-enviar {
   padding: 14px 28px;
   font-family: var(--lumen-font-body);
@@ -381,11 +482,13 @@ textarea.field__input {
     color 0.2s ease;
 }
 
+/* Al pasar el ratón, el botón se "vacía": fondo transparente y texto dorado. */
 .btn-enviar:hover {
   background: transparent;
   color: var(--lumen-primary);
 }
 
+/* Título de la lista de reseñas (ej. "RESEÑAS"), pequeño y apagado. */
 .reviews__title {
   font-weight: 500;
   font-size: 10px;
@@ -394,12 +497,14 @@ textarea.field__input {
   color: var(--lumen-muted);
 }
 
+/* La lista de reseñas, apilada en columna. */
 .reviews {
   display: flex;
   flex-direction: column;
   gap: 20px;
 }
 
+/* Mensaje que se muestra cuando aún no hay reseñas: en cursiva y apagado. */
 .reviews__empty {
   font-family: var(--lumen-font-serif);
   font-style: italic;
@@ -407,6 +512,7 @@ textarea.field__input {
   color: var(--lumen-muted);
 }
 
+/* Cada tarjeta de reseña: caja con borde, en columna. */
 .review-card {
   display: flex;
   flex-direction: column;
@@ -415,6 +521,7 @@ textarea.field__input {
   border: 1px solid var(--lumen-border);
 }
 
+/* Cabecera de la reseña (estrellas + autor + fecha), en fila con wrap. */
 .review-card__head {
   display: flex;
   flex-wrap: wrap;
@@ -422,12 +529,14 @@ textarea.field__input {
   gap: 12px;
 }
 
+/* Las estrellas de la reseña, en dorado. */
 .review-card__stars {
   font-size: 14px;
   letter-spacing: 2px;
   color: var(--lumen-primary);
 }
 
+/* Nombre del autor, en cursiva. */
 .review-card__author {
   font-family: var(--lumen-font-serif);
   font-weight: 400;
@@ -436,6 +545,8 @@ textarea.field__input {
   color: var(--lumen-text);
 }
 
+/* La fecha de la reseña. margin-left: auto la empuja al EXTREMO DERECHO de la
+   cabecera flex (el margen automático "se come" todo el espacio sobrante). */
 .review-card__date {
   margin-left: auto;
   font-weight: 500;
@@ -445,6 +556,7 @@ textarea.field__input {
   color: var(--lumen-dim);
 }
 
+/* El texto de la reseña, en serif con buen interlineado. */
 .review-card__text {
   font-family: var(--lumen-font-serif);
   font-size: 16px;
@@ -452,6 +564,7 @@ textarea.field__input {
   color: var(--lumen-text);
 }
 
+/* A partir de tablet (≥768px): títulos más grandes y créditos en dos columnas. */
 @media (min-width: 768px) {
   .detalle__title {
     font-size: 72px;
@@ -461,13 +574,18 @@ textarea.field__input {
     font-size: 56px;
   }
 
+  /* Créditos pasan de 1 a 2 columnas. */
   .creditos {
     grid-template-columns: 1fr 1fr;
     gap: 40px;
   }
 }
 
+/* A partir de escritorio (≥992px): el detalle se reorganiza a dos columnas. */
 @media (min-width: 992px) {
+  /* El layout principal: columna lateral fija de 380px + columna principal que
+     ocupa el resto (1fr). align-items: start evita que las columnas se estiren
+     para igualar alturas. */
   .detalle {
     grid-template-columns: 380px 1fr;
     gap: 64px;
@@ -490,6 +608,8 @@ textarea.field__input {
     gap: 56px;
   }
 
+  /* El formulario de reseña pasa a rejilla de dos columnas: una fija de 400px
+     para campos cortos y otra flexible. */
   .review-form {
     display: grid;
     grid-template-columns: 400px 1fr;
@@ -498,6 +618,8 @@ textarea.field__input {
     align-items: start;
   }
 
+  /* El campo de comentario y la zona de acciones ocupan TODA la fila
+     (de la primera a la última columna). */
   .field--comment,
   .review-form__actions {
     grid-column: 1 / -1;
