@@ -1,6 +1,3 @@
-// Paginación de listados estáticos: las cards ya están en el HTML; este script
-// solo muestra las 8 de la página pedida (?page=N) y dibuja los controles.
-// Sin JS, se ven todas las cards (degradación correcta).
 const PER_PAGE = 8;
 
 const grid = document.querySelector("[data-grid]");
@@ -24,7 +21,6 @@ document.querySelector("[data-rango]").textContent =
 document.querySelector("[data-pagina]").textContent =
   `Página ${page} / ${totalPages}`;
 
-// Controles: enlazan al mismo archivo con ?page=N (recarga y re-pagina).
 const file = location.pathname.split("/").pop();
 const pageHref = (n) => `${file}?page=${n}`;
 
@@ -46,7 +42,6 @@ const itemHTML = (label, target, { disabled, active } = {}) => {
   `;
 };
 
-// Con una sola página no hay nada que paginar: se omiten los controles.
 if (totalPages > 1) {
   const numbers = Array.from({ length: totalPages }, (_, i) =>
     itemHTML(i + 1, i + 1, { active: i + 1 === page }),

@@ -88,7 +88,6 @@ const initHeroCarousel = () => {
 
   const slides = Array.from(hero.querySelectorAll(".hero__slide"));
   const dots = Array.from(hero.querySelectorAll(".hero__dot"));
-  // Sin dos diapositivas no hay nada que rotar
   if (slides.length < 2) return;
 
   const AUTO_ADVANCE_MS = 8000;
@@ -96,7 +95,6 @@ const initHeroCarousel = () => {
   let timerId = null;
 
   const showSlide = (nextIndex) => {
-    // Normaliza el índice para que envuelva en ambos sentidos
     const total = slides.length;
     const index = (nextIndex + total) % total;
 
@@ -112,7 +110,6 @@ const initHeroCarousel = () => {
   };
 
   const startAuto = () => {
-    // Evita timers duplicados (focusin/focusout disparan en cada salto de foco)
     if (timerId !== null) return;
     timerId = setInterval(() => showSlide(currentIndex + 1), AUTO_ADVANCE_MS);
   };
@@ -122,7 +119,6 @@ const initHeroCarousel = () => {
     timerId = null;
   };
 
-  // Tras navegar a mano, reinicia el reloj para no saltar de inmediato
   const restartAuto = () => {
     stopAuto();
     startAuto();
@@ -144,13 +140,11 @@ const initHeroCarousel = () => {
     dot.addEventListener("click", () => goTo(index));
   });
 
-  // Pausa al pasar el ratón o al enfocar con teclado dentro del hero
   hero.addEventListener("mouseenter", stopAuto);
   hero.addEventListener("mouseleave", startAuto);
   hero.addEventListener("focusin", stopAuto);
   hero.addEventListener("focusout", startAuto);
 
-  // Marca aria-current en el indicador inicial
   dots[currentIndex].setAttribute("aria-current", "true");
   startAuto();
 };
