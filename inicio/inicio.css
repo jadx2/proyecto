@@ -11,7 +11,6 @@
   overflow: hidden;
 }
 
-/* Todas las diapositivas se apilan a pantalla completa; el cross-fade es por opacidad */
 .hero__slide {
   position: absolute;
   inset: 0;
@@ -30,7 +29,6 @@
   z-index: 1;
 }
 
-/* Bloque de texto: hereda el layout que antes vivía en .hero__slide */
 .hero__content {
   display: flex;
   flex-direction: column;
@@ -111,7 +109,6 @@
   color: var(--lumen-primary);
 }
 
-/* Chevrones */
 .hero__nav {
   position: absolute;
   top: 50%;
@@ -158,14 +155,12 @@
   color: var(--lumen-text);
 }
 
-/* Foco visible por teclado para todos los controles del hero */
 .hero__nav:focus-visible,
 .hero__dot:focus-visible {
   outline: 2px solid var(--lumen-primary);
   outline-offset: 3px;
 }
 
-/* Indicadores (barras) */
 .hero__dots {
   position: absolute;
   bottom: 28px;
@@ -190,7 +185,6 @@
   background: var(--lumen-primary);
 }
 
-/* STRIPS (Películas / Series / Documentales) */
 .strip {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -199,7 +193,6 @@
   padding: 56px var(--lumen-pad-x);
 }
 
-/* Header del strip */
 .strip__header {
   grid-column: 1 / -1;
   display: grid;
@@ -245,7 +238,6 @@
   color: var(--lumen-primary);
 }
 
-/* CARD */
 .film-card a {
   display: flex;
   flex-direction: column;
@@ -308,7 +300,6 @@
   color: var(--lumen-dim);
 }
 
-/* Hover de card: zoom + color (solo desktop con puntero fino) */
 @media (hover: hover) and (pointer: fine) {
   .film-card:hover .poster img {
     transform: scale(1.04);
@@ -316,7 +307,6 @@
   }
 }
 
-/* Media */
 @media (min-width: 768px) {
   .strip {
     grid-template-columns: repeat(3, 1fr);

@@ -95,7 +95,6 @@ const initHeroCarousel = () => {
   let timerId = null;
 
   const showSlide = (nextIndex) => {
-    // Normaliza el índice para que envuelva en ambos sentidos
     const total = slides.length;
     const index = (nextIndex + total) % total;
 

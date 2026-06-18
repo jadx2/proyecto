@@ -310,7 +310,6 @@
   box-shadow: 0 0 0 1px var(--lumen-primary);
 }
 
-/* No hay token de error en base.css; el color de validación vive aquí. */
 .field__error {
   font-weight: 500;
   font-size: 11px;
@@ -453,7 +452,6 @@ textarea.field__input {
   color: var(--lumen-text);
 }
 
-/* Media */
 @media (min-width: 768px) {
   .detalle__title {
     font-size: 72px;
