@@ -46,7 +46,6 @@ body > nav {
 }
 
 body > nav > div {
-  /* Ancla para el menú móvil, que se posiciona absoluto debajo de esta barra */
   position: relative;
   display: flex;
   flex-wrap: wrap;
@@ -57,8 +56,6 @@ body > nav > div {
 }
 
 body > nav > div::before {
-  /* El fondo difuminado vive en el pseudo, no en un ancestro de .nav-menu:
-     así el menú móvil (descendiente) puede muestrear la página y difuminar igual */
   content: "";
   position: absolute;
   inset: 0;
@@ -89,12 +86,7 @@ body > nav > div > a > span:last-child {
   opacity: 0.6;
 }
 
-/*
- * El menú móvil se abre con CSS puro: un checkbox oculto (.nav-toggle) cuyo
- * estado :checked muestra el menú. La hamburguesa visible es su <label>.
- */
 .nav-toggle {
-  /* Fuera de pantalla pero enfocable por teclado (no display:none) */
   position: absolute;
   width: 1px;
   height: 1px;
@@ -103,7 +95,6 @@ body > nav > div > a > span:last-child {
   clip: rect(0 0 0 0);
 }
 
-/* Mobile-first: la hamburguesa muestra/oculta el menú bajo tablet */
 .nav-burger {
   display: block;
   padding: 6px 4px;
@@ -111,7 +102,6 @@ body > nav > div > a > span:last-child {
   cursor: pointer;
 }
 
-/* El span es la barra central; ::before y ::after son las barras superior e inferior */
 .nav-burger span,
 .nav-burger span::before,
 .nav-burger span::after {
@@ -140,17 +130,11 @@ body > nav > div > a > span:last-child {
   top: 7px;
 }
 
-/* Foco por teclado sobre el checkbox oculto: resalta la hamburguesa */
 .nav-toggle:focus-visible ~ .nav-burger {
   outline: 2px solid var(--lumen-primary);
   outline-offset: 2px;
 }
 
-/*
- * Móvil: el menú abierto es un overlay fuera del flujo. Así no empuja a <main>
- * al abrirse en scroll-top, y al tener su propio fondo+blur se ve consistente
- * sin depender del contenido que haya detrás de la barra.
- */
 .nav-menu {
   display: none;
   position: absolute;
@@ -168,7 +152,6 @@ body > nav > div > a > span:last-child {
   display: block;
 }
 
-/* En móvil el menú abierto apila los enlaces en columna */
 .nav-menu ul {
   display: flex;
   flex-direction: column;
@@ -179,7 +162,6 @@ body > nav > div > a > span:last-child {
 
 .nav-menu a {
   position: relative;
-  /* El padding deja sitio a la barra de acento y mantiene alineados los inactivos */
   padding-left: 12px;
   color: var(--lumen-text);
   font-size: 12px;
@@ -196,7 +178,6 @@ body > nav > div > a > span:last-child {
   color: var(--lumen-primary);
 }
 
-/* Móvil: barra vertical dorada en el borde izquierdo del item activo */
 .nav-menu a[aria-current="page"]::after {
   content: "";
   position: absolute;
@@ -249,13 +230,12 @@ body > footer p:last-child {
   color: var(--lumen-dim);
 }
 
-/* Desde tablet el menú es siempre visible y la hamburguesa sobra */
+/* Media */
 @media (min-width: 768px) {
   .nav-burger {
     display: none;
   }
 
-  /* Desktop: el menú vuelve al flujo en fila; se anulan los ajustes del overlay móvil */
   .nav-menu {
     display: block;
     position: static;
@@ -267,7 +247,6 @@ body > footer p:last-child {
     -webkit-backdrop-filter: none;
   }
 
-  /* En desktop vuelve a fila horizontal, idéntico al diseño previo */
   .nav-menu ul {
     flex-direction: row;
     flex-wrap: wrap;
@@ -275,7 +254,6 @@ body > footer p:last-child {
     gap: 28px;
   }
 
-  /* Desktop resetea los ajustes móviles del item activo */
   .nav-menu a {
     padding-left: 0;
   }
@@ -284,7 +262,6 @@ body > footer p:last-child {
     color: var(--lumen-text);
   }
 
-  /* Desktop: subrayado centrado expansivo, idéntico al diseño previo */
   .nav-menu a[aria-current="page"]::after {
     left: 25%;
     top: auto;
