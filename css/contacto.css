@@ -1,0 +1,229 @@
+main {
+  max-width: 900px;
+  margin: 60px auto;
+  padding: 0 var(--lumen-pad-x);
+}
+
+header {
+  margin-bottom: 3rem;
+}
+
+header small {
+  display: block;
+  font-size: 14px;
+  letter-spacing: 7px;
+  color: var(--lumen-primary);
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+
+header h2 {
+  font-family: var(--lumen-font-serif);
+  font-size: clamp(1.8rem, 8vw, 4.5rem);
+  font-weight: 500;
+  line-height: 1.1;
+  color: var(--lumen-text);
+  word-wrap: break-word;
+}
+
+header h2 em {
+  font-style: italic;
+  color: var(--lumen-primary);
+}
+
+header p {
+  font-family: var(--lumen-font-serif);
+  font-style: italic;
+  font-size: clamp(1rem, 5vw, 1.4rem);
+  margin-top: 1rem;
+  line-height: 1.5;
+  color: var(--lumen-text);
+  max-width: 100%;
+  opacity: 0.8;
+}
+
+#contacto-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+#contacto-form > div {
+  flex: 1 0 100%;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+@media (min-width: 768px) {
+  #contacto-form div:nth-child(1),
+  #contacto-form div:nth-child(2) {
+    flex: 0 0 calc(50% - 0.75rem);
+  }
+}
+
+label {
+  font-size: 14px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 0.75rem;
+  color: var(--lumen-dim);
+}
+
+input[type="text"],
+input[type="email"],
+select,
+textarea {
+  background-color: transparent !important;
+  border: 1px solid #262626;
+  color: var(--lumen-text);
+  border-radius: 0 !important;
+  padding: 12px 16px;
+  font-size: 16px; 
+  font-family: var(--lumen-font-body);
+  transition: all 0.3s ease;
+  width: 100%;
+}
+
+::placeholder {
+  color: var(--lumen-muted);
+  opacity: 0.5;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--lumen-primary);    
+  box-shadow: 0 0 0 4px rgba(232, 217, 176, 0.15);
+}
+
+select {
+  appearance: none;
+  -webkit-appearance: none;
+  padding: 12px 36px 12px 16px;
+  font-size: 16px;
+  font-family: var(--lumen-font-body);
+  transition: all 0.3s ease;  
+}
+
+select option {
+  background-color: #141414;
+  color: var(--lumen-text);
+  padding: 10px;
+}
+
+#contacto-form div:nth-child(5) {
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 12px;
+  margin-top: 0.5rem;
+}
+
+#contacto-form div:nth-child(5) label {
+  margin-bottom: 0;
+  text-transform: none;
+  font-size: 14px;
+  letter-spacing: 0;
+  color: var(--lumen-muted);
+  flex: 1; 
+  min-width: 0;
+  word-break: break-word;  
+}
+
+input[type="checkbox"] {
+  accent-color: #75b798;
+  width: 18px;
+  height: 18px;  
+  flex-shrink: 0;
+}  
+
+#contacto-form div:nth-child(6) {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1rem;
+  padding-top: 2.5rem;
+  border-top: 1px solid var(--lumen-border);
+}
+
+#contacto-form div:nth-child(6) span {
+  font-size: 13px;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  color: var(--lumen-dim);
+}
+
+button[type="submit"] {
+  background: transparent;
+  border: 1px solid var(--lumen-primary);
+  color: var(--lumen-primary);
+  padding: 0.8rem 2.5rem;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  cursor: pointer;
+  min-height: 44px;
+  transition: all 0.3s ease;
+}
+
+button[type="submit"]:hover {
+  background: var(--lumen-primary);
+  color: var(--lumen-bg);
+}
+
+#alerta-exito { 
+  display: flex;
+  align-items: center;
+  justify-content: space-between; 
+  background-color: #051b11;
+  padding: 1.5rem;
+  border: 0 !important;
+  border-radius: 0 !important;
+  font-family: var(--lumen-font-serif);
+  font-style: italic;
+
+  flex: 1 0 100%;       
+  order: -1;            
+  margin-bottom: 1rem;  
+}
+
+#alerta-exito[hidden] {
+  display: none !important;
+}
+
+#alerta-exito p {
+  color: #75b798;
+  margin: 0;
+  font-size: 17px;
+  line-height: 1.5;
+}
+
+#btn-cerrar-exito {
+  background: transparent;
+  border: none;
+  color: #75b798; 
+  font-size: 24px;
+  font-weight: bold;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0 0 0 1rem;
+  transition: all 0.2s ease;
+}
+
+#btn-cerrar-exito:hover {
+  opacity: 0.5;
+}
+
+.invalid-feedback {
+  display: none;
+  color: #ff6b6b;
+  font-size: 12px;
+  margin-top: 0.5rem;
+  letter-spacing: 1px;
+  font-family: var(--lumen-font-body); 
+}
