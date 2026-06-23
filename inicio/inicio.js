@@ -5,7 +5,7 @@ const heroSlideHTML = (film, index, total) => `
     aria-label="Diapositiva ${index + 1} de ${total}"
   >
     <figure class="hero__media">
-      <img loading="lazy" src="${film.poster}" alt="Póster de ${film.title}" />
+      <img loading="${index === 0 ? "eager" : "lazy"}" src="${film.poster}" alt="Póster de ${film.title}" />
     </figure>
     <div class="hero__content">
       <h2 class="hero__title">${film.title}</h2>
