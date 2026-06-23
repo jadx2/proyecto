@@ -1,75 +1,42 @@
-document.addEventListener("DOMContentLoaded", () => {
-  const form = document.getElementById("contacto-form");
-  const inputNombre = document.getElementById("nombre");
-  const mensajeTextArea = document.getElementById("mensaje");
-  const alertaExito = document.getElementById("alerta-exito");
+const form = document.getElementById("contacto-form");
+const alerta = form.querySelector("[data-alerta]");
+const cerrarAlerta = form.querySelector("[data-cerrar-alerta]");
 
-  if (alertaExito && form) {
-    form.parentElement.insertBefore(alertaExito, form);
+const FIELD_IDS = ["nombre", "correo", "asunto", "mensaje", "consent"];
 
-    if (!document.getElementById("btn-cerrar-exito")) {
-      const btnCerrar = document.createElement("button");
-      btnCerrar.id = "btn-cerrar-exito";
-      btnCerrar.type = "button";
-      btnCerrar.innerHTML = "&times;";
-      btnCerrar.setAttribute("aria-label", "Cerrar alerta");
+const setFieldError = (id, hasError) => {
+  const errorNode = form.querySelector(`[data-error="${id}"]`);
+  errorNode.hidden = !hasError;
+  errorNode.closest(".field").classList.toggle("field--error", hasError);
+};
 
-      btnCerrar.addEventListener("click", () => {
-        alertaExito.setAttribute("hidden", "true");
-      });
+const isFieldValid = (id) => document.getElementById(id).checkValidity();
 
-      alertaExito.appendChild(btnCerrar);
-    }
+FIELD_IDS.forEach((id) => {
+  const input = document.getElementById(id);
+  const eventName =
+    input.type === "checkbox" || input.tagName === "SELECT" ? "change" : "input";
+  input.addEventListener(eventName, () => {
+    if (isFieldValid(id)) setFieldError(id, false);
+  });
+});
+
+cerrarAlerta.addEventListener("click", () => {
+  alerta.hidden = true;
+});
+
+form.addEventListener("submit", (event) => {
+  event.preventDefault();
+
+  const invalidIds = FIELD_IDS.filter((id) => !isFieldValid(id));
+  FIELD_IDS.forEach((id) => setFieldError(id, invalidIds.includes(id)));
+
+  if (invalidIds.length > 0) {
+    alerta.hidden = true;
+    return;
   }
 
-  form.classList.add("needs-validation");
-  inputNombre.setAttribute("minlength", "3");
-  mensajeTextArea.setAttribute("minlength", "10");
-  mensajeTextArea.setAttribute("maxlength", "2000");
-
-  const mensajesError = {
-    nombre: "Por favor, introduce tu nombre.",
-    correo: "Por favor, introduce un correo válido.",
-    asunto: "Por favor, elige un asunto.",
-    mensaje:
-      "Por favor, escribe al menos unas palabras (mínimo 10 caracteres).",
-    consent: "El consentimiento es obligatorio.",
-  };
-
-  Object.keys(mensajesError).forEach((id) => {
-    const elemento = document.getElementById(id);
-    if (
-      elemento &&
-      !elemento.parentElement.querySelector(".invalid-feedback")
-    ) {
-      const feedbackDiv = document.createElement("div");
-      feedbackDiv.className = "invalid-feedback";
-      feedbackDiv.textContent = mensajesError[id];
-      elemento.parentElement.appendChild(feedbackDiv);
-    }
-  });
-
-  form.addEventListener("submit", (evento) => {
-    evento.preventDefault();
-    evento.stopPropagation();
-
-    if (form.checkValidity()) {
-      alertaExito.removeAttribute("hidden");
-      form.classList.remove("was-validated");
-      form.reset();
-
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth",
-      }); 
-
-    } else {
-      form.classList.add("was-validated");
-      alertaExito.setAttribute("hidden", "true");
-    }
-  });
-});  
-
-
-
-
+  form.reset();
+  alerta.hidden = false;
+  window.scrollTo({ top: 0, behavior: "smooth" });
+});
