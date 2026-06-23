@@ -5,42 +5,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Contacto · Lumen</title>
 
-    <link rel="stylesheet" href="css/base.css" />
-    <link rel="stylesheet" href="css/contacto.css" />
+    <link rel="stylesheet" href="../base.css" />
+    <link rel="stylesheet" href="contacto.css" />
   </head>
   <body>
     <nav>
       <div>
-        <a href="inicio.html">
+        <a href="../inicio/inicio.html">
           <span>Lumen</span>
           <span>La Biblioteca Audiovisual</span>
         </a>
 
-        <button
-          type="button"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
+        <input
+          type="checkbox"
+          id="nav-toggle"
+          class="nav-toggle"
+          aria-label="Abrir menú"
+        />
+        <label class="nav-burger" for="nav-toggle">
           <span></span>
-        </button>
+        </label>
 
         <div class="nav-menu">
           <ul>
-            <li>
-              <a href="inicio.html">Inicio</a>
-            </li>
-            <li>
-              <a href="listado.html?cat=series">Series</a>
-            </li>
-            <li>
-              <a href="listado.html?cat=peliculas">Películas</a>
-            </li>
-            <li>
-              <a href="listado.html?cat=documentales">Documentales</a>
-            </li>
-            <li>
-              <a href="contacto.html" aria-current="page">Contacto</a>
-            </li>
+            <li><a href="../inicio/inicio.html">Inicio</a></li>
+            <li><a href="../listado/series.html">Series</a></li>
+            <li><a href="../listado/peliculas.html">Películas</a></li>
+            <li><a href="../listado/documentales.html">Documentales</a></li>
+            <li><a href="../contacto/contacto.html" aria-current="page">Contacto</a></li>
           </ul>
         </div>
       </div>
@@ -57,7 +49,7 @@
       </header>
 
       <section>
-        <form id="contacto-form">
+        <form id="contacto-form" novalidate>
           <div>
             <label for="nombre">Nombre</label>
             <input type="text" id="nombre" required />
@@ -114,5 +106,7 @@
         </div>
       </div>
     </footer>
+
+    <script src="contacto.js"></script>
   </body>
 </html>

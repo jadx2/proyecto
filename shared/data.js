@@ -347,8 +347,6 @@ const CONTENT = [
     genres: ["Comedia", "Suspense", "Drama"],
     rating: 4.2,
   },
-
-  // ── SERIES ────────────────────────────────────────────────
   {
     id: 16,
     type: "series",
@@ -649,8 +647,6 @@ const CONTENT = [
     genres: ["Crimen", "Drama"],
     rating: 4.3,
   },
-
-  // ── DOCUMENTALES ──────────────────────────────────────────
   {
     id: 30,
     type: "documentary",
@@ -929,7 +925,6 @@ const CONTENT = [
   },
 ];
 
-// Helpers
 const Data = {
   all() {
     return CONTENT;
@@ -959,38 +954,4 @@ const Data = {
       totalPages,
     };
   },
-};
-
-const Categories = {
-  peliculas: { type: "movie", label: "Películas" },
-  series: { type: "series", label: "Series" },
-  documentales: { type: "documentary", label: "Documentales" },
-};
-
-const getFormattedType = (type) => {
-  const match = Object.values(Categories).find(
-    (category) => category.type === type,
-  );
-  return match ? match.label : "";
-};
-
-const getParam = (name, fallback = undefined) => {
-  const value = new URLSearchParams(location.search).get(name);
-  return value === null || value === "" ? fallback : value;
-};
-
-const mount = (html) => {
-  document.getElementById("app").innerHTML = html;
-};
-
-const setActiveNav = (key) => {
-  const links = document.querySelectorAll(".nav-menu a");
-  links.forEach((link) => link.removeAttribute("aria-current"));
-
-  const suffix = Categories[key] ? `listado.html?cat=${key}` : `${key}.html`;
-  links.forEach((link) => {
-    if (link.getAttribute("href").endsWith(suffix)) {
-      link.setAttribute("aria-current", "page");
-    }
-  });
 };

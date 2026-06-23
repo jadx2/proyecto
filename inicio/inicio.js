@@ -1,5 +1,3 @@
-setActiveNav("inicio");
-
 const heroSlideHTML = (film, index, total) => `
   <section
     class="hero__slide${index === 0 ? " hero__slide--active" : ""}"
@@ -7,14 +5,14 @@ const heroSlideHTML = (film, index, total) => `
     aria-label="Diapositiva ${index + 1} de ${total}"
   >
     <figure class="hero__media">
-      <img loading="lazy" src="${film.poster}" alt="Póster de ${film.title}" />
+      <img loading="${index === 0 ? "eager" : "lazy"}" src="${film.poster}" alt="Póster de ${film.title}" />
     </figure>
     <div class="hero__content">
       <h2 class="hero__title">${film.title}</h2>
       <p class="hero__meta">${filmMeta(film)}</p>
       <p class="hero__synopsis">${film.synopsis}</p>
       <p class="hero__cta">
-        <a href="detalles.html?id=${film.id}">Ver detalle →</a>
+        <a href="../detalles/detalles.html?id=${film.id}">Ver detalle →</a>
       </p>
     </div>
   </section>
@@ -51,7 +49,7 @@ const stripHTML = (config) => `
       <p class="strip__eyebrow">MEJOR VALORADOS</p>
       <h2 class="strip__title">${config.title}</h2>
       <p class="strip__viewall">
-        <a href="listado.html?cat=${config.cat}">Ver todo →</a>
+        <a href="../listado/${config.cat}.html">Ver todo →</a>
       </p>
     </header>
     ${Data.topRated(config.type, 4).map(cardHTML).join("")}
@@ -90,7 +88,6 @@ const initHeroCarousel = () => {
 
   const slides = Array.from(hero.querySelectorAll(".hero__slide"));
   const dots = Array.from(hero.querySelectorAll(".hero__dot"));
-  // Sin dos diapositivas no hay nada que rotar
   if (slides.length < 2) return;
 
   const AUTO_ADVANCE_MS = 8000;
@@ -98,7 +95,6 @@ const initHeroCarousel = () => {
   let timerId = null;
 
   const showSlide = (nextIndex) => {
-    // Normaliza el índice para que envuelva en ambos sentidos
     const total = slides.length;
     const index = (nextIndex + total) % total;
 
@@ -114,7 +110,6 @@ const initHeroCarousel = () => {
   };
 
   const startAuto = () => {
-    // Evita timers duplicados (focusin/focusout disparan en cada salto de foco)
     if (timerId !== null) return;
     timerId = setInterval(() => showSlide(currentIndex + 1), AUTO_ADVANCE_MS);
   };
@@ -124,7 +119,6 @@ const initHeroCarousel = () => {
     timerId = null;
   };
 
-  // Tras navegar a mano, reinicia el reloj para no saltar de inmediato
   const restartAuto = () => {
     stopAuto();
     startAuto();
@@ -146,13 +140,11 @@ const initHeroCarousel = () => {
     dot.addEventListener("click", () => goTo(index));
   });
 
-  // Pausa al pasar el ratón o al enfocar con teclado dentro del hero
   hero.addEventListener("mouseenter", stopAuto);
   hero.addEventListener("mouseleave", startAuto);
   hero.addEventListener("focusin", stopAuto);
   hero.addEventListener("focusout", startAuto);
 
-  // Marca aria-current en el indicador inicial
   dots[currentIndex].setAttribute("aria-current", "true");
   startAuto();
 };

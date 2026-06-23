@@ -1,13 +1,8 @@
-/* ============================================================
-   listado.css — Página de Listado (Películas / Series / Docs)
-   ============================================================ */
-
-/* ── 1. Page Header ────────────────────────────────────────── */
 .page-header {
   display: flex;
   flex-direction: column;
   gap: 16px;
-  padding-top: 100px;
+  padding-top: 50px;
   padding-bottom: 56px;
 }
 
@@ -44,7 +39,6 @@
   color: var(--lumen-muted);
 }
 
-/* ── 2. Film Grid ──────────────────────────────────────────── */
 .film-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -66,10 +60,13 @@
   }
 }
 
-/* ── 3. Film Card ──────────────────────────────────────────── */
 .film-card {
   display: flex;
   flex-direction: column;
+}
+
+.film-card[hidden] {
+  display: none;
 }
 
 .film-card a {
@@ -153,7 +150,6 @@
   content: " · ";
 }
 
-/* ── 4. Paginación ─────────────────────────────────────────── */
 .paginacion {
   display: flex;
   justify-content: center;
