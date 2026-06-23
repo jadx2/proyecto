@@ -32,70 +32,112 @@
             <li><a href="../listado/series.html">Series</a></li>
             <li><a href="../listado/peliculas.html">Películas</a></li>
             <li><a href="../listado/documentales.html">Documentales</a></li>
-            <li><a href="../contacto/contacto.html" aria-current="page">Contacto</a></li>
+            <li>
+              <a href="../contacto/contacto.html" aria-current="page"
+                >Contacto</a
+              >
+            </li>
           </ul>
         </div>
       </div>
     </nav>
 
-    <main>
-      <header>
-        <small>ESCRÍBENOS</small>
-        <h2>Contáct<em>anos</em>.</h2>
-        <p>
+    <main class="contacto">
+      <header class="contacto__header">
+        <p class="eyebrow">Escríbenos</p>
+        <h1 class="contacto__title">Contáct<em>anos</em>.</h1>
+        <p class="contacto__intro">
           Para consultas de programación, prensa o envíos. Leemos todo, tarde o
           temprano.
         </p>
       </header>
 
-      <section>
-        <form id="contacto-form" novalidate>
-          <div>
-            <label for="nombre">Nombre</label>
-            <input type="text" id="nombre" required />
-          </div>
+      <form id="contacto-form" class="contacto-form" novalidate>
+        <div class="alerta-exito" data-alerta hidden>
+          <p class="alerta-exito__text">
+            <strong>¡Mensaje enviado exitosamente!</strong> Estaremos en
+            contacto con usted pronto.
+          </p>
+          <button
+            type="button"
+            class="alerta-exito__close"
+            data-cerrar-alerta
+            aria-label="Cerrar alerta"
+          >
+            &times;
+          </button>
+        </div>
 
-          <div>
-            <label for="correo">Correo</label>
-            <input type="email" id="correo" required />
-          </div>
+        <div class="field field--half">
+          <label class="field__label" for="nombre">Nombre</label>
+          <input
+            class="field__input"
+            type="text"
+            id="nombre"
+            required
+            minlength="3"
+          />
+          <p class="field__error" data-error="nombre" hidden>
+            Por favor, introduce tu nombre.
+          </p>
+        </div>
 
-          <div>
-            <label for="asunto">Asunto</label>
-            <select id="asunto" name="asunto" required>
-              <option value="" selected disabled>Selecciona un asunto</option>
-              <option value="programacion">Consulta de programación</option>
-              <option value="prensa">Prensa</option>
-              <option value="envio">Envío</option>
-              <option value="general">General</option>
-            </select>
-          </div>
+        <div class="field field--half">
+          <label class="field__label" for="correo">Correo</label>
+          <input class="field__input" type="email" id="correo" required />
+          <p class="field__error" data-error="correo" hidden>
+            Por favor, introduce un correo válido.
+          </p>
+        </div>
 
-          <div>
-            <label for="mensaje">Mensaje</label>
-            <textarea id="mensaje" rows="6" required></textarea>
-          </div>
+        <div class="field">
+          <label class="field__label" for="asunto">Asunto</label>
+          <select class="field__input" id="asunto" name="asunto" required>
+            <option value="" selected disabled>Selecciona un asunto</option>
+            <option value="programacion">Consulta de programación</option>
+            <option value="prensa">Prensa</option>
+            <option value="envio">Envío</option>
+            <option value="general">General</option>
+          </select>
+          <p class="field__error" data-error="asunto" hidden>
+            Por favor, elige un asunto.
+          </p>
+        </div>
 
-          <div>
-            <input type="checkbox" id="consent" required />
-            <label for="consent"
-              >Doy mi consentimiento para ser contactado con el correo
-              indicado.</label
-            >
-          </div>
-          <div>
-            <span>Prototipo · Envío Simulado</span>
-            <button type="submit">Enviar Mensaje</button>
-          </div>
+        <div class="field">
+          <label class="field__label" for="mensaje">Mensaje</label>
+          <textarea
+            class="field__input"
+            id="mensaje"
+            rows="6"
+            required
+            minlength="10"
+            maxlength="2000"
+          ></textarea>
+          <p class="field__error" data-error="mensaje" hidden>
+            Por favor, escribe al menos unas palabras (mínimo 10 caracteres).
+          </p>
+        </div>
 
-          <div id="alerta-exito" hidden>
-            <p>
-              <strong>¡Mensaje enviado exitosamente!</strong> Estaremos en
-              contacto con usted pronto.
-            </p>
-          </div>
-        </form>
-      </section>
+        <div class="field field--consent">
+          <input
+            class="field__checkbox"
+            type="checkbox"
+            id="consent"
+            required
+          />
+          <label class="field__consent-label" for="consent">
+            Doy mi consentimiento para ser contactado con el correo indicado.
+          </label>
+          <p class="field__error" data-error="consent" hidden>
+            El consentimiento es obligatorio.
+          </p>
+        </div>
+
+        <div class="contacto-form__footer">
+          <button class="btn-enviar" type="submit">Enviar Mensaje</button>
+        </div>
+      </form>
     </main>
 
     <footer>
